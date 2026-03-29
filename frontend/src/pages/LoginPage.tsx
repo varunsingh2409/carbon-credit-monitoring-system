@@ -1,0 +1,234 @@
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { KeyRound, Leaf, UserCircle2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { z } from "zod";
+
+import { authApi } from "@/api/authApi";
+import { useAuthStore } from "@/store/authStore";
+import type { UserRole } from "@/types";
+
+const loginSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  password: z.string().min(8, "Password must be at least 8 characters")
+});
+
+type LoginSchema = z.infer<typeof loginSchema>;
+
+const roleOptions: UserRole[] = ["farmer", "verifier", "admin"];
+
+const routeByRole = (role: UserRole) => {
+  switch (role) {
+    case "farmer":
+      return "/farmer/dashboard";
+    case "verifier":
+      return "/verifier/dashboard";
+    case "admin":
+      return "/admin/panel";
+    default:
+      return "/";
+  }
+};
+
+const getErrorMessage = (error: unknown) => {
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "response" in error &&
+    typeof error.response === "object" &&
+    error.response !== null &&
+    "data" in error.response &&
+    typeof error.response.data === "object" &&
+    error.response.data !== null &&
+    "detail" in error.response.data &&
+    typeof error.response.data.detail === "string"
+  ) {
+    return error.response.data.detail;
+  }
+
+  return "Login failed. Please check your credentials.";
+};
+
+function LoginPage() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<UserRole>("farmer");
+  const login = useAuthStore((state) => state.login);
+  const user = useAuthStore((state) => state.user);
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: "",
+      password: ""
+    }
+  });
+
+  useEffect(() => {
+    if (user) {
+      navigate(routeByRole(user.role), { replace: true });
+    }
+  }, [navigate, user]);
+
+  const onSubmit = handleSubmit(async (values) => {
+    try {
+      setIsSubmitting(true);
+      const response = await authApi.login(values.username, values.password);
+      login(response.access_token, response.user);
+
+      if (response.user.role !== selectedRole) {
+        toast.success(
+          `Signed in as ${response.user.role}. Redirecting to the correct workspace.`
+        );
+      } else {
+        toast.success("Signed in successfully");
+      }
+
+      const intendedPath =
+        typeof location.state === "object" &&
+        location.state &&
+        "from" in location.state &&
+        typeof location.state.from === "object" &&
+        location.state.from &&
+        "pathname" in location.state.from
+          ? String(location.state.from.pathname)
+          : null;
+
+      navigate(intendedPath ?? routeByRole(response.user.role), { replace: true });
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
+  });
+
+  return (
+    <main className="relative flex min-h-[calc(100vh-88px)] items-center justify-center overflow-hidden px-4 py-16 sm:px-6">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-[10%] top-[10%] h-56 w-56 rounded-full bg-accent-green/10 blur-3xl" />
+        <div className="absolute right-[8%] top-[18%] h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
+      </div>
+
+      <section className="surface-panel-strong relative w-full max-w-md overflow-hidden p-8">
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-r from-emerald-400/12 via-blue-400/10 to-transparent blur-2xl" />
+
+        <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-accent-green via-accent-emerald to-accent-blue text-white shadow-accent">
+          <Leaf size={28} />
+        </div>
+
+        <div className="relative mt-6 text-center">
+          <p className="eyebrow">
+            Secure Login
+          </p>
+          <h1 className="mt-3 text-4xl font-extrabold text-white">Welcome Back</h1>
+          <p className="mt-3 text-sm leading-7 text-slate-400">
+            Sign in to access your carbon-credit workspace and continue from the
+            latest farm, verification, or admin activity.
+          </p>
+        </div>
+
+        <form className="mt-8 space-y-5" onSubmit={onSubmit}>
+          <div>
+            <label
+              className="mb-2 block text-sm font-medium text-slate-300"
+              htmlFor="username"
+            >
+              Username
+            </label>
+            <div className="surface-card-muted flex items-center gap-3 px-4 py-3 transition focus-within:border-accent-green focus-within:bg-white/10">
+              <UserCircle2 className="text-slate-400" size={18} />
+              <input
+                className="w-full bg-transparent text-white outline-none placeholder:text-slate-500"
+                id="username"
+                placeholder="Enter your username"
+                {...register("username")}
+              />
+            </div>
+            {errors.username ? (
+              <p className="mt-2 text-sm text-rose-300">{errors.username.message}</p>
+            ) : null}
+          </div>
+
+          <div>
+            <label
+              className="mb-2 block text-sm font-medium text-slate-300"
+              htmlFor="password"
+            >
+              Password
+            </label>
+            <div className="surface-card-muted flex items-center gap-3 px-4 py-3 transition focus-within:border-accent-green focus-within:bg-white/10">
+              <KeyRound className="text-slate-400" size={18} />
+              <input
+                className="w-full bg-transparent text-white outline-none placeholder:text-slate-500"
+                id="password"
+                placeholder="Enter your password"
+                type="password"
+                {...register("password")}
+              />
+            </div>
+            {errors.password ? (
+              <p className="mt-2 text-sm text-rose-300">{errors.password.message}</p>
+            ) : null}
+          </div>
+
+          <div>
+            <p className="mb-3 text-sm font-medium text-slate-300">Demo Role</p>
+            <div className="grid grid-cols-3 gap-2">
+              {roleOptions.map((role) => {
+                const isActive = selectedRole === role;
+                return (
+                  <button
+                    className={`rounded-full px-3 py-2 text-sm font-semibold capitalize transition ${
+                      isActive
+                        ? "bg-gradient-to-r from-accent-green via-accent-emerald to-accent-blue text-white shadow-accent"
+                        : "border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
+                    }`}
+                    key={role}
+                    onClick={() => setSelectedRole(role)}
+                    type="button"
+                  >
+                    {role}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <button
+            className="button-primary w-full rounded-2xl px-5 py-3 disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={isSubmitting}
+            type="submit"
+          >
+            {isSubmitting ? "Signing In..." : "Sign In"}
+          </button>
+        </form>
+
+        <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-3 text-xs uppercase tracking-[0.18em] text-slate-400">
+          Demo-ready access for farmer, verifier, and admin workspaces
+        </div>
+
+        <div className="mt-5 flex items-center justify-between text-sm">
+          <button
+            className="text-slate-400 transition hover:text-white"
+            onClick={() => toast("Password reset will be connected in a later step.")}
+            type="button"
+          >
+            Forgot password?
+          </button>
+          <Link className="font-medium text-accent-blue transition hover:text-blue-300" to="/">
+            Back to home
+          </Link>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+export default LoginPage;
