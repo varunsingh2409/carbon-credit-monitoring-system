@@ -10,6 +10,25 @@ This repository contains a full-stack carbon credit monitoring application with:
 
 If you want the fastest way to present the app live, use [DEMO_README.md](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/DEMO_README.md).
 
+## Permanent Deploy With GitHub
+
+This repo now includes a GitHub-connected Render Blueprint at [render.yaml](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/render.yaml).
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/varunsingh2409/carbon-credit-monitoring-system)
+
+What this sets up:
+
+- a Render web service for the FastAPI backend
+- a Render static site for the Vite frontend
+- a managed Render Postgres database
+- automatic deploys on future GitHub pushes after the initial Render import
+
+Important note:
+
+- Render's current free Postgres instances expire after 30 days, so the Blueprint uses `basic-256mb` for the database to make the deployment durable instead of temporary
+- the repo does not currently include checked-in Alembic migration files, so [scripts/bootstrap_db.py](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/scripts/bootstrap_db.py) creates the schema and runs the existing demo seed SQL during deploy
+- if you want live ThingSpeak sync in production, fill in the prompted `THINGSPEAK_*` secrets during the first Render setup
+
 ## 1. What The System Does
 
 The platform is designed to track soil measurements, calculate carbon sequestration, and manage verification before carbon credits are considered issued.
