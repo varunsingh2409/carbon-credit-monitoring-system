@@ -14,7 +14,7 @@ If you want the fastest way to present the app live, use [DEMO_README.md](C:/Use
 
 This repo now includes a GitHub-connected Render Blueprint at [render.yaml](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/render.yaml).
 
-There is also a free-tier-oriented variant at [render.free.yaml](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/render.free.yaml) for cases where you want to keep Render free and bring your own Postgres URL.
+There is also a free-tier-oriented variant at [render.free.yaml](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/render.free.yaml) for short-term demos and presentations where you want the entire stack on Render without paid services.
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/varunsingh2409/carbon-credit-monitoring-system)
 
@@ -38,15 +38,17 @@ Use [render.free.yaml](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/c
 
 - a free Render backend
 - a free Render static frontend
-- an external Postgres database such as Neon
+- a free Render Postgres database for short-term demonstration use
 
 For that free setup, provide these values during the first Render import:
 
-- `DATABASE_URL` from your external Postgres provider
 - `THINGSPEAK_CHANNEL_ID`
 - `THINGSPEAK_READ_API_KEY`
 
-The free blueprint avoids Render's managed Postgres billing requirement, but the web service still uses Render's free runtime behavior.
+The free blueprint is suitable for presentations and demos, but it keeps Render's free-tier tradeoffs:
+
+- the web service can spin down when idle
+- the free Postgres database is not intended for long-term production use
 
 ## 1. What The System Does
 
