@@ -54,15 +54,15 @@ const normalizeVerificationStatus = (status: string): StatusBadgeValue => {
 const getSeasonCardTone = (status: FarmerSeasonDashboard["status"]) => {
   switch (status) {
     case "active":
-      return "border-blue-400/20 bg-blue-500/[0.06]";
+      return "border-blue-200/20 bg-blue-300/[0.08]";
     case "completed":
-      return "border-cyan-400/20 bg-cyan-500/[0.05]";
+      return "border-cyan-200/20 bg-cyan-300/[0.08]";
     case "verified":
-      return "border-accent-green/20 bg-accent-green/[0.05]";
+      return "border-accent-green/25 bg-accent-green/[0.08]";
     case "rejected":
-      return "border-red-400/20 bg-red-500/[0.05]";
+      return "border-rose-200/20 bg-rose-300/[0.08]";
     default:
-      return "border-white/10 bg-white/5";
+      return "border-white/10 bg-white/10";
   }
 };
 
@@ -235,7 +235,7 @@ function FarmerDashboard() {
 
             return (
               <article className="surface-panel relative overflow-hidden p-6" key={farm.farm_id}>
-                <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-r from-accent-green/8 via-blue-400/6 to-transparent blur-2xl" />
+                <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-r from-accent-green/10 via-blue-400/10 to-transparent blur-2xl" />
                 <div className="flex flex-col gap-4 border-b border-white/10 pb-5 md:flex-row md:items-start md:justify-between">
                   <div>
                     <h2 className="text-2xl font-bold text-white">{farm.farm_name}</h2>
@@ -305,7 +305,7 @@ function FarmerDashboard() {
                                 {season.carbon_data.baseline_carbon.toFixed(2)}
                               </p>
                             </div>
-                            <div className="rounded-2xl border border-accent-green/15 bg-accent-green/[0.06] p-4 shadow-[0_12px_28px_rgba(34,197,94,0.08)]">
+                            <div className="rounded-2xl border border-accent-green/20 bg-accent-green/[0.06] p-4 shadow-[0_12px_28px_rgba(34,197,94,0.08)]">
                               <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
                                 Current Carbon
                               </p>
@@ -313,7 +313,7 @@ function FarmerDashboard() {
                                 {season.carbon_data.current_carbon.toFixed(2)}
                               </p>
                             </div>
-                            <div className="rounded-2xl border border-blue-400/15 bg-blue-500/[0.06] p-4 shadow-[0_12px_28px_rgba(59,130,246,0.08)]">
+                            <div className="rounded-2xl border border-blue-400/20 bg-blue-500/[0.06] p-4 shadow-[0_12px_28px_rgba(59,130,246,0.08)]">
                               <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
                                 Net Increase
                               </p>
@@ -321,7 +321,7 @@ function FarmerDashboard() {
                                 {season.carbon_data.net_increase.toFixed(2)}
                               </p>
                             </div>
-                            <div className="rounded-2xl border border-accent-purple/15 bg-accent-purple/[0.06] p-4 shadow-[0_12px_28px_rgba(139,92,246,0.08)]">
+                            <div className="rounded-2xl border border-accent-purple/20 bg-accent-purple/[0.06] p-4 shadow-[0_12px_28px_rgba(139,92,246,0.08)]">
                               <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
                                 Estimated Credits
                               </p>
@@ -393,10 +393,10 @@ function FarmerDashboard() {
                   />
                   <Tooltip
                     contentStyle={{
-                      background: "rgba(8, 17, 29, 0.94)",
-                      border: "1px solid rgba(255,255,255,0.08)",
+                      background: "rgba(36, 49, 63, 0.92)",
+                      border: "1px solid rgba(255,255,255,0.14)",
                       borderRadius: "18px",
-                      boxShadow: "0 18px 48px rgba(4, 9, 20, 0.4)"
+                      boxShadow: "0 18px 48px rgba(26, 36, 49, 0.22)"
                     }}
                     formatter={(value: number, name: string) => [
                       `${Number(value).toFixed(2)} kg/ha`,
@@ -424,7 +424,7 @@ function FarmerDashboard() {
                 </AreaChart>
               </ResponsiveContainer>
             ) : (
-              <div className="flex h-full items-center justify-center rounded-[1.6rem] border border-dashed border-white/10 bg-white/5 p-6 text-center text-sm leading-7 text-slate-400">
+              <div className="flex h-full items-center justify-center rounded-[1.6rem] border border-dashed border-white/10 bg-white/10 p-6 text-center text-sm leading-7 text-slate-300/80">
                 Carbon trend data will populate here after completed seasons have
                 carbon sequestration records.
               </div>
@@ -440,7 +440,7 @@ function FarmerDashboard() {
                 {baselineAverage.toFixed(2)}
               </p>
             </div>
-            <div className="rounded-2xl border border-accent-green/15 bg-accent-green/[0.06] p-4">
+            <div className="rounded-2xl border border-accent-green/20 bg-accent-green/[0.06] p-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                 Current Avg
               </p>
@@ -448,7 +448,7 @@ function FarmerDashboard() {
                 {currentAverage.toFixed(2)}
               </p>
             </div>
-            <div className="rounded-2xl border border-blue-400/15 bg-blue-500/[0.06] p-4">
+            <div className="rounded-2xl border border-blue-400/20 bg-blue-500/[0.06] p-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                 Total Increase
               </p>

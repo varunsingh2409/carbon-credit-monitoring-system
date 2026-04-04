@@ -110,15 +110,15 @@ function LandingPage() {
       <main className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-[-12%] top-[-8%] h-72 w-72 rounded-full bg-accent-green/10 blur-3xl" />
-          <div className="absolute right-[-8%] top-[10%] h-80 w-80 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="absolute right-[-8%] top-[10%] h-80 w-80 rounded-full bg-accent-blue/10 blur-3xl" />
           <div className="absolute bottom-[-10%] left-[30%] h-96 w-96 rounded-full bg-accent-amber/10 blur-3xl" />
         </div>
 
         <section className="relative flex min-h-screen items-center">
           <div className="mx-auto grid w-full max-w-7xl gap-14 px-4 py-20 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
             <div className="flex flex-col justify-center">
-              <div className="inline-flex w-fit items-center gap-3 rounded-full border border-emerald-300/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200 shadow-[0_10px_30px_rgba(4,9,20,0.2)]">
-                <span className="h-2.5 w-2.5 rounded-full bg-accent-green shadow-[0_0_20px_rgba(34,197,94,0.7)]" />
+              <div className="inline-flex w-fit items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-emerald-100 shadow-[0_10px_30px_rgba(26,36,49,0.14)]">
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-100 shadow-[0_0_18px_rgba(115,184,143,0.55)]" />
                 Trusted Carbon Operations Platform
               </div>
 
@@ -160,7 +160,7 @@ function LandingPage() {
               <div className="mt-10 flex flex-wrap gap-3">
                 {heroModules.map((module) => (
                   <span
-                    className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300"
+                    className="rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-200"
                     key={module}
                   >
                     {module}
@@ -193,9 +193,9 @@ function LandingPage() {
               <div className="surface-panel-strong relative w-full overflow-hidden p-6 sm:p-8">
                 <div className="absolute inset-0 bg-surface-mesh opacity-80" />
                 <div className="relative space-y-5">
-                  <div className="flex items-center justify-between rounded-[1.4rem] border border-white/10 bg-white/5 px-4 py-3 text-xs uppercase tracking-[0.22em] text-slate-400">
+                  <div className="flex items-center justify-between rounded-[1.4rem] border border-white/10 bg-white/10 px-4 py-3 text-xs uppercase tracking-[0.22em] text-slate-300/80">
                     <span>Decision Workspace</span>
-                    <span className="rounded-full border border-emerald-300/15 bg-emerald-400/10 px-3 py-1 text-emerald-200">
+                    <span className="rounded-full border border-emerald-100/20 bg-emerald-200/10 px-3 py-1 text-emerald-100">
                       Live
                     </span>
                   </div>
@@ -232,7 +232,7 @@ function LandingPage() {
                       >
                         <div className={`absolute inset-0 bg-gradient-to-r ${glow} opacity-0 transition duration-300 group-hover:opacity-100`} />
                         <div className="relative flex items-start gap-4">
-                          <div className={`rounded-2xl bg-white/10 p-3 shadow-[0_12px_24px_rgba(4,9,20,0.24)] ${accent}`}>
+                          <div className={`rounded-2xl bg-white/10 p-3 shadow-[0_12px_24px_rgba(26,36,49,0.14)] ${accent}`}>
                             <Icon size={20} />
                           </div>
                           <div>
@@ -274,7 +274,7 @@ function LandingPage() {
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${glow} opacity-0 transition duration-300 group-hover:opacity-100`} />
                 <div className="relative">
-                  <div className={`mb-5 inline-flex rounded-2xl bg-white/10 p-3 shadow-[0_12px_24px_rgba(4,9,20,0.24)] ${accent}`}>
+                  <div className={`mb-5 inline-flex rounded-2xl bg-white/10 p-3 shadow-[0_12px_24px_rgba(26,36,49,0.14)] ${accent}`}>
                     <Icon size={22} />
                   </div>
                   <h3 className="text-2xl font-bold text-white">{title}</h3>
@@ -286,14 +286,14 @@ function LandingPage() {
             ))}
           </div>
 
-          <div className="mt-8 rounded-[1.8rem] border border-white/10 bg-white/[0.03] px-6 py-5">
+          <div className="mt-8 rounded-[1.8rem] border border-white/10 bg-white/[0.08] px-6 py-5">
             <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
               Trusted across the full workflow
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               {["Farmers", "Verifiers", "Admins", "Sensor Networks"].map((label) => (
                 <span
-                  className="rounded-full border border-white/10 bg-slate-950/40 px-4 py-2 text-sm font-medium text-slate-300"
+                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-slate-200"
                   key={label}
                 >
                   {label}
@@ -346,7 +346,7 @@ function LandingPage() {
       </main>
 
       {isModalOpen ? (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/70 px-4 py-8 backdrop-blur-md">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[rgba(20,29,39,0.48)] px-4 py-8 backdrop-blur-md">
           <div className="surface-panel-strong relative max-h-[90vh] w-full max-w-6xl overflow-y-auto p-6 sm:p-8">
             <button
               aria-label="Close learn more modal"

@@ -102,12 +102,12 @@ function VerifierDashboard() {
         </p>
       </section>
 
-      <section className="mb-8 flex flex-wrap gap-3 rounded-full border border-white/10 bg-white/5 p-2">
+      <section className="mb-8 flex flex-wrap gap-3 rounded-full border border-white/10 bg-white/10 p-2">
         <button
           className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
             activeTab === "pending"
               ? "bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-950 shadow-[0_14px_34px_rgba(245,158,11,0.2)]"
-              : "text-slate-200 hover:bg-white/10"
+              : "text-slate-100 hover:bg-white/10"
           }`}
           onClick={() => setActiveTab("pending")}
           type="button"
@@ -118,7 +118,7 @@ function VerifierDashboard() {
           className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
             activeTab === "history"
               ? "bg-gradient-to-r from-accent-green to-accent-blue text-white shadow-accent"
-              : "text-slate-200 hover:bg-white/10"
+              : "text-slate-100 hover:bg-white/10"
           }`}
           onClick={() => setActiveTab("history")}
           type="button"

@@ -16,24 +16,24 @@ const statusStyles: Record<
   }
 > = {
   active: {
-    dot: "bg-blue-300",
-    shell: "border-blue-400/25 bg-blue-500/15 text-blue-300"
+    dot: "bg-blue-100",
+    shell: "border-blue-200/30 bg-blue-300/20 text-blue-100"
   },
   completed: {
-    dot: "bg-cyan-300",
-    shell: "border-cyan-400/25 bg-cyan-500/15 text-cyan-300"
+    dot: "bg-cyan-100",
+    shell: "border-cyan-200/30 bg-cyan-300/20 text-cyan-100"
   },
   pending: {
-    dot: "bg-yellow-300",
-    shell: "border-yellow-400/25 bg-yellow-500/15 text-yellow-300"
+    dot: "bg-amber-100",
+    shell: "border-amber-200/30 bg-amber-300/20 text-amber-100"
   },
   rejected: {
-    dot: "bg-red-300",
-    shell: "border-red-400/25 bg-red-500/15 text-red-300"
+    dot: "bg-rose-100",
+    shell: "border-rose-200/30 bg-rose-300/20 text-rose-100"
   },
   verified: {
-    dot: "bg-accent-green",
-    shell: "border-accent-green/25 bg-accent-green/15 text-accent-green"
+    dot: "bg-emerald-50",
+    shell: "border-accent-green/30 bg-accent-green/20 text-emerald-50"
   }
 };
 
