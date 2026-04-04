@@ -113,11 +113,11 @@ function LoginPage() {
     <main className="relative flex min-h-[calc(100vh-88px)] items-center justify-center overflow-hidden px-4 py-16 sm:px-6">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[10%] top-[10%] h-56 w-56 rounded-full bg-accent-green/10 blur-3xl" />
-        <div className="absolute right-[8%] top-[18%] h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
+        <div className="absolute right-[8%] top-[18%] h-64 w-64 rounded-full bg-accent-blue/10 blur-3xl" />
       </div>
 
       <section className="surface-panel-strong relative w-full max-w-md overflow-hidden p-8">
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-r from-emerald-400/12 via-blue-400/10 to-transparent blur-2xl" />
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-r from-emerald-200/10 via-blue-200/10 to-transparent blur-2xl" />
 
         <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-accent-green via-accent-emerald to-accent-blue text-white shadow-accent">
           <Leaf size={28} />
@@ -142,10 +142,10 @@ function LoginPage() {
             >
               Username
             </label>
-            <div className="surface-card-muted flex items-center gap-3 px-4 py-3 transition focus-within:border-accent-green focus-within:bg-white/10">
-              <UserCircle2 className="text-slate-400" size={18} />
+            <div className="surface-card-muted flex items-center gap-3 px-4 py-3 transition focus-within:border-white/25 focus-within:bg-white/10">
+              <UserCircle2 className="text-slate-300/75" size={18} />
               <input
-                className="w-full bg-transparent text-white outline-none placeholder:text-slate-500"
+                className="w-full bg-transparent text-white outline-none placeholder:text-slate-300/45"
                 id="username"
                 placeholder="Enter your username"
                 {...register("username")}
@@ -163,10 +163,10 @@ function LoginPage() {
             >
               Password
             </label>
-            <div className="surface-card-muted flex items-center gap-3 px-4 py-3 transition focus-within:border-accent-green focus-within:bg-white/10">
-              <KeyRound className="text-slate-400" size={18} />
+            <div className="surface-card-muted flex items-center gap-3 px-4 py-3 transition focus-within:border-white/25 focus-within:bg-white/10">
+              <KeyRound className="text-slate-300/75" size={18} />
               <input
-                className="w-full bg-transparent text-white outline-none placeholder:text-slate-500"
+                className="w-full bg-transparent text-white outline-none placeholder:text-slate-300/45"
                 id="password"
                 placeholder="Enter your password"
                 type="password"
@@ -188,7 +188,7 @@ function LoginPage() {
                     className={`rounded-full px-3 py-2 text-sm font-semibold capitalize transition ${
                       isActive
                         ? "bg-gradient-to-r from-accent-green via-accent-emerald to-accent-blue text-white shadow-accent"
-                        : "border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
+                        : "border border-white/10 bg-white/10 text-slate-200 hover:bg-white/10"
                     }`}
                     key={role}
                     onClick={() => setSelectedRole(role)}
@@ -210,13 +210,13 @@ function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-3 text-xs uppercase tracking-[0.18em] text-slate-400">
+        <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-white/10 px-4 py-3 text-xs uppercase tracking-[0.18em] text-slate-300/80">
           Demo-ready access for farmer, verifier, and admin workspaces
         </div>
 
         <div className="mt-5 flex items-center justify-between text-sm">
           <button
-            className="text-slate-400 transition hover:text-white"
+            className="text-slate-300/80 transition hover:text-white"
             onClick={() => toast("Password reset will be connected in a later step.")}
             type="button"
           >

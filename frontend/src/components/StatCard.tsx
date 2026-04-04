@@ -69,38 +69,38 @@ const colorMap: Record<
 > = {
   blue: {
     glow: "from-blue-400/25 to-transparent",
-    icon: "bg-blue-500/15 text-blue-300 ring-1 ring-inset ring-blue-400/25",
-    text: "text-blue-300"
+    icon: "bg-blue-400/20 text-blue-100 ring-1 ring-inset ring-blue-200/30",
+    text: "text-blue-100"
   },
   cyan: {
     glow: "from-cyan-400/25 to-transparent",
-    icon: "bg-cyan-500/15 text-cyan-300 ring-1 ring-inset ring-cyan-400/25",
-    text: "text-cyan-300"
+    icon: "bg-cyan-400/20 text-cyan-100 ring-1 ring-inset ring-cyan-200/30",
+    text: "text-cyan-100"
   },
   green: {
     glow: "from-accent-green/25 to-transparent",
-    icon: "bg-accent-green/15 text-accent-green ring-1 ring-inset ring-accent-green/25",
-    text: "text-accent-green"
+    icon: "bg-accent-green/20 text-emerald-50 ring-1 ring-inset ring-accent-green/30",
+    text: "text-emerald-50"
   },
   pink: {
     glow: "from-pink-400/25 to-transparent",
-    icon: "bg-pink-500/15 text-pink-300 ring-1 ring-inset ring-pink-400/25",
-    text: "text-pink-300"
+    icon: "bg-pink-400/20 text-pink-100 ring-1 ring-inset ring-pink-200/30",
+    text: "text-pink-100"
   },
   purple: {
     glow: "from-accent-purple/25 to-transparent",
-    icon: "bg-accent-purple/15 text-accent-purple ring-1 ring-inset ring-accent-purple/25",
-    text: "text-accent-purple"
+    icon: "bg-accent-purple/20 text-violet-50 ring-1 ring-inset ring-accent-purple/30",
+    text: "text-violet-50"
   },
   red: {
     glow: "from-red-400/25 to-transparent",
-    icon: "bg-red-500/15 text-red-300 ring-1 ring-inset ring-red-400/25",
-    text: "text-red-300"
+    icon: "bg-red-400/20 text-red-100 ring-1 ring-inset ring-red-200/30",
+    text: "text-red-100"
   },
   yellow: {
     glow: "from-yellow-400/25 to-transparent",
-    icon: "bg-yellow-500/15 text-yellow-300 ring-1 ring-inset ring-yellow-400/25",
-    text: "text-yellow-300"
+    icon: "bg-yellow-300/20 text-amber-50 ring-1 ring-inset ring-yellow-100/30",
+    text: "text-amber-50"
   }
 };
 
@@ -115,14 +115,14 @@ function StatCard({ icon, label, value, color, trend }: StatCardProps) {
 
       <div className="relative mb-5 flex items-start justify-between gap-4">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-300/85">
             {label}
           </p>
           {trend ? (
-            <p className="mt-2 text-sm leading-6 text-slate-500">{trend}</p>
+            <p className="mt-2 text-sm leading-6 text-slate-300/70">{trend}</p>
           ) : null}
         </div>
-        <div className={`rounded-[1.1rem] p-3 shadow-[0_14px_28px_rgba(4,9,20,0.2)] ${palette.icon}`}>
+        <div className={`rounded-[1.1rem] p-3 shadow-[0_14px_28px_rgba(26,36,49,0.16)] ${palette.icon}`}>
           <Icon size={20} />
         </div>
       </div>

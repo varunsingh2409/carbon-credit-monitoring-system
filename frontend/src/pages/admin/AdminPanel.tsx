@@ -270,10 +270,10 @@ function AdminPanel() {
                   <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
                   <Tooltip
                     contentStyle={{
-                      background: "rgba(8, 17, 29, 0.94)",
-                      border: "1px solid rgba(255,255,255,0.08)",
+                      background: "rgba(36, 49, 63, 0.92)",
+                      border: "1px solid rgba(255,255,255,0.14)",
                       borderRadius: "18px",
-                      boxShadow: "0 18px 48px rgba(4, 9, 20, 0.4)"
+                      boxShadow: "0 18px 48px rgba(26, 36, 49, 0.22)"
                     }}
                     formatter={(value: number) => [`${Number(value).toFixed(2)} tCO2e`, "Credits"]}
                   />
@@ -355,7 +355,7 @@ function AdminPanel() {
                     <div className="mt-4 space-y-2">
                       {thingSpeakResult.skipped_entries.slice(0, 3).map((entry, index) => (
                         <div
-                          className="rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-slate-300"
+                          className="rounded-xl border border-white/10 bg-white/10 px-3 py-2 text-sm text-slate-200"
                           key={`${entry.entry_id ?? "unknown"}-${index}`}
                         >
                           Entry {entry.entry_id ?? "unknown"}: {entry.reason}
@@ -390,7 +390,7 @@ function AdminPanel() {
                   Select Season
                 </label>
                 <select
-                  className="w-full rounded-[1.25rem] border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition focus:border-accent-green"
+                  className="w-full rounded-[1.25rem] border border-white/10 bg-white/10 px-4 py-3 text-sm text-white outline-none transition focus:border-white/25 focus:bg-white/10"
                   id="season_id"
                   onChange={(event) => setSelectedSeasonId(event.target.value)}
                   value={selectedSeasonId}
@@ -473,9 +473,9 @@ function AdminPanel() {
               </div>
             </section>
 
-            <section className="rounded-[2rem] border border-accent-green/20 bg-gradient-to-br from-accent-green/[0.10] to-blue-500/[0.08] p-6 shadow-[0_18px_50px_rgba(34,197,94,0.08)]">
+            <section className="rounded-[2rem] border border-accent-green/20 bg-gradient-to-br from-accent-green/[0.12] to-accent-blue/[0.12] p-6 shadow-[0_18px_50px_rgba(101,184,165,0.1)]">
               <div className="flex items-start gap-3">
-                <div className="rounded-2xl bg-accent-green/15 p-3 text-accent-green">
+                <div className="rounded-2xl bg-accent-green/20 p-3 text-accent-green">
                   <Activity size={18} />
                 </div>
                 <div>
@@ -494,7 +494,7 @@ function AdminPanel() {
       </main>
 
       {showUsersModal ? (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/70 px-4 py-8 backdrop-blur-md">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[rgba(20,29,39,0.48)] px-4 py-8 backdrop-blur-md">
           <div className="surface-panel-strong relative max-h-[85vh] w-full max-w-4xl overflow-y-auto p-6">
             <button
               className="button-secondary absolute right-5 top-5 h-10 w-10 rounded-full p-0 text-slate-300"

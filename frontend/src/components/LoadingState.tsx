@@ -5,7 +5,7 @@ function LoadingState({ label = "Loading dashboard..." }: { label?: string }) {
         <div className="mb-8">
           <div className="h-4 w-40 rounded-full bg-white/10" />
           <div className="mt-4 h-10 max-w-lg rounded-2xl bg-white/10" />
-          <p className="mt-4 text-sm uppercase tracking-[0.24em] text-slate-500">
+          <p className="mt-4 text-sm uppercase tracking-[0.24em] text-slate-300/70">
             {label}
           </p>
         </div>
@@ -41,7 +41,7 @@ function LoadingState({ label = "Loading dashboard..." }: { label?: string }) {
                   <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
                     {Array.from({ length: 5 }).map((__, statIndex) => (
                       <div
-                        className="rounded-2xl bg-primary/60 p-4"
+                        className="rounded-2xl bg-white/10 p-4"
                         key={`${index}-${statIndex}`}
                       >
                         <div className="h-3 w-16 rounded-full bg-white/10" />
@@ -68,8 +68,8 @@ function LoadingState({ label = "Loading dashboard..." }: { label?: string }) {
                   </div>
                   <div className="mt-3 h-4 w-40 rounded-full bg-white/10" />
                   <div className="mt-4 grid grid-cols-2 gap-3">
-                    <div className="h-16 rounded-2xl bg-primary/60" />
-                    <div className="h-16 rounded-2xl bg-primary/60" />
+                    <div className="h-16 rounded-2xl bg-white/10" />
+                    <div className="h-16 rounded-2xl bg-white/10" />
                   </div>
                 </div>
               ))}

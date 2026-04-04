@@ -191,7 +191,7 @@ function VerificationDetails() {
       </section>
 
       {detail.verification ? (
-        <section className="mb-8 rounded-[1.5rem] border border-accent-green/15 bg-accent-green/[0.06] p-5 text-sm text-slate-200">
+        <section className="mb-8 rounded-[1.5rem] border border-accent-green/20 bg-accent-green/[0.1] p-5 text-sm text-slate-100">
           This record already has a verification decision from{" "}
           {formatDateTime(detail.verification.verification_date)}.
         </section>
@@ -234,7 +234,7 @@ function VerificationDetails() {
                   {detail.baseline_carbon.toFixed(2)}
                 </p>
               </div>
-              <div className="rounded-[1.5rem] border border-accent-green/15 bg-accent-green/[0.06] p-5 shadow-[0_14px_32px_rgba(34,197,94,0.08)]">
+              <div className="rounded-[1.5rem] border border-accent-green/20 bg-accent-green/[0.1] p-5 shadow-[0_14px_32px_rgba(101,184,143,0.08)]">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Current Carbon
                 </p>
@@ -242,7 +242,7 @@ function VerificationDetails() {
                   {detail.current_carbon.toFixed(2)}
                 </p>
               </div>
-              <div className="rounded-[1.5rem] border border-blue-400/15 bg-blue-500/[0.06] p-5 shadow-[0_14px_32px_rgba(59,130,246,0.08)]">
+              <div className="rounded-[1.5rem] border border-blue-200/20 bg-blue-300/[0.1] p-5 shadow-[0_14px_32px_rgba(127,167,217,0.08)]">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Net Increase
                 </p>
@@ -250,7 +250,7 @@ function VerificationDetails() {
                   {detail.net_carbon_increase.toFixed(2)}
                 </p>
               </div>
-              <div className="rounded-[1.5rem] border border-accent-purple/20 bg-accent-purple/[0.08] p-5 shadow-[0_18px_40px_rgba(139,92,246,0.12)]">
+              <div className="rounded-[1.5rem] border border-accent-purple/20 bg-accent-purple/[0.12] p-5 shadow-[0_18px_40px_rgba(157,142,209,0.1)]">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Estimated Credit
                 </p>
@@ -260,14 +260,14 @@ function VerificationDetails() {
               </div>
             </div>
 
-            <div className="mt-6 rounded-[1.5rem] border border-blue-400/15 bg-blue-500/[0.07] p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-200">
+            <div className="mt-6 rounded-[1.5rem] border border-blue-200/20 bg-blue-300/[0.1] p-5">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-100">
                 Calculation formula
               </p>
               <p className="mt-3 text-sm leading-7 text-slate-200">
                 Estimated credit = (net carbon increase x farm area x 3.67) / 1000
               </p>
-              <p className="mt-2 text-sm leading-7 text-slate-300">
+              <p className="mt-2 text-sm leading-7 text-slate-200/85">
                 ({detail.net_carbon_increase.toFixed(2)} x{" "}
                 {detail.area_hectares.toFixed(2)} x 3.67) / 1000 ={" "}
                 {detail.estimated_carbon_credit.toFixed(2)} tCO2e
@@ -283,7 +283,7 @@ function VerificationDetails() {
                   Verifier Comments
                 </label>
                 <textarea
-                  className="min-h-[150px] w-full rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-accent-green focus:bg-white/[0.07]"
+                  className="min-h-[150px] w-full rounded-[1.5rem] border border-white/10 bg-white/10 px-4 py-3 text-white outline-none transition placeholder:text-slate-300/45 focus:border-white/25 focus:bg-white/[0.12]"
                   id="verifier_comments"
                   placeholder="Add your review notes, validation observations, or decision rationale"
                   {...register("verifier_comments")}
@@ -303,7 +303,7 @@ function VerificationDetails() {
                   Approved Carbon Credit
                 </label>
                 <input
-                  className="w-full rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-accent-green focus:bg-white/[0.07]"
+                  className="w-full rounded-[1.5rem] border border-white/10 bg-white/10 px-4 py-3 text-white outline-none transition focus:border-white/25 focus:bg-white/[0.12]"
                   id="approved_carbon_credit"
                   step="0.01"
                   type="number"
