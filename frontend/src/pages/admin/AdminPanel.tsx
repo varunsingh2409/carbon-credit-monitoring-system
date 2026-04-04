@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Activity,
   BarChart3,
@@ -63,7 +63,7 @@ function AdminPanel() {
   const [usersLoading, setUsersLoading] = useState(false);
   const [thingSpeakResult, setThingSpeakResult] = useState<ThingSpeakSyncResponse | null>(null);
 
-  const loadPanelData = async () => {
+  const loadPanelData = useCallback(async () => {
     const [statisticsResponse, monthlyResponse, seasonsResponse] = await Promise.all([
       adminApi.getStatistics(),
       adminApi.getMonthlyCredits(),
@@ -74,10 +74,12 @@ function AdminPanel() {
     setMonthlyCredits(monthlyResponse);
     setSeasonOptions(seasonsResponse);
 
-    if (!selectedSeasonId && seasonsResponse.length > 0) {
-      setSelectedSeasonId(String(seasonsResponse[0].season_id));
+    if (seasonsResponse.length > 0) {
+      setSelectedSeasonId((currentSeasonId) =>
+        currentSeasonId || String(seasonsResponse[0].season_id)
+      );
     }
-  };
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -101,7 +103,7 @@ function AdminPanel() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [loadPanelData]);
 
   const openUsersModal = async () => {
     setShowUsersModal(true);
