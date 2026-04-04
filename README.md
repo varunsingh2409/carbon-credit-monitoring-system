@@ -14,6 +14,8 @@ If you want the fastest way to present the app live, use [DEMO_README.md](C:/Use
 
 This repo now includes a GitHub-connected Render Blueprint at [render.yaml](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/render.yaml).
 
+There is also a free-tier-oriented variant at [render.free.yaml](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/render.free.yaml) for cases where you want to keep Render free and bring your own Postgres URL.
+
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/varunsingh2409/carbon-credit-monitoring-system)
 
 What this sets up:
@@ -28,6 +30,23 @@ Important note:
 - Render's current free Postgres instances expire after 30 days, so the Blueprint uses `basic-256mb` for the database to make the deployment durable instead of temporary
 - the repo does not currently include checked-in Alembic migration files, so [scripts/bootstrap_db.py](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/scripts/bootstrap_db.py) creates the schema and runs the existing demo seed SQL during deploy
 - if you want live ThingSpeak sync in production, fill in the prompted `THINGSPEAK_*` secrets during the first Render setup
+- the static site build in both Render blueprints publishes from `frontend/dist`, which matches the configured `rootDir: frontend`
+
+### Free Render Option
+
+Use [render.free.yaml](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/render.free.yaml) if you want:
+
+- a free Render backend
+- a free Render static frontend
+- an external Postgres database such as Neon
+
+For that free setup, provide these values during the first Render import:
+
+- `DATABASE_URL` from your external Postgres provider
+- `THINGSPEAK_CHANNEL_ID`
+- `THINGSPEAK_READ_API_KEY`
+
+The free blueprint avoids Render's managed Postgres billing requirement, but the web service still uses Render's free runtime behavior.
 
 ## 1. What The System Does
 
