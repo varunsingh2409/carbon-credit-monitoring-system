@@ -3,7 +3,7 @@ from decimal import Decimal
 from fastapi import status
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.orm import Session
 
 from app.models.carbon import CarbonSequestration, CarbonVerification
 from app.models.season import Season
@@ -16,16 +16,16 @@ class VerificationServiceError(Exception):
         self.detail = detail
 
 
-def _get_pending_sequestration(db: Session, sequestration_id: int) -> CarbonSequestration:
-    stmt = (
+def _build_pending_sequestration_lock_stmt(sequestration_id: int):
+    return (
         select(CarbonSequestration)
-        .options(
-            joinedload(CarbonSequestration.season),
-            joinedload(CarbonSequestration.verification),
-        )
         .where(CarbonSequestration.sequestration_id == sequestration_id)
         .with_for_update()
     )
+
+
+def _get_pending_sequestration(db: Session, sequestration_id: int) -> CarbonSequestration:
+    stmt = _build_pending_sequestration_lock_stmt(sequestration_id)
     sequestration = db.scalar(stmt)
     if sequestration is None:
         raise VerificationServiceError(
