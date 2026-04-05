@@ -17,6 +17,23 @@ class MonthlyCreditsItem(BaseModel):
     credits: float
 
 
+class AdminImplementationEntityCount(BaseModel):
+    label: str
+    table_name: str
+    count: int
+
+
+class AdminImplementationSummaryResponse(BaseModel):
+    thingspeak_base_url: str
+    thingspeak_channel_id: int | None = None
+    health_endpoint: str
+    docs_endpoint: str
+    api_touchpoints: list[str]
+    network_flow: list[str]
+    dbms_highlights: list[str]
+    database_entities: list[AdminImplementationEntityCount]
+
+
 class AdminUserItem(BaseModel):
     user_id: int
     username: str

@@ -15,10 +15,13 @@ from app.db.session import get_db
 from app.models.carbon import CarbonSequestration, CarbonVerification
 from app.models.farm import Farm
 from app.models.farmer import Farmer
+from app.models.measurement import MeasurementResult, Nutrient, SoilMeasurement
 from app.models.season import Season
 from app.models.user import User
 from app.schemas.admin import (
     AdminCarbonCalculationResponse,
+    AdminImplementationEntityCount,
+    AdminImplementationSummaryResponse,
     AdminStatisticsResponse,
     AdminThingSpeakSyncRequest,
     AdminUserItem,
@@ -98,6 +101,93 @@ def get_admin_statistics(db: Session = Depends(get_db)) -> AdminStatisticsRespon
         pending_verifications=pending_verifications,
         total_carbon_credits_issued=round(total_carbon_credits_issued, 2),
         active_seasons=active_seasons,
+    )
+
+
+@router.get("/implementation-summary", response_model=AdminImplementationSummaryResponse)
+def get_admin_implementation_summary(
+    db: Session = Depends(get_db),
+) -> AdminImplementationSummaryResponse:
+    entity_counts = [
+        AdminImplementationEntityCount(
+            label="Users",
+            table_name="users",
+            count=int(db.scalar(select(func.count(User.user_id))) or 0),
+        ),
+        AdminImplementationEntityCount(
+            label="Farms",
+            table_name="farm",
+            count=int(db.scalar(select(func.count(Farm.farm_id))) or 0),
+        ),
+        AdminImplementationEntityCount(
+            label="Seasons",
+            table_name="season",
+            count=int(db.scalar(select(func.count(Season.season_id))) or 0),
+        ),
+        AdminImplementationEntityCount(
+            label="Nutrients",
+            table_name="nutrient",
+            count=int(db.scalar(select(func.count(Nutrient.nutrient_id))) or 0),
+        ),
+        AdminImplementationEntityCount(
+            label="Measurements",
+            table_name="soil_measurement",
+            count=int(
+                db.scalar(select(func.count(SoilMeasurement.measurement_id))) or 0
+            ),
+        ),
+        AdminImplementationEntityCount(
+            label="Results",
+            table_name="measurement_result",
+            count=int(
+                db.scalar(select(func.count(MeasurementResult.measurement_id))) or 0
+            ),
+        ),
+        AdminImplementationEntityCount(
+            label="Carbon Records",
+            table_name="carbon_sequestration",
+            count=int(
+                db.scalar(
+                    select(func.count(CarbonSequestration.sequestration_id))
+                )
+                or 0
+            ),
+        ),
+        AdminImplementationEntityCount(
+            label="Verifications",
+            table_name="carbon_verification",
+            count=int(
+                db.scalar(select(func.count(CarbonVerification.verification_id))) or 0
+            ),
+        ),
+    ]
+
+    return AdminImplementationSummaryResponse(
+        thingspeak_base_url=settings.THINGSPEAK_BASE_URL,
+        thingspeak_channel_id=settings.THINGSPEAK_CHANNEL_ID,
+        health_endpoint="/health",
+        docs_endpoint="/docs",
+        api_touchpoints=[
+            "/api/auth/login",
+            "/api/admin/statistics",
+            "/api/admin/sync-thingspeak",
+            "/api/admin/trigger-carbon-calculation",
+            "/api/verifier/approve/{id}",
+        ],
+        network_flow=[
+            "ThingSpeak sends field data to the application over HTTP using JSON-friendly payloads.",
+            "FastAPI exposes REST endpoints for login, ingestion, calculation, and verification.",
+            "JWT-based role protection secures admin, verifier, and farmer workflows.",
+            "The React frontend consumes those endpoints and updates dashboards from live responses.",
+        ],
+        dbms_highlights=[
+            "PostgreSQL stores normalized entities for users, farms, seasons, nutrients, and carbon records.",
+            "Foreign keys connect users -> farmer -> farm -> season -> measurement workflow.",
+            "Measurement tables separate event rows from nutrient result rows for relational integrity.",
+            "Check constraints and unique constraints protect area, depth, season status, and duplicate measurement logic.",
+            "Indexes support fast filtering by season status, measurement date, and sequestration status.",
+        ],
+        database_entities=entity_counts,
     )
 
 

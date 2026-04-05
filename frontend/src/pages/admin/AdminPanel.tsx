@@ -2,11 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 import {
   Activity,
   BarChart3,
+  Database,
   Download,
   FileDown,
   PlayCircle,
   Radio,
+  ShieldCheck,
   Users,
+  Workflow,
   X
 } from "lucide-react";
 import {
@@ -24,6 +27,7 @@ import { adminApi } from "@/api/adminApi";
 import LoadingState from "@/components/LoadingState";
 import StatCard from "@/components/StatCard";
 import type {
+  AdminImplementationSummary,
   AdminStatistics,
   AdminUser,
   MonthlyCredit,
@@ -52,6 +56,8 @@ const getErrorMessage = (error: unknown, fallback: string) => {
 
 function AdminPanel() {
   const [statistics, setStatistics] = useState<AdminStatistics | null>(null);
+  const [implementationSummary, setImplementationSummary] =
+    useState<AdminImplementationSummary | null>(null);
   const [monthlyCredits, setMonthlyCredits] = useState<MonthlyCredit[]>([]);
   const [seasonOptions, setSeasonOptions] = useState<SeasonOption[]>([]);
   const [selectedSeasonId, setSelectedSeasonId] = useState("");
@@ -64,13 +70,16 @@ function AdminPanel() {
   const [thingSpeakResult, setThingSpeakResult] = useState<ThingSpeakSyncResponse | null>(null);
 
   const loadPanelData = useCallback(async () => {
-    const [statisticsResponse, monthlyResponse, seasonsResponse] = await Promise.all([
+    const [statisticsResponse, implementationResponse, monthlyResponse, seasonsResponse] =
+      await Promise.all([
       adminApi.getStatistics(),
+      adminApi.getImplementationSummary(),
       adminApi.getMonthlyCredits(),
       adminApi.getSeasonOptions()
-    ]);
+      ]);
 
     setStatistics(statisticsResponse);
+    setImplementationSummary(implementationResponse);
     setMonthlyCredits(monthlyResponse);
     setSeasonOptions(seasonsResponse);
 
@@ -236,6 +245,154 @@ function AdminPanel() {
             value={statistics.active_seasons}
           />
         </section>
+
+        {implementationSummary ? (
+          <section className="mt-10 grid gap-8 xl:grid-cols-[0.94fr_1.06fr]">
+            <div className="surface-panel p-6">
+              <div className="flex items-center gap-3">
+                <div className="rounded-2xl bg-white/10 p-3 text-blue-300">
+                  <Radio size={18} />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-white">
+                    CNDC Implementation
+                  </h2>
+                  <p className="text-sm text-slate-400">
+                    Network communication and API evidence used in this project
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                {[
+                  "ThingSpeak HTTP",
+                  "FastAPI REST",
+                  "JSON Payloads",
+                  "JWT Auth",
+                  `Docs ${implementationSummary.docs_endpoint}`,
+                  `Health ${implementationSummary.health_endpoint}`
+                ].map((label) => (
+                  <span
+                    className="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-200"
+                    key={label}
+                  >
+                    {label}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="surface-card-muted p-4">
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                    ThingSpeak Base URL
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-white">
+                    {implementationSummary.thingspeak_base_url}
+                  </p>
+                </div>
+                <div className="surface-card-muted p-4">
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                    Channel ID
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-white">
+                    {implementationSummary.thingspeak_channel_id ?? "Not configured"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-3">
+                {implementationSummary.network_flow.map((item) => (
+                  <div
+                    className="surface-card-muted flex items-start gap-3 p-4"
+                    key={item}
+                  >
+                    <Workflow className="mt-0.5 text-blue-300" size={18} />
+                    <p className="text-sm leading-7 text-slate-300">{item}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 rounded-[1.5rem] border border-blue-200/20 bg-blue-300/[0.08] p-5">
+                <p className="text-xs uppercase tracking-[0.18em] text-blue-100">
+                  Presentation Focus
+                </p>
+                <p className="mt-3 text-sm leading-7 text-slate-200">
+                  This proves client-server architecture, external HTTP integration,
+                  REST APIs, JSON-based communication, and protected role-based
+                  network workflows.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {implementationSummary.api_touchpoints.map((endpoint) => (
+                    <code
+                      className="rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs text-slate-200"
+                      key={endpoint}
+                    >
+                      {endpoint}
+                    </code>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="surface-panel p-6">
+              <div className="flex items-center gap-3">
+                <div className="rounded-2xl bg-white/10 p-3 text-accent-green">
+                  <Database size={18} />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-white">
+                    DBMS Implementation
+                  </h2>
+                  <p className="text-sm text-slate-400">
+                    Relational schema and live PostgreSQL counts from the system
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                {implementationSummary.database_entities.map((entity) => (
+                  <div
+                    className="surface-card-muted p-4"
+                    key={entity.table_name}
+                  >
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                      {entity.label}
+                    </p>
+                    <p className="mt-2 text-2xl font-bold text-white">
+                      {entity.count}
+                    </p>
+                    <code className="mt-3 inline-flex rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[11px] text-slate-300">
+                      {entity.table_name}
+                    </code>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 space-y-3">
+                {implementationSummary.dbms_highlights.map((item) => (
+                  <div
+                    className="surface-card-muted flex items-start gap-3 p-4"
+                    key={item}
+                  >
+                    <ShieldCheck className="mt-0.5 text-accent-green" size={18} />
+                    <p className="text-sm leading-7 text-slate-300">{item}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 rounded-[1.5rem] border border-accent-green/20 bg-accent-green/[0.08] p-5">
+                <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">
+                  Presentation Focus
+                </p>
+                <p className="mt-3 text-sm leading-7 text-slate-200">
+                  This section makes the DBMS work explicit: relational tables,
+                  entity counts, lookup tables, constraints, indexes, and
+                  workflow history stored in PostgreSQL.
+                </p>
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         <section className="mt-10 grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
           <div className="surface-panel p-6">

@@ -2,6 +2,7 @@ import { apiClient } from "@/api/axiosConfig";
 import { isPublishedDemoMode } from "@/demo/demoMode";
 import { demoBackend } from "@/demo/mockBackend";
 import type {
+  AdminImplementationSummary,
   AdminStatistics,
   AdminUser,
   CarbonCalculationRequest,
@@ -32,6 +33,17 @@ async function getStatistics() {
   }
 
   const { data } = await apiClient.get<AdminStatistics>("/admin/statistics");
+  return data;
+}
+
+async function getImplementationSummary() {
+  if (isPublishedDemoMode) {
+    return demoBackend.getImplementationSummary();
+  }
+
+  const { data } = await apiClient.get<AdminImplementationSummary>(
+    "/admin/implementation-summary"
+  );
   return data;
 }
 
@@ -114,6 +126,7 @@ async function syncThingSpeak(payload: ThingSpeakSyncRequest) {
 
 export const adminApi = {
   getStatistics,
+  getImplementationSummary,
   getMonthlyCredits,
   getSeasonOptions,
   triggerCarbonCalculation,

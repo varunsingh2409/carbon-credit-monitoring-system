@@ -207,6 +207,23 @@ export interface MonthlyCredit {
   credits: number;
 }
 
+export interface AdminImplementationEntityCount {
+  label: string;
+  table_name: string;
+  count: number;
+}
+
+export interface AdminImplementationSummary {
+  thingspeak_base_url: string;
+  thingspeak_channel_id: number | null;
+  health_endpoint: string;
+  docs_endpoint: string;
+  api_touchpoints: string[];
+  network_flow: string[];
+  dbms_highlights: string[];
+  database_entities: AdminImplementationEntityCount[];
+}
+
 export interface SeasonOption {
   season_id: number;
   farm_id: number;

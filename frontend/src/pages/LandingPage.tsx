@@ -89,6 +89,42 @@ const heroModules = [
   "Admin Control"
 ];
 
+const evaluationFocusCards = [
+  {
+    icon: Radio,
+    title: "CNDC Implementation",
+    description:
+      "Shows client-server communication, ThingSpeak network integration, REST APIs, JSON payload exchange, and JWT-protected workflows.",
+    bullets: [
+      "ThingSpeak -> FastAPI -> React data flow",
+      "HTTP and REST-based communication",
+      "Role-protected API routes and live sync endpoints"
+    ],
+    accent: "text-blue-300",
+    panel: "border-blue-200/20 bg-blue-300/[0.08]"
+  },
+  {
+    icon: Database,
+    title: "DBMS Implementation",
+    description:
+      "Shows a relational PostgreSQL design with linked tables, constraints, indexes, persistent workflow history, and measurable records.",
+    bullets: [
+      "Normalized tables for farms, seasons, nutrients, and carbon records",
+      "Foreign keys across the measurement and verification workflow",
+      "Stored history for calculation and approval decisions"
+    ],
+    accent: "text-accent-green",
+    panel: "border-accent-green/20 bg-accent-green/[0.08]"
+  }
+];
+
+const evaluationFlow = [
+  "ThingSpeak Channel",
+  "FastAPI REST API",
+  "PostgreSQL Tables",
+  "Role Dashboards"
+];
+
 function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -298,6 +334,58 @@ function LandingPage() {
                 >
                   {label}
                 </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mb-8">
+            <p className="eyebrow">Evaluation Focus</p>
+            <h2 className="mt-3 text-3xl font-extrabold text-white sm:text-4xl">
+              Built to demonstrate CNDC and DBMS clearly
+            </h2>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-400">
+              The project is not only a working product. It also makes the
+              communication-network flow and the relational-database design easy
+              to explain during evaluation.
+            </p>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            {evaluationFocusCards.map(({ icon: Icon, title, description, bullets, accent, panel }) => (
+              <article className={`rounded-[1.8rem] border p-6 shadow-[0_18px_48px_rgba(11,17,27,0.18)] ${panel}`} key={title}>
+                <div className={`inline-flex rounded-2xl bg-white/10 p-3 ${accent}`}>
+                  <Icon size={22} />
+                </div>
+                <h3 className="mt-5 text-2xl font-bold text-white">{title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-300">{description}</p>
+                <div className="mt-5 space-y-3">
+                  {bullets.map((bullet) => (
+                    <div className="surface-card-muted flex items-start gap-3 p-4" key={bullet}>
+                      <CheckCircle2 className="mt-0.5 text-slate-200" size={17} />
+                      <p className="text-sm leading-7 text-slate-300">{bullet}</p>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-[1.8rem] border border-white/10 bg-white/[0.08] px-6 py-5">
+            <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
+              End-to-End Technical Flow
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              {evaluationFlow.map((label, index) => (
+                <div className="flex items-center gap-3" key={label}>
+                  <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-slate-200">
+                    {label}
+                  </span>
+                  {index < evaluationFlow.length - 1 ? (
+                    <ArrowRight className="text-slate-500" size={16} />
+                  ) : null}
+                </div>
               ))}
             </div>
           </div>
