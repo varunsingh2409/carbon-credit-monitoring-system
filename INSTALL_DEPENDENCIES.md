@@ -1,34 +1,28 @@
-# Dependency Installation Commands
+# Setup, Build, And Publish Commands
 
-This file contains copy-pasteable commands to install the dependencies required for the Carbon Credit Monitoring System.
+This file contains the practical commands used to install, run, test, and rebuild the Carbon Credit Monitoring System.
 
 It covers:
 
-- backend Python dependencies
-- frontend Node.js dependencies
-- environment file setup
-- migration command
-- startup commands
-- explicit package-by-package install commands
+- backend setup
+- frontend setup
+- local demo reset
+- quality checks
+- GitHub Pages rebuild steps
 
 ## 1. Prerequisites
 
-Install these on your machine first:
+Install these on the machine first:
 
 - Python 3.10 or newer
 - Node.js 18 or newer
-- npm 9 or newer
+- npm
 - PostgreSQL
+- PowerShell
 
-This project expects a running PostgreSQL database before the backend can fully work.
+## 2. Backend Setup
 
-## 2. Recommended Backend Install
-
-Run these commands from:
-
-`C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend`
-
-### PowerShell
+Run these commands from the project root:
 
 ```powershell
 python -m venv venv
@@ -38,179 +32,202 @@ pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
-## 3. Recommended Frontend Install
+Update `.env` with the correct values for your machine.
 
-Run these commands from:
+Minimum backend values:
 
-`C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\frontend`
+```env
+SECRET_KEY=change_this_to_a_long_random_secret_key
+DATABASE_URL=postgresql+psycopg2://carbon_app_user:your_password@localhost:5432/carbon_credit_db
+```
+
+ThingSpeak values used by the project:
+
+```env
+THINGSPEAK_CHANNEL_ID=3313997
+THINGSPEAK_SENSOR_ID=THINGSPEAK-3313997
+THINGSPEAK_DEFAULT_DEPTH_CM=10.0
+THINGSPEAK_IMPORT_RESULTS=5
+```
+
+Run migrations:
+
+```powershell
+alembic upgrade head
+```
+
+Start the backend:
+
+```powershell
+.\venv\Scripts\python.exe -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Useful backend URLs:
+
+- `http://127.0.0.1:8000`
+- `http://127.0.0.1:8000/health`
+- `http://127.0.0.1:8000/docs`
+
+## 3. Frontend Setup
+
+Run these commands from the `frontend` folder:
 
 ```powershell
 npm install
 Copy-Item .env.example .env
 ```
 
-## 4. Exact Backend Dependency Command
-
-If you want to install the backend packages manually instead of using `requirements.txt`, use:
-
-```powershell
-pip install `
-  fastapi==0.104.1 `
-  "uvicorn[standard]==0.24.0" `
-  sqlalchemy==2.0.23 `
-  psycopg2-binary==2.9.9 `
-  requests==2.32.3 `
-  "python-jose[cryptography]==3.3.0" `
-  "passlib[bcrypt]==1.7.4" `
-  python-multipart==0.0.6 `
-  pydantic==2.5.0 `
-  pydantic-settings==2.1.0 `
-  python-dotenv==1.0.0 `
-  alembic==1.13.0
-```
-
-## 5. Exact Frontend Dependency Commands
-
-If you want to install the frontend packages manually instead of using `npm install`, use these.
-
-### Runtime dependencies
-
-```powershell
-npm install `
-  react@18.2.0 `
-  react-dom@18.2.0 `
-  react-router-dom@6.30.3 `
-  zustand@4.4.7 `
-  axios@1.13.6 `
-  react-hook-form@7.49.2 `
-  zod@3.22.4 `
-  @hookform/resolvers@3.3.3 `
-  date-fns@3.0.0 `
-  recharts@2.10.3 `
-  lucide-react@0.294.0 `
-  clsx@2.0.0 `
-  tailwind-merge@2.2.0 `
-  react-hot-toast@2.4.1
-```
-
-### Dev dependencies
-
-```powershell
-npm install -D `
-  @types/react@18.2.43 `
-  @types/react-dom@18.2.17 `
-  @vitejs/plugin-react@4.7.0 `
-  autoprefixer@10.4.16 `
-  postcss@8.4.32 `
-  tailwindcss@3.4.1 `
-  typescript@5.3.3 `
-  vite@8.0.1
-```
-
-## 6. Environment File Setup
-
-### Backend `.env`
-
-From the project root:
-
-```powershell
-Copy-Item .env.example .env
-```
-
-Then edit `.env` and set at least:
-
-- `DATABASE_URL`
-- `SECRET_KEY`
-
-### Frontend `.env`
-
-From the frontend folder:
-
-```powershell
-Copy-Item .env.example .env
-```
-
-Expected frontend value:
+Expected frontend `.env` value:
 
 ```env
 VITE_API_URL=http://localhost:8000
 ```
 
-## 7. Database Migration Command
-
-After backend dependencies are installed and the database is configured:
+Start the frontend:
 
 ```powershell
-alembic upgrade head
+npm run dev
 ```
 
-## 8. Start Commands
+## 4. Demo Reset Command
 
-### Backend
+Use this before local presentations:
+
+```powershell
+$env:PGPASSWORD='Masterbeast'
+& 'C:\Program Files\PostgreSQL\16\bin\psql.exe' `
+  -h localhost `
+  -U carbon_app_user `
+  -d carbon_credit_db `
+  -f '.\scripts\seed_demo.sql'
+```
+
+This resets:
+
+- demo users
+- demo farm and season data
+- pending and historical verification records
+- the active ThingSpeak demo season
+
+## 5. ThingSpeak Demo Command
+
+Use this to send fresh demo-ready entries:
+
+```powershell
+.\venv\Scripts\python.exe .\scripts\thingspeak_demo_batch.py
+```
+
+ThingSpeak field mapping:
+
+- `field1` -> `Nitrogen`
+- `field2` -> `Phosphorus`
+- `field3` -> `Potassium`
+- `field4` -> `Moisture`
+- `field5` -> `Organic_Carbon`
+- `field6` -> `depth_cm`
+
+## 6. Quality Checks
+
+Run backend tests from the project root:
+
+```powershell
+.\venv\Scripts\python.exe -m pytest -q
+```
+
+Run frontend lint from the `frontend` folder:
+
+```powershell
+npm run lint
+```
+
+Run frontend production build from the `frontend` folder:
+
+```powershell
+npm run build
+```
+
+## 7. Rebuild The GitHub Pages Demo
+
+The published site is served from the repository `docs/` folder.
+
+### Step 1: build the latest frontend
+
+From the `frontend` folder:
+
+```powershell
+npm run lint
+npm run build
+```
+
+### Step 2: copy the fresh build into `docs`
 
 From the project root:
 
 ```powershell
-.\venv\Scripts\Activate.ps1
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+Remove-Item .\docs\assets -Recurse -Force -ErrorAction SilentlyContinue
+Copy-Item .\frontend\dist\* .\docs -Recurse -Force
+Copy-Item .\docs\index.html .\docs\404.html -Force
+if (-not (Test-Path .\docs\.nojekyll)) { New-Item .\docs\.nojekyll -ItemType File | Out-Null }
 ```
 
-### Frontend
-
-From the frontend folder:
+### Step 3: commit and push the updated `docs/` files
 
 ```powershell
-npm run dev
+git add docs
+git commit -m "Refresh GitHub Pages demo build"
+git push
 ```
 
-## 9. Build Commands
+Important note:
 
-### Frontend production build
+- the current repository publishes GitHub Pages from `main /docs`
+- if work is done on another branch first, the branch must be merged before the public site updates
 
-```powershell
-cd C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\frontend
-npm run build
-```
+## 8. Fastest Complete Local Startup
 
-## 10. One-Time Full Setup Flow
-
-If you want the shortest complete setup flow, use these commands in order.
-
-### Backend full setup
+Backend terminal:
 
 ```powershell
 cd C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-Copy-Item .env.example .env
-alembic upgrade head
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+.\venv\Scripts\python.exe -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### Frontend full setup
-
-Open a second terminal:
+Frontend terminal:
 
 ```powershell
 cd C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\frontend
-npm install
-Copy-Item .env.example .env
 npm run dev
 ```
 
-## 11. Quick Verification
+Demo reset terminal:
 
-After installation:
+```powershell
+cd C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend
+$env:PGPASSWORD='Masterbeast'
+& 'C:\Program Files\PostgreSQL\16\bin\psql.exe' -h localhost -U carbon_app_user -d carbon_credit_db -f '.\scripts\seed_demo.sql'
+```
 
-- backend root should open at `http://127.0.0.1:8000`
-- backend docs should open at `http://127.0.0.1:8000/docs`
-- frontend should open at `http://localhost:5173`
+ThingSpeak sender terminal:
 
-## 12. Notes
+```powershell
+cd C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend
+.\venv\Scripts\python.exe .\scripts\thingspeak_demo_batch.py
+```
 
-- The safest way to install backend packages is still `pip install -r requirements.txt`
-- The safest way to install frontend packages is still `npm install`
-- The exact commands above are useful if you want to recreate the dependency set manually
-- PostgreSQL server installation itself is not managed by this repository, but the app requires it
+## 9. Quick Verification Checklist
+
+After setup:
+
+- backend root opens
+- backend `/health` returns `{"status":"ok"}`
+- backend `/docs` opens
+- frontend opens at `http://localhost:5173`
+- login works with demo accounts
+- admin panel loads
+- verifier dashboard loads
+- farmer dashboard loads
+
+## 10. Recommended Reading
+
+- `README.md` for project overview and architecture
+- `DEMO_README.md` for presentation order and talking points
