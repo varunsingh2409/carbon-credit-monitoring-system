@@ -1,4 +1,6 @@
 import { apiClient } from "@/api/axiosConfig";
+import { isPublishedDemoMode } from "@/demo/demoMode";
+import { demoBackend } from "@/demo/mockBackend";
 import type {
   AdminStatistics,
   AdminUser,
@@ -25,16 +27,28 @@ interface LegacyFarmResponse {
 }
 
 async function getStatistics() {
+  if (isPublishedDemoMode) {
+    return demoBackend.getStatistics();
+  }
+
   const { data } = await apiClient.get<AdminStatistics>("/admin/statistics");
   return data;
 }
 
 async function getMonthlyCredits() {
+  if (isPublishedDemoMode) {
+    return demoBackend.getMonthlyCredits();
+  }
+
   const { data } = await apiClient.get<MonthlyCredit[]>("/admin/monthly-credits");
   return data;
 }
 
 async function getSeasonOptions() {
+  if (isPublishedDemoMode) {
+    return demoBackend.getSeasonOptions();
+  }
+
   const [seasonResponse, farmResponse] = await Promise.all([
     apiClient.get<LegacySeasonResponse[]>("/v1/seasons"),
     apiClient.get<LegacyFarmResponse[]>("/v1/farms")
@@ -57,6 +71,10 @@ async function getSeasonOptions() {
 }
 
 async function triggerCarbonCalculation(payload: CarbonCalculationRequest) {
+  if (isPublishedDemoMode) {
+    return demoBackend.triggerCarbonCalculation(payload);
+  }
+
   const { data } = await apiClient.post<CarbonCalculationResponse>(
     "/admin/trigger-carbon-calculation",
     payload
@@ -65,16 +83,28 @@ async function triggerCarbonCalculation(payload: CarbonCalculationRequest) {
 }
 
 async function getUsers() {
+  if (isPublishedDemoMode) {
+    return demoBackend.getUsers();
+  }
+
   const { data } = await apiClient.get<AdminUser[]>("/admin/users");
   return data;
 }
 
 async function createUser(payload: UserCreateInput) {
+  if (isPublishedDemoMode) {
+    return demoBackend.createUser(payload);
+  }
+
   const { data } = await apiClient.post<AdminUser>("/admin/users", payload);
   return data;
 }
 
 async function syncThingSpeak(payload: ThingSpeakSyncRequest) {
+  if (isPublishedDemoMode) {
+    return demoBackend.syncThingSpeak(payload);
+  }
+
   const { data } = await apiClient.post<ThingSpeakSyncResponse>(
     "/admin/sync-thingspeak",
     payload

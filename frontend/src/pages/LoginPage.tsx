@@ -7,6 +7,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 import { authApi } from "@/api/authApi";
+import { isPublishedDemoMode } from "@/demo/demoMode";
+import { demoCredentialPresets } from "@/demo/mockBackend";
 import { useAuthStore } from "@/store/authStore";
 import type { UserRole } from "@/types";
 
@@ -17,7 +19,8 @@ const loginSchema = z.object({
 
 type LoginSchema = z.infer<typeof loginSchema>;
 
-const roleOptions: UserRole[] = ["farmer", "verifier", "admin"];
+const roleOptions = ["farmer", "verifier", "admin"] as const;
+type DemoLoginRole = (typeof roleOptions)[number];
 
 const routeByRole = (role: UserRole) => {
   switch (role) {
@@ -55,13 +58,14 @@ function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<UserRole>("farmer");
+  const [selectedRole, setSelectedRole] = useState<DemoLoginRole>("farmer");
   const login = useAuthStore((state) => state.login);
   const user = useAuthStore((state) => state.user);
 
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors }
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -76,6 +80,17 @@ function LoginPage() {
       navigate(routeByRole(user.role), { replace: true });
     }
   }, [navigate, user]);
+
+  const applyDemoCredentials = (role: DemoLoginRole) => {
+    if (!isPublishedDemoMode) {
+      return;
+    }
+
+    const preset = demoCredentialPresets[role];
+    setSelectedRole(role);
+    setValue("username", preset.username, { shouldDirty: true });
+    setValue("password", preset.password, { shouldDirty: true });
+  };
 
   const onSubmit = handleSubmit(async (values) => {
     try {
@@ -135,6 +150,41 @@ function LoginPage() {
         </div>
 
         <form className="mt-8 space-y-5" onSubmit={onSubmit}>
+          {isPublishedDemoMode ? (
+            <div className="rounded-[1.5rem] border border-accent-green/20 bg-accent-green/[0.08] p-4">
+              <p className="text-xs uppercase tracking-[0.18em] text-emerald-100/80">
+                GitHub Pages Demo Mode
+              </p>
+              <p className="mt-2 text-sm leading-7 text-slate-200">
+                Use one of the prepared accounts below to open the published
+                farmer, verifier, or admin workspace without the backend.
+              </p>
+              <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                {roleOptions.map((role) => {
+                  const preset = demoCredentialPresets[role];
+                  return (
+                    <button
+                      className="rounded-2xl border border-white/10 bg-white/10 px-3 py-3 text-left transition hover:border-white/20 hover:bg-white/[0.14]"
+                      key={`preset-${role}`}
+                      onClick={() => applyDemoCredentials(role)}
+                      type="button"
+                    >
+                      <p className="text-xs uppercase tracking-[0.18em] text-slate-300">
+                        {role}
+                      </p>
+                      <p className="mt-2 text-sm font-semibold text-white">
+                        {preset.username}
+                      </p>
+                      <p className="mt-1 text-xs text-slate-300/80">
+                        {preset.password}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
+
           <div>
             <label
               className="mb-2 block text-sm font-medium text-slate-300"
@@ -211,7 +261,9 @@ function LoginPage() {
         </form>
 
         <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-white/10 px-4 py-3 text-xs uppercase tracking-[0.18em] text-slate-300/80">
-          Demo-ready access for farmer, verifier, and admin workspaces
+          {isPublishedDemoMode
+            ? "Published demo mode is active with sample farmer, verifier, and admin accounts"
+            : "Demo-ready access for farmer, verifier, and admin workspaces"}
         </div>
 
         <div className="mt-5 flex items-center justify-between text-sm">

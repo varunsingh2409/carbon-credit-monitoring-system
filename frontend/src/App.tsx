@@ -12,6 +12,7 @@ import {
 
 import Navbar from "@/components/Navbar";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { isPublishedDemoMode } from "@/demo/demoMode";
 import AdminPanel from "@/pages/admin/AdminPanel";
 import FarmerDashboard from "@/pages/farmer/FarmerDashboard";
 import LandingPage from "@/pages/LandingPage";
@@ -134,11 +135,7 @@ function AppShell() {
 }
 
 function App() {
-  const shouldUseHashRouter =
-    typeof window !== "undefined" &&
-    window.location.hostname.endsWith("github.io");
-
-  const Router = shouldUseHashRouter ? HashRouter : BrowserRouter;
+  const Router = isPublishedDemoMode ? HashRouter : BrowserRouter;
 
   return (
     <Router>

@@ -1,4 +1,6 @@
 import { apiClient } from "@/api/axiosConfig";
+import { isPublishedDemoMode } from "@/demo/demoMode";
+import { demoBackend } from "@/demo/mockBackend";
 import type { LoginInput, TokenResponse, User, UserCreateInput } from "@/types";
 
 type ApiUser = Omit<User, "name"> & {
@@ -19,11 +21,19 @@ const normalizeUser = (user: ApiUser): User => ({
 });
 
 export async function register(userData: UserCreateInput) {
+  if (isPublishedDemoMode) {
+    return demoBackend.register(userData);
+  }
+
   const { data } = await apiClient.post<ApiUser>("/auth/register", userData);
   return normalizeUser(data);
 }
 
 export async function login(username: string, password: string) {
+  if (isPublishedDemoMode) {
+    return demoBackend.login(username, password);
+  }
+
   const payload: LoginInput = { username, password };
   const { data } = await apiClient.post<ApiTokenResponse>("/auth/login", payload);
 
@@ -34,6 +44,10 @@ export async function login(username: string, password: string) {
 }
 
 export async function getCurrentUser() {
+  if (isPublishedDemoMode) {
+    return demoBackend.getCurrentUser();
+  }
+
   const { data } = await apiClient.get<ApiUser>("/auth/me");
   return normalizeUser(data);
 }

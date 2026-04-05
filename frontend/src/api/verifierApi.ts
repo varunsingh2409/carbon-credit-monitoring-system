@@ -1,4 +1,6 @@
 import { apiClient } from "@/api/axiosConfig";
+import { isPublishedDemoMode } from "@/demo/demoMode";
+import { demoBackend } from "@/demo/mockBackend";
 import type {
   CarbonSequestrationRecord,
   PendingVerification,
@@ -22,11 +24,19 @@ const normalizeHistoryStatus = (status: string) => {
 };
 
 async function getPendingVerifications() {
+  if (isPublishedDemoMode) {
+    return demoBackend.getPendingVerifications();
+  }
+
   const { data } = await apiClient.get<PendingVerification[]>("/verifier/pending-verifications");
   return data;
 }
 
 async function getSequestrationDetail(sequestrationId: number) {
+  if (isPublishedDemoMode) {
+    return demoBackend.getSequestrationDetail(sequestrationId);
+  }
+
   const { data } = await apiClient.get<SequestrationDetail>(
     `/verifier/sequestration/${sequestrationId}`
   );
@@ -34,6 +44,10 @@ async function getSequestrationDetail(sequestrationId: number) {
 }
 
 async function getVerificationHistory() {
+  if (isPublishedDemoMode) {
+    return demoBackend.getVerificationHistory();
+  }
+
   const { data } = await apiClient.get<CarbonSequestrationRecord[]>("/v1/sequestration");
   const historicalRecords = data.filter(
     (record) => record.status.toLowerCase() !== "pending"
@@ -89,6 +103,10 @@ async function approveSequestration(
   sequestrationId: number,
   payload: VerificationActionPayload
 ) {
+  if (isPublishedDemoMode) {
+    return demoBackend.approveSequestration(sequestrationId, payload);
+  }
+
   const { data } = await apiClient.post<VerificationActionResponse>(
     `/verifier/approve/${sequestrationId}`,
     payload
@@ -100,6 +118,10 @@ async function rejectSequestration(
   sequestrationId: number,
   payload: RejectVerificationPayload
 ) {
+  if (isPublishedDemoMode) {
+    return demoBackend.rejectSequestration(sequestrationId, payload);
+  }
+
   const { data } = await apiClient.post<VerificationActionResponse>(
     `/verifier/reject/${sequestrationId}`,
     payload
