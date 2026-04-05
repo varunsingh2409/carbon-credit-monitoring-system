@@ -1,6 +1,7 @@
 import { Toaster } from "react-hot-toast";
 import {
   BrowserRouter,
+  HashRouter,
   Link,
   Navigate,
   Route,
@@ -133,10 +134,16 @@ function AppShell() {
 }
 
 function App() {
+  const shouldUseHashRouter =
+    typeof window !== "undefined" &&
+    window.location.hostname.endsWith("github.io");
+
+  const Router = shouldUseHashRouter ? HashRouter : BrowserRouter;
+
   return (
-    <BrowserRouter>
+    <Router>
       <AppShell />
-    </BrowserRouter>
+    </Router>
   );
 }
 

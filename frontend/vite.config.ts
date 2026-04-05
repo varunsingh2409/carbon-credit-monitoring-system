@@ -6,7 +6,8 @@ import { defineConfig } from "vite";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  base: command === "build" ? "./" : "/",
   plugins: [react()],
   resolve: {
     alias: {
@@ -17,4 +18,4 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 5173
   }
-});
+}));
