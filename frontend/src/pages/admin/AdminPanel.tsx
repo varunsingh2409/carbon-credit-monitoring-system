@@ -23,6 +23,7 @@ import toast from "react-hot-toast";
 import { adminApi } from "@/api/adminApi";
 import ImplementationEvidencePanel from "@/components/ImplementationEvidencePanel";
 import LoadingState from "@/components/LoadingState";
+import ProjectAlignmentPanel from "@/components/ProjectAlignmentPanel";
 import StatCard from "@/components/StatCard";
 import type {
   AdminImplementationSummary,
@@ -245,12 +246,18 @@ function AdminPanel() {
         </section>
 
         {implementationSummary ? (
-          <section className="mt-10">
+          <section className="mt-10 space-y-10">
             <ImplementationEvidencePanel
               description="The admin surface now exposes the same technical evidence as the landing page, so CNDC and DBMS proof stays available during live workflow demonstrations."
               eyebrow="Implementation Control Room"
               summary={implementationSummary}
               title="Inspect the exact CNDC and DBMS evidence behind the workflow"
+            />
+            <ProjectAlignmentPanel
+              description="This is a supporting panel for the broader project brief. For your actual semester evaluation, the main explanation should still stay on the CNDC and DBMS evidence above."
+              eyebrow="Supporting Panel"
+              summary={implementationSummary}
+              title="Optional analytics and submission support"
             />
           </section>
         ) : null}

@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 
 import { implementationApi } from "@/api/implementationApi";
 import ImplementationEvidencePanel from "@/components/ImplementationEvidencePanel";
+import ProjectAlignmentPanel from "@/components/ProjectAlignmentPanel";
 import type { AdminImplementationSummary } from "@/types";
 
 const roleSurfaces = [
@@ -355,6 +356,18 @@ function LandingPage() {
           </div>
         )}
       </section>
+
+      {implementationSummary ? (
+        <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <ProjectAlignmentPanel
+            anchorId="analytics-report"
+            description="This lower section is only supporting material for the wider project brief. The main presentation and evaluation focus should still stay on the CNDC and DBMS proof shown above."
+            eyebrow="Supporting Material"
+            summary={implementationSummary}
+            title="Optional analytics and submission support"
+          />
+        </section>
+      ) : null}
 
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8" id="roles">
         <div className="rounded-[2.1rem] border border-white/10 bg-white/[0.05] p-8 sm:p-10">

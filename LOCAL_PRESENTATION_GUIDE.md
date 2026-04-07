@@ -8,7 +8,8 @@ Use this guide if you want to:
 2. start the project locally
 3. demonstrate the whole workflow in the correct order
 4. explain the project specifically for CNDC and DBMS evaluation
-5. answer common questions confidently
+5. mention the optional supporting analytics layer only if asked
+6. answer common questions confidently
 
 Important:
 
@@ -32,7 +33,8 @@ If you are in a hurry:
 1. read section 16 for the demo order
 2. read section 24 for CNDC talking points
 3. read section 25 for DBMS talking points
-4. keep section 33 open for emergency fixes
+4. keep the optional supporting analytics panel as backup material only
+5. keep section 33 open for emergency fixes
 
 ## 2. Project In One Minute
 
@@ -55,7 +57,7 @@ In simple words:
 
 ### Two-line summary for evaluation
 
-> The project demonstrates CNDC through HTTP communication, REST APIs, JSON-based client-server interaction, and ThingSpeak integration. It demonstrates DBMS through PostgreSQL tables, relationships, stored workflow records, and persistent verification history.
+> The project demonstrates CNDC through HTTP communication, REST APIs, JSON-based client-server interaction, and ThingSpeak integration. It demonstrates DBMS through PostgreSQL tables, relationships, stored workflow records, and persistent verification history. Supporting analytics is available in the app, but it should remain secondary to the CNDC and DBMS explanation.
 
 ## 3. What Is Fully Working Locally
 
@@ -77,6 +79,7 @@ These features are ready and safe to demonstrate:
 14. PostgreSQL persistence
 15. CNDC trace explorer inside the app
 16. DBMS query lab inside the app
+17. optional supporting analytics and submission panel inside the app
 
 ## 4. What Exists But Should Not Be Presented As Fully Finished
 
@@ -195,6 +198,10 @@ Database reset file:
 ThingSpeak demo sender:
 
 `C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\scripts\thingspeak_demo_batch.py`
+
+Faculty deliverables folder:
+
+`C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\deliverables`
 
 ## 8. Architecture In Simple Words
 

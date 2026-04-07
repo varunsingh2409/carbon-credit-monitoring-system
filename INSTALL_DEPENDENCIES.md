@@ -66,6 +66,13 @@ Useful backend URLs:
 - `http://127.0.0.1:8000/docs`
 - `http://127.0.0.1:8000/api/implementation/evidence`
 
+Faculty deliverable files:
+
+- `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
+- `deliverables/SOIL_CARBON_ER_DIAGRAM.md`
+- `deliverables/r_analysis/soil_carbon_analysis.R`
+- `deliverables/CARBON_CREDIT_ANALYTICAL_REPORT.md`
+
 ## 3. Frontend Setup
 
 Run from `frontend`:
@@ -152,9 +159,9 @@ Use this checklist before the actual presentation:
 
 - backend `/health` returns `{"status":"ok"}`
 - backend `/docs` opens
-- backend `/api/implementation/evidence` returns CNDC flow and table details
+- backend `/api/implementation/evidence` returns CNDC flow and table details, with optional supporting analytics if needed
 - frontend opens at `http://localhost:5173`
-- landing page shows the implementation evidence explorer
+- landing page shows the implementation evidence explorer and keeps CNDC/DBMS as the main story
 - farmer login works
 - verifier login works
 - admin login works

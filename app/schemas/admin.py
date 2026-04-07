@@ -45,6 +45,69 @@ class AdminImplementationIndex(BaseModel):
     unique: bool = False
 
 
+class AdminInferentialCorrelation(BaseModel):
+    nutrient_name: str
+    sample_size: int
+    coefficient: float
+    direction: str
+    interpretation: str
+
+
+class AdminRegressionSummary(BaseModel):
+    predictor: str
+    response: str
+    sample_size: int
+    intercept: float
+    slope: float
+    r_squared: float
+    interpretation: str
+
+
+class AdminHypothesisTestSummary(BaseModel):
+    test_name: str
+    null_hypothesis: str
+    alternative_hypothesis: str
+    baseline_label: str
+    comparison_label: str
+    baseline_mean: float
+    comparison_mean: float
+    p_value: float
+    conclusion: str
+
+
+class AdminConfidenceIntervalSummary(BaseModel):
+    metric: str
+    confidence_level: float
+    estimate: float
+    lower_bound: float
+    upper_bound: float
+    interpretation: str
+
+
+class AdminInferentialSummary(BaseModel):
+    dataset_rows: int
+    season_count: int
+    correlations: list[AdminInferentialCorrelation]
+    regression: AdminRegressionSummary | None = None
+    hypothesis_test: AdminHypothesisTestSummary | None = None
+    confidence_interval: AdminConfidenceIntervalSummary | None = None
+    limitations: list[str]
+
+
+class AdminCertificationReportSummary(BaseModel):
+    title: str
+    readiness: str
+    summary: str
+    report_sections: list[str]
+    key_findings: list[str]
+
+
+class AdminDeliverableStatus(BaseModel):
+    title: str
+    status: str
+    evidence: str
+
+
 class AdminImplementationTableDetail(BaseModel):
     label: str
     table_name: str
@@ -87,6 +150,9 @@ class AdminImplementationSummaryResponse(BaseModel):
     dbms_highlights: list[str]
     database_entities: list[AdminImplementationEntityCount]
     cndc_flow: list[AdminImplementationFlowStep]
+    inferential_summary: AdminInferentialSummary
+    certification_report: AdminCertificationReportSummary
+    deliverable_statuses: list[AdminDeliverableStatus]
     table_details: list[AdminImplementationTableDetail]
 
 

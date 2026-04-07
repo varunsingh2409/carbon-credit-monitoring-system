@@ -188,6 +188,121 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       ]
     }
   ],
+  inferential_summary: {
+    dataset_rows: 5,
+    season_count: 2,
+    correlations: [
+      {
+        nutrient_name: "Moisture",
+        sample_size: 5,
+        coefficient: 0.9993,
+        direction: "positive",
+        interpretation: "Strong positive association with organic carbon."
+      },
+      {
+        nutrient_name: "Nitrogen",
+        sample_size: 5,
+        coefficient: 0.998,
+        direction: "positive",
+        interpretation: "Strong positive association with organic carbon."
+      }
+    ],
+    regression: {
+      predictor: "Moisture",
+      response: "Organic Carbon",
+      sample_size: 5,
+      intercept: 0.3256,
+      slope: 0.0976,
+      r_squared: 0.9986,
+      interpretation:
+        "Each one-unit increase in Moisture is associated with a 0.0976 unit change in organic carbon in this dataset."
+    },
+    hypothesis_test: {
+      test_name: "Exact permutation test on seasonal organic-carbon means",
+      null_hypothesis:
+        "There is no difference in mean organic carbon between the baseline and comparison season.",
+      alternative_hypothesis:
+        "The comparison season has a different mean organic carbon than the baseline season.",
+      baseline_label: "Rabi 2025 Baseline",
+      comparison_label: "Monsoon 2026 Demo",
+      baseline_mean: 2.94,
+      comparison_mean: 3.4733,
+      p_value: 0.1,
+      conclusion:
+        "The comparison season mean is 0.5333 units above the baseline mean, but the result is not statistically significant at the 5% level because the demo sample is still small."
+    },
+    confidence_interval: {
+      metric: "Estimated credit for Monsoon 2026 Demo",
+      confidence_level: 0.95,
+      estimate: 2.07,
+      lower_bound: 1.89,
+      upper_bound: 2.24,
+      interpretation:
+        "Bootstrap interval derived from the season's organic-carbon observations and the same sequestration logic used by the platform."
+    },
+    limitations: [
+      "The current sample is still small, so the seasonal difference does not cross the 5% significance threshold.",
+      "This is still an academic demo-sized dataset; confidence improves as more long-term measurements arrive."
+    ]
+  },
+  certification_report: {
+    title: "Carbon Credit Readiness Report",
+    readiness: "Ready for verifier review",
+    summary:
+      "The platform combines secure CNDC ingestion, relational auditability, inferential statistics, and a verifier-facing workflow to support carbon-credit reporting.",
+    report_sections: [
+      "Secure sensor-network and CNDC authenticity design",
+      "DBMS audit trail and certification-ready schema",
+      "Inferential statistics on nutrients and organic carbon",
+      "Carbon credit estimate with confidence interval",
+      "Verifier decision and certification note"
+    ],
+    key_findings: [
+      "5 measurement events across 2 seasons are included in the inferential layer.",
+      "Moisture shows a positive correlation of 0.9993 with organic carbon.",
+      "The strongest regression explains 99.86% of the observed organic-carbon variance.",
+      "The seasonal hypothesis test produced p = 0.1, with mean organic carbon rising from 2.94 to 3.4733.",
+      "The 95% bootstrap interval for the credit estimate is 1.89 to 2.24."
+    ]
+  },
+  deliverable_statuses: [
+    {
+      title: "Secure sensor-network and data transmission design",
+      status: "Implemented",
+      evidence:
+        "ThingSpeak ingestion, authenticated REST import, and visible CNDC transport/security flow are built into the app."
+    },
+    {
+      title: "CNDC security and data authenticity note",
+      status: "Implemented",
+      evidence:
+        "JWT-protected routes, ThingSpeak channel authorization, and auditable network steps are documented and surfaced in the interface."
+    },
+    {
+      title: "ER diagram for soil, land, carbon, and certification data",
+      status: "Implemented",
+      evidence:
+        "The relational design is documented as a faculty-facing ER deliverable and mirrored by the live PostgreSQL schema."
+    },
+    {
+      title: "SQL database with long-term data handling",
+      status: "Implemented",
+      evidence:
+        "Normalized PostgreSQL tables, constraints, indexes, and season-linked measurement history support long-term storage and traceability."
+    },
+    {
+      title: "R analysis correlating nutrients and carbon sequestration",
+      status: "Implemented",
+      evidence:
+        "A deliverable-ready R script and dataset snapshot accompany the live inferential-statistics section in the app."
+    },
+    {
+      title: "Carbon credit-ready analytical report",
+      status: "Implemented",
+      evidence:
+        "The platform now exposes an integrated certification-readiness summary plus a faculty-facing analytical report artifact."
+    }
+  ],
   table_details: [
     {
       label: "Users",

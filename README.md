@@ -11,6 +11,7 @@ The local version is the real implementation and includes:
 - JWT authentication with farmer, verifier, admin, and sensor roles
 - real carbon calculation and verifier approval workflow
 - visible CNDC trace and DBMS query lab inside the website
+- optional supporting analytics and submission material inside the website
 
 ## 1. What To Use For Presentation
 
@@ -21,6 +22,8 @@ Use the local app for the actual presentation because it proves:
 - real ThingSpeak import
 - real carbon calculation
 - real verifier approval and stored workflow history
+
+Your main semester evaluation focus should stay on CNDC and DBMS. The supporting analytics/reporting layer is available only if faculty asks about the broader problem statement.
 
 Use these files in this order:
 
@@ -95,6 +98,8 @@ Main tables:
 - CNDC trace explorer showing real communication flow
 - DBMS query lab showing table rows, constraints, indexes, and schema details
 - admin implementation control room using the same evidence surface
+- optional supporting analytics panel for broader project questions
+- optional faculty-deliverable support panel and submission files
 
 ## 6. Demo Accounts
 
@@ -189,6 +194,7 @@ External integration:
 carbon_credit_backend/
 |-- alembic/
 |-- app/
+|-- deliverables/
 |-- docs/                       GitHub Pages build output only
 |-- frontend/
 |-- scripts/
@@ -200,7 +206,20 @@ carbon_credit_backend/
 `-- README.md
 ```
 
-## 11. Quick Local Start
+## 11. Faculty Deliverables
+
+Faculty-facing submission files are kept in:
+
+- `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
+- `deliverables/SOIL_CARBON_ER_DIAGRAM.md`
+- `deliverables/r_analysis/soil_carbon_measurements.csv`
+- `deliverables/r_analysis/soil_carbon_analysis.R`
+- `deliverables/CARBON_CREDIT_ANALYTICAL_REPORT.md`
+- `deliverables/SUBMISSION_MAP.md`
+
+These files support the local app demonstration. They are secondary to the CNDC and DBMS proof shown in the app.
+
+## 12. Quick Local Start
 
 Backend:
 
@@ -235,7 +254,7 @@ ThingSpeak sender:
 .\venv\Scripts\python.exe .\scripts\thingspeak_demo_batch.py
 ```
 
-## 12. Public Demo Note
+## 13. Public Demo Note
 
 The GitHub Pages site is only for visual sharing and limited walkthroughs.
 

@@ -81,12 +81,13 @@ Then open:
 5. admin panel
 6. CNDC trace
 7. DBMS query lab
-8. ThingSpeak sender
-9. import data
-10. refresh farmer dashboard
-11. calculate carbon credits
-12. approve as verifier
-13. refresh all dashboards
+8. optional supporting analytics panel only if needed
+9. ThingSpeak sender
+10. import data
+11. refresh farmer dashboard
+12. calculate carbon credits
+13. approve as verifier
+14. refresh all dashboards
 
 ## 9. ThingSpeak Sender
 
@@ -103,7 +104,7 @@ This system receives external soil-style data, validates it, stores it in Postgr
 
 ### Landing page
 
-This screen introduces the project and now proves CNDC and DBMS directly through the implementation evidence explorer.
+This screen introduces the project and now proves CNDC and DBMS directly through the built-in evidence surfaces.
 
 ### Login
 
@@ -128,6 +129,10 @@ CNDC is shown through ThingSpeak communication, FastAPI REST APIs, JSON exchange
 ### DBMS
 
 DBMS is shown through PostgreSQL tables, relationships, stored measurements, carbon records, verification history, and the queryable table explorer with constraints.
+
+### Optional Supporting Analytics
+
+This optional panel shows correlation, regression, hypothesis test, confidence interval, and report-readiness material only if broader project questions come up.
 
 ### ThingSpeak import
 
@@ -209,6 +214,10 @@ Because the project demonstrates PostgreSQL tables, relationships, persistent re
 ### What is the core workflow?
 
 ThingSpeak -> FastAPI -> PostgreSQL -> carbon calculation -> verifier approval -> dashboards.
+
+### Where are the faculty deliverables?
+
+Inside `deliverables\` in the project root.
 
 ## 18. Quick Fixes
 

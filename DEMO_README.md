@@ -10,6 +10,7 @@ Use the local app when you need to prove:
 - real carbon calculation
 - real verifier approval workflow
 - visible CNDC and DBMS proof inside the website
+- optional supporting analytics and submission material if broader questions are asked
 
 The public GitHub Pages site is only a limited visual demo and should be treated as secondary.
 
@@ -43,6 +44,7 @@ Show:
 - implementation evidence explorer
 - CNDC trace
 - DBMS query lab
+- faculty-deliverable evaluation panel
 
 Say:
 
@@ -80,6 +82,7 @@ Show:
 - ThingSpeak sync
 - carbon calculation
 - implementation control room
+- optional supporting analytics panel if needed
 
 Say:
 
@@ -125,7 +128,28 @@ One-line answer:
 
 > DBMS is demonstrated through a relational PostgreSQL schema, stored workflow history, constraints, indexes, and a visible queryable table explorer.
 
-## 6. Quick Commands
+## 6. Optional Supporting Analytics Talking Points
+
+- the app now correlates soil-health variables with organic carbon
+- the app shows a regression model for the strongest predictor
+- the app shows a seasonal hypothesis test
+- the app shows a confidence interval for the carbon-credit estimate
+- the final report status is presented as certification-readiness, not just as a raw number
+
+Use this only if faculty asks beyond CNDC and DBMS. It should not lead the demonstration.
+
+One-line answer:
+
+> Supporting analytics is available through live correlation, regression, hypothesis testing, and confidence-interval output tied to the same soil and carbon records used by the workflow.
+
+## 7. Quick Commands
+
+Faculty deliverable files:
+
+- `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
+- `deliverables/SOIL_CARBON_ER_DIAGRAM.md`
+- `deliverables/r_analysis/soil_carbon_analysis.R`
+- `deliverables/CARBON_CREDIT_ANALYTICAL_REPORT.md`
 
 Reset demo data:
 
@@ -153,7 +177,7 @@ Send ThingSpeak demo batch:
 .\venv\Scripts\python.exe .\scripts\thingspeak_demo_batch.py
 ```
 
-## 7. Presentation-Readiness Checks
+## 8. Presentation-Readiness Checks
 
 Before presenting, confirm:
 
@@ -168,7 +192,7 @@ Before presenting, confirm:
 - carbon calculation works
 - verifier approval works
 
-## 8. Public Demo Note
+## 9. Public Demo Note
 
 The published website is useful when you only need to share the look of the product.
 

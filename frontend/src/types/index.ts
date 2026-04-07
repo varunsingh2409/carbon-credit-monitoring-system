@@ -234,6 +234,69 @@ export interface AdminImplementationIndex {
   unique: boolean;
 }
 
+export interface AdminInferentialCorrelation {
+  nutrient_name: string;
+  sample_size: number;
+  coefficient: number;
+  direction: string;
+  interpretation: string;
+}
+
+export interface AdminRegressionSummary {
+  predictor: string;
+  response: string;
+  sample_size: number;
+  intercept: number;
+  slope: number;
+  r_squared: number;
+  interpretation: string;
+}
+
+export interface AdminHypothesisTestSummary {
+  test_name: string;
+  null_hypothesis: string;
+  alternative_hypothesis: string;
+  baseline_label: string;
+  comparison_label: string;
+  baseline_mean: number;
+  comparison_mean: number;
+  p_value: number;
+  conclusion: string;
+}
+
+export interface AdminConfidenceIntervalSummary {
+  metric: string;
+  confidence_level: number;
+  estimate: number;
+  lower_bound: number;
+  upper_bound: number;
+  interpretation: string;
+}
+
+export interface AdminInferentialSummary {
+  dataset_rows: number;
+  season_count: number;
+  correlations: AdminInferentialCorrelation[];
+  regression: AdminRegressionSummary | null;
+  hypothesis_test: AdminHypothesisTestSummary | null;
+  confidence_interval: AdminConfidenceIntervalSummary | null;
+  limitations: string[];
+}
+
+export interface AdminCertificationReportSummary {
+  title: string;
+  readiness: string;
+  summary: string;
+  report_sections: string[];
+  key_findings: string[];
+}
+
+export interface AdminDeliverableStatus {
+  title: string;
+  status: string;
+  evidence: string;
+}
+
 export interface AdminImplementationTableDetail {
   label: string;
   table_name: string;
@@ -276,6 +339,9 @@ export interface AdminImplementationSummary {
   dbms_highlights: string[];
   database_entities: AdminImplementationEntityCount[];
   cndc_flow: AdminImplementationFlowStep[];
+  inferential_summary: AdminInferentialSummary;
+  certification_report: AdminCertificationReportSummary;
+  deliverable_statuses: AdminDeliverableStatus[];
   table_details: AdminImplementationTableDetail[];
 }
 

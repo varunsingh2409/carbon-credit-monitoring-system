@@ -1,0 +1,6 @@
+measurement_id,season_name,measurement_date,nitrogen,moisture,organic_carbon,estimated_credit_tco2e
+30101,Rabi 2025 Baseline,2025-12-18T08:40:00Z,189,26.1,2.87,1.60
+30102,Rabi 2025 Baseline,2026-01-06T09:10:00Z,193,27.5,3.01,1.60
+30201,Monsoon 2026 Demo,2026-03-24T08:35:00Z,211,31.4,3.41,2.07
+30202,Monsoon 2026 Demo,2026-03-28T08:45:00Z,214,32.2,3.46,2.07
+30203,Monsoon 2026 Demo,2026-04-02T09:00:00Z,218,33.1,3.55,2.07

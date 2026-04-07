@@ -22,13 +22,20 @@ from app.models.measurement import MeasurementResult, Nutrient, SoilMeasurement
 from app.models.season import Season
 from app.models.user import User
 from app.schemas.admin import (
+    AdminCertificationReportSummary,
     AdminImplementationColumn,
     AdminImplementationConstraint,
     AdminImplementationEntityCount,
     AdminImplementationFlowStep,
     AdminImplementationIndex,
+    AdminInferentialSummary,
     AdminImplementationSummaryResponse,
     AdminImplementationTableDetail,
+)
+from app.services.statistics_service import (
+    build_certification_report,
+    build_deliverable_statuses,
+    build_inferential_summary,
 )
 
 
@@ -501,6 +508,10 @@ def build_implementation_summary(db: Session) -> AdminImplementationSummaryRespo
         )
         for table_detail in table_details
     ]
+    inferential_summary: AdminInferentialSummary = build_inferential_summary(db)
+    certification_report: AdminCertificationReportSummary = build_certification_report(
+        inferential_summary
+    )
 
     return AdminImplementationSummaryResponse(
         thingspeak_base_url=settings.THINGSPEAK_BASE_URL,
@@ -530,5 +541,8 @@ def build_implementation_summary(db: Session) -> AdminImplementationSummaryRespo
         ],
         database_entities=database_entities,
         cndc_flow=list(FLOW_STEPS),
+        inferential_summary=inferential_summary,
+        certification_report=certification_report,
+        deliverable_statuses=build_deliverable_statuses(),
         table_details=table_details,
     )
