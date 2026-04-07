@@ -161,7 +161,7 @@ Use this checklist before the actual presentation:
 - backend `/docs` opens
 - backend `/api/implementation/evidence` returns CNDC flow and table details, with optional supporting analytics if needed
 - frontend opens at `http://localhost:5173`
-- landing page shows the implementation evidence explorer and keeps CNDC/DBMS as the main story
+- landing page shows the implementation evidence explorer and presents CNDC/DBMS as the main story
 - farmer login works
 - verifier login works
 - admin login works

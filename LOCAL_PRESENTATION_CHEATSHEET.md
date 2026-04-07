@@ -104,7 +104,7 @@ This system receives external soil-style data, validates it, stores it in Postgr
 
 ### Landing page
 
-This screen introduces the project and now proves CNDC and DBMS directly through the built-in evidence surfaces.
+This screen introduces the project and presents CNDC and DBMS directly through the built-in evidence surfaces.
 
 ### Login
 
@@ -148,7 +148,7 @@ The verifier checks the evidence and then approves the record.
 
 ### Final state
 
-All dashboards now reflect the completed workflow end to end.
+All dashboards reflect the completed workflow end to end.
 
 ## 11. Strongest CNDC Points
 

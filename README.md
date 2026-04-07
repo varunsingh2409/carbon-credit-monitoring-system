@@ -94,7 +94,7 @@ Main tables:
 - farmer dashboard with farms, seasons, measurements, and carbon outcomes
 - verifier dashboard with pending review workflow and evidence details
 - admin panel with statistics, ThingSpeak sync, carbon calculation, and user visibility
-- redesigned landing page with embedded technical proof
+- landing page with embedded technical proof
 - CNDC trace explorer showing real communication flow
 - DBMS query lab showing table rows, constraints, indexes, and schema details
 - admin implementation control room using the same evidence surface

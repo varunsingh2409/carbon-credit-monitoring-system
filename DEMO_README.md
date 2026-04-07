@@ -29,7 +29,7 @@ The public GitHub Pages site is only a limited visual demo and should be treated
 4. open farmer, verifier, and admin sessions
 5. send the ThingSpeak demo batch
 6. import ThingSpeak data from the admin panel
-7. show the updated measurement evidence
+7. show the imported measurement evidence
 8. trigger carbon calculation
 9. approve the record as verifier
 10. refresh all roles and show the final verified state
@@ -49,7 +49,7 @@ Show:
 Say:
 
 - "This platform connects soil-data collection, carbon calculation, and verification into one workflow."
-- "The website now proves CNDC and DBMS directly through a visible technical evidence surface."
+- "The website presents CNDC and DBMS directly through a visible technical evidence surface."
 
 ### Step 2: Farmer dashboard
 
@@ -130,7 +130,7 @@ One-line answer:
 
 ## 6. Optional Supporting Analytics Talking Points
 
-- the app now correlates soil-health variables with organic carbon
+- the app correlates soil-health variables with organic carbon
 - the app shows a regression model for the strongest predictor
 - the app shows a seasonal hypothesis test
 - the app shows a confidence interval for the carbon-credit estimate

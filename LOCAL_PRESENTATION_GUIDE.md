@@ -475,7 +475,7 @@ What to click:
 
 What to say:
 
-> This landing page introduces the system and now proves the technical implementation directly. It shows CNDC through a visible network trace and shows DBMS through queryable tables, rows, constraints, and indexes.
+> This landing page introduces the system and presents the technical implementation directly. It shows CNDC through a visible network trace and DBMS through queryable tables, rows, constraints, and indexes.
 
 Why it matters for CNDC:
 
@@ -582,7 +582,7 @@ Show:
 
 What to say:
 
-> The admin panel is the operational control center. It shows platform health, triggers workflows, and now contains the same technical evidence explorer as the landing page.
+> The admin panel is the operational control center. It shows platform health, triggers workflows, and includes the same technical evidence explorer as the landing page.
 
 CNDC relevance:
 
@@ -658,7 +658,7 @@ What the script sends:
 
 What to say:
 
-> I am now sending live sensor-style data into ThingSpeak. This proves the workflow starts outside the web application and comes from an external communication source.
+> I am sending live sensor-style data into ThingSpeak. This proves the workflow starts outside the web application and comes from an external communication source.
 
 CNDC relevance:
 
@@ -684,7 +684,7 @@ Expected result:
 
 What to say:
 
-> The admin is now importing the ThingSpeak data into the FastAPI backend. The backend validates the data, maps the fields, and stores the measurements in PostgreSQL.
+> The admin is importing the ThingSpeak data into the FastAPI backend. The backend validates the data, maps the fields, and stores the measurements in PostgreSQL.
 
 CNDC relevance:
 
@@ -694,7 +694,7 @@ CNDC relevance:
 DBMS relevance:
 
 1. imported values become stored measurement rows
-2. the workflow is now database-backed
+2. the workflow is database-backed
 
 ### Feature 10: Farmer refresh after import
 
@@ -702,11 +702,11 @@ Go back to the farmer dashboard and refresh.
 
 Show:
 
-1. recent measurements now include the imported records
+1. recent measurements include the imported records
 
 What to say:
 
-> The imported data now appears in the farmer dashboard. This shows the connection between external communication, backend storage, and frontend display.
+> The imported data appears in the farmer dashboard. This shows the connection between external communication, backend storage, and frontend display.
 
 ### Feature 11: Carbon calculation
 
@@ -717,7 +717,7 @@ In the admin panel:
 
 What to say:
 
-> The backend now uses Organic Carbon data and farm information to calculate a carbon-credit estimate for the season.
+> The backend uses Organic Carbon data and farm information to calculate a carbon-credit estimate for the season.
 
 Explain the formula:
 
@@ -769,9 +769,9 @@ Refresh:
 
 Show:
 
-1. updated farmer status
-2. updated verifier history
-3. updated admin stats
+1. farmer status
+2. verifier history
+3. admin stats
 
 What to say:
 
@@ -959,7 +959,7 @@ Use these points during evaluation:
 
 ### Approval
 
-- verification row stored and season status updated
+- verification row stored and season status recorded in the workflow
 
 ### Monthly chart
 
