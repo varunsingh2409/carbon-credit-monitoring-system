@@ -1,193 +1,131 @@
-# Demo Guide
+# Local Demonstration Guide
 
-This file explains how to demonstrate the Carbon Credit Monitoring System in two ways:
+This file is for the real local full-stack presentation.
 
-- the published GitHub Pages demo
-- the complete local full-stack version
+Use the local app when you need to prove:
 
-Use the published version when you only need a clean online UI walkthrough.
-Use the local version when you want to show the real backend, real database, and live ThingSpeak flow.
+- real FastAPI backend behavior
+- real PostgreSQL persistence
+- real ThingSpeak import
+- real carbon calculation
+- real verifier approval workflow
+- visible CNDC and DBMS proof inside the website
 
-## 1. Demo Credentials
+The public GitHub Pages site is only a limited visual demo and should be treated as secondary.
 
-Use these accounts in both the published demo and the local app:
+## 1. Credentials
 
 - Farmer: `farmer1` / `FarmerDemo123!`
 - Verifier: `verifier1` / `VerifierDemo123!`
 - Admin: `admin` / `AdminDemo123!`
-
-Additional local API account:
-
 - Sensor user: `sensor_api` / `SensorDemo123!`
 
-## 2. Published Demo
-
-URL:
-
-- https://varunsingh2409.github.io/carbon-credit-monitoring-system/
-
-What the published demo is good for:
-
-- showing the landing page design
-- showing role-based login
-- opening farmer, verifier, and admin dashboards
-- explaining the workflow visually
-- showing CNDC and DBMS sections in the landing page and admin panel
-
-What the published demo does not prove yet:
-
-- real backend persistence
-- real PostgreSQL data changes
-- real ThingSpeak import
-- real online verification records
-
-Important note:
-
-- the published demo is frontend-only and uses demo-mode data in the browser
-
-### Published demo walkthrough
-
-1. open the URL
-2. click `Get Started` or `Sign In`
-3. use the farmer account and show the farmer dashboard
-4. log out and use the verifier account to show pending items and history
-5. log out and use the admin account to show statistics, ThingSpeak sync, carbon calculation, and CNDC/DBMS sections
-6. explain that this online version is the presentation-friendly frontend build, while the complete working stack already runs locally
-
-## 3. Local Full-Stack Demo
-
-The local version is the real implementation. It includes:
-
-- FastAPI backend
-- PostgreSQL database
-- real JWT authentication
-- real ThingSpeak sync
-- real carbon calculation
-- real verifier approval persistence
-
-### Local prerequisites
-
-- Python 3.10+
-- Node.js 18+
-- npm
-- PostgreSQL
-- internet connection for ThingSpeak
-
-### ThingSpeak mapping used by the app
-
-- `field1` -> `Nitrogen`
-- `field2` -> `Phosphorus`
-- `field3` -> `Potassium`
-- `field4` -> `Moisture`
-- `field5` -> `Organic_Carbon`
-- `field6` -> `depth_cm`
-
-### Local demo flow
+## 2. Local Demo Flow
 
 1. reset the demo database
 2. start the backend
 3. start the frontend
 4. open farmer, verifier, and admin sessions
-5. send demo data to ThingSpeak
+5. send the ThingSpeak demo batch
 6. import ThingSpeak data from the admin panel
-7. show new measurements on the farmer dashboard
-8. trigger carbon calculation from the admin panel
-9. approve the new record as verifier
-10. refresh all dashboards and show the final verified result
+7. show the updated measurement evidence
+8. trigger carbon calculation
+9. approve the record as verifier
+10. refresh all roles and show the final verified state
 
-## 4. Suggested Presentation Order
+## 3. Recommended Presentation Order
 
 ### Step 1: Landing page
 
 Show:
 
-- product positioning
-- feature cards
-- CNDC and DBMS evaluation section
+- hero section
+- implementation evidence explorer
+- CNDC trace
+- DBMS query lab
 
 Say:
 
-- "This platform is designed to connect soil-data collection, carbon calculation, and verification into one workflow."
-- "It also clearly demonstrates both CNDC and DBMS implementation."
+- "This platform connects soil-data collection, carbon calculation, and verification into one workflow."
+- "The website now proves CNDC and DBMS directly through a visible technical evidence surface."
 
 ### Step 2: Farmer dashboard
 
 Show:
 
-- farm and season summaries
+- farm and season summary
 - recent measurements
-- carbon trend view
+- carbon results
 
 Say:
 
-- "The farmer sees the operational result of the system without needing technical knowledge."
+- "The farmer sees the outcome of the workflow without needing technical backend access."
 
 ### Step 3: Verifier dashboard
 
 Show:
 
 - pending items
-- approval history
-- verification details
+- verification detail screen
 
 Say:
 
-- "The verifier adds trust to the process by reviewing evidence before a carbon claim is accepted."
+- "The verifier is the trust layer. Carbon records are reviewed before they become accepted outcomes."
 
 ### Step 4: Admin panel
 
 Show:
 
-- platform statistics
-- monthly credits chart
-- ThingSpeak sync section
-- carbon calculation button
-- CNDC implementation section
-- DBMS implementation section
+- statistics
+- ThingSpeak sync
+- carbon calculation
+- implementation control room
 
 Say:
 
-- "This screen is where the system behavior becomes easy to explain technically."
+- "This is the operational control center where both the live workflow and the technical proof are visible."
 
-### Step 5: Live data and workflow
+### Step 5: Live workflow
 
 Show:
 
+- ThingSpeak sender
 - ThingSpeak import
-- measurement updates
+- fresh measurement evidence
 - carbon calculation
 - verifier approval
+- final dashboard state
 
 Say:
 
-- "The system moves from external data intake to verified carbon output in one continuous workflow."
+- "The system moves from external communication to stored database records and then to verified carbon output."
 
-## 5. CNDC Talking Points
+## 4. CNDC Talking Points
 
-Use these points if the evaluation focuses on communication and networking:
-
-- the app communicates with ThingSpeak over HTTP
+- ThingSpeak is the external communication source
 - the frontend communicates with FastAPI through REST APIs
-- data moves as JSON between client and server
+- data moves in JSON payloads
 - JWT protects role-based routes
-- the backend exposes `/health` and `/docs` for service validation
-- the full communication path is:
-  - ThingSpeak -> FastAPI -> PostgreSQL -> React dashboards
+- `/health` and `/docs` validate the backend service
+- the CNDC trace explorer shows endpoints, methods, payloads, and outcomes directly in the website
 
-## 6. DBMS Talking Points
+One-line answer:
 
-Use these points if the evaluation focuses on database management:
+> CNDC is demonstrated through ThingSpeak communication, REST APIs, JSON exchange, secure role-based routes, and the visible in-app communication trace.
 
-- PostgreSQL stores all persistent application records
+## 5. DBMS Talking Points
+
+- PostgreSQL stores all persistent records
 - the schema is relational and normalized
-- the workflow uses linked tables rather than one large flat table
-- measurements, nutrients, seasons, sequestration, and verification are stored separately but connected with foreign keys
-- verifier approval writes persistent workflow history
-- admin statistics are generated from database-backed counts
+- measurements, nutrients, seasons, sequestration, and verification are stored in connected tables
+- constraints and indexes protect data quality and queryability
+- the DBMS query lab shows real tables, row samples, constraints, and indexes in the app
 
-## 7. Quick Local Commands
+One-line answer:
 
-These are the minimum commands used most often.
+> DBMS is demonstrated through a relational PostgreSQL schema, stored workflow history, constraints, indexes, and a visible queryable table explorer.
+
+## 6. Quick Commands
 
 Reset demo data:
 
@@ -215,24 +153,28 @@ Send ThingSpeak demo batch:
 .\venv\Scripts\python.exe .\scripts\thingspeak_demo_batch.py
 ```
 
-## 8. Common Questions To Be Ready For
+## 7. Presentation-Readiness Checks
 
-### Is the published site fully live?
+Before presenting, confirm:
 
-No. The published GitHub Pages site is a frontend demo build.
+- backend `/health` returns `ok`
+- backend `/docs` opens
+- frontend opens at `http://localhost:5173`
+- landing page shows the implementation evidence explorer
+- farmer login works
+- verifier login works
+- admin login works
+- ThingSpeak import works
+- carbon calculation works
+- verifier approval works
 
-### Is the full app working?
+## 8. Public Demo Note
 
-Yes. The complete backend, database, ThingSpeak import, carbon calculation, and verification workflow work locally.
+The published website is useful when you only need to share the look of the product.
 
-### Why use the published demo then?
+It is not the version you should rely on for proving:
 
-Because it is easy to share online and useful for UI walkthroughs before the full backend deployment.
-
-### What proves the DBMS part?
-
-The PostgreSQL tables, relations, workflow history, and admin implementation summary.
-
-### What proves the CNDC part?
-
-ThingSpeak integration, FastAPI REST APIs, JSON communication, and role-based protected routes.
+- live database writes
+- live ThingSpeak import
+- real API workflow persistence
+- end-to-end verifier approval storage

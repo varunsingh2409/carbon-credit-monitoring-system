@@ -1,138 +1,109 @@
 # Carbon Credit Monitoring System
 
-The Carbon Credit Monitoring System is a full-stack web application for collecting soil measurements, calculating carbon sequestration, and routing carbon-credit claims through verifier approval before they are treated as issued.
+This project should be presented and judged from the local full-stack app, not from the public website.
 
-It combines:
+The local version is the real implementation and includes:
 
-- a React + TypeScript frontend
-- a FastAPI backend
-- a PostgreSQL relational database
-- ThingSpeak-based external sensor ingestion
+- React + TypeScript frontend
+- FastAPI backend
+- PostgreSQL database
+- ThingSpeak integration
 - JWT authentication with farmer, verifier, admin, and sensor roles
+- real carbon calculation and verifier approval workflow
+- visible CNDC trace and DBMS query lab inside the website
 
-## 1. Live Demo Options
+## 1. What To Use For Presentation
 
-### Published GitHub Pages demo
+Use the local app for the actual presentation because it proves:
 
-Frontend-only demo URL:
-
-- https://varunsingh2409.github.io/carbon-credit-monitoring-system/
-
-Published demo credentials:
-
-- `farmer1` / `FarmerDemo123!`
-- `verifier1` / `VerifierDemo123!`
-- `admin` / `AdminDemo123!`
-
-What works on the published demo:
-
-- landing page
-- login
-- farmer dashboard
-- verifier dashboard and review flow
-- admin panel with demo sync/calculation behavior
-- CNDC and DBMS presentation sections
-
-Current limitation of the published demo:
-
-- it runs in frontend demo mode on GitHub Pages
-- it does not use the live FastAPI backend
-- it does not use the live PostgreSQL database
-- it does not use live ThingSpeak data online
-- demo actions are stored in browser local storage
-
-### Full local demo
-
-The local version is the complete implementation and supports:
-
-- real FastAPI APIs
+- real backend APIs
 - real PostgreSQL persistence
-- real JWT authentication
 - real ThingSpeak import
 - real carbon calculation
-- real verifier approval workflow
+- real verifier approval and stored workflow history
 
-For the presentation flow, use `DEMO_README.md`.
-For installation and rebuild commands, use `INSTALL_DEPENDENCIES.md`.
+Use these files in this order:
 
-## 2. Why This Project Fits CNDC And DBMS
+1. `README.md` for the local overview
+2. `DEMO_README.md` for the live presentation flow
+3. `INSTALL_DEPENDENCIES.md` for setup, reset, testing, and rebuild commands
+4. `LOCAL_PRESENTATION_GUIDE.md` for the full speaking guide
+5. `LOCAL_PRESENTATION_CHEATSHEET.md` for the short version during rehearsal
 
-### CNDC implementation
+## 2. Core Workflow
 
-This project clearly demonstrates communication and networking concepts through:
+1. sensor-style data is sent to ThingSpeak
+2. admin imports that data into the selected season
+3. FastAPI validates and stores the measurements in PostgreSQL
+4. admin triggers carbon calculation
+5. verifier reviews the resulting carbon record
+6. verifier approves or rejects the record
+7. farmer, verifier, and admin screens reflect the final state
 
-- ThingSpeak HTTP channel integration
-- FastAPI REST endpoints
-- JSON request and response payloads
-- JWT-protected client-server communication
-- role-based API access
-- health and documentation endpoints for service validation
+## 3. Why This Fits CNDC
 
-Typical network flow:
+This project demonstrates CNDC through:
 
-1. ThingSpeak receives measurement data from an external source
-2. the admin panel calls the backend sync API
-3. FastAPI reads ThingSpeak over HTTP
-4. FastAPI validates and stores the data
-5. React dashboards fetch the updated records through REST APIs
+- ThingSpeak HTTP communication
+- FastAPI REST APIs
+- JSON request and response flow
+- JWT-protected client-server access
+- role-based routes
+- `/health` and `/docs`
+- a visible in-app CNDC trace explorer with endpoints, payloads, and workflow outcomes
 
-### DBMS implementation
+Typical CNDC path:
 
-This project clearly demonstrates database-management concepts through:
+1. ThingSpeak channel receives external data
+2. admin triggers `/api/admin/sync-thingspeak`
+3. backend reads ThingSpeak over HTTP
+4. backend returns structured JSON to the frontend
+5. dashboards consume live API responses
+6. the implementation evidence screen shows the flow step by step
 
-- PostgreSQL as the relational database
-- normalized tables for users, farms, seasons, nutrients, measurements, sequestration, and verification
-- foreign-key relationships across the workflow
-- persisted calculation history and verifier decisions
-- transactional updates during approval and rejection
-- database-backed statistics used in the admin panel
+## 4. Why This Fits DBMS
 
-Core workflow tables:
+This project demonstrates DBMS through:
+
+- PostgreSQL as the main database
+- normalized relational tables
+- foreign keys across the measurement and verification workflow
+- unique constraints and check constraints
+- stored carbon-calculation results
+- persistent verification history
+- live counts and queryable table previews in the UI
+
+Main tables:
 
 - `users`
 - `farmer`
 - `farm`
 - `season`
+- `nutrient`
 - `soil_measurement`
 - `measurement_result`
-- `nutrient`
 - `carbon_sequestration`
 - `carbon_verification`
 
-## 3. End-To-End Workflow
-
-1. sensor-style data is sent to ThingSpeak
-2. admin imports the latest ThingSpeak entries into the selected season
-3. FastAPI validates the season, maps the fields, and stores measurements in PostgreSQL
-4. admin triggers carbon calculation for that season
-5. the backend calculates estimated carbon credit from Organic Carbon readings
-6. verifier reviews the pending record and approves or rejects it
-7. farmer, verifier, and admin dashboards reflect the final status
-
-## 4. Main Features
+## 5. Main Features
 
 - role-based login for farmer, verifier, admin, and sensor users
-- farmer dashboard with farms, seasons, recent measurements, and carbon history
-- verifier dashboard with pending items, history, and approval comments
-- admin panel with statistics, monthly credits, ThingSpeak sync, user view, and carbon calculation
-- CNDC and DBMS implementation summary cards inside the admin panel
-- landing page section that explicitly explains CNDC and DBMS evaluation value
-- GitHub Pages demo mode for frontend-only presentations
+- farmer dashboard with farms, seasons, measurements, and carbon outcomes
+- verifier dashboard with pending review workflow and evidence details
+- admin panel with statistics, ThingSpeak sync, carbon calculation, and user visibility
+- redesigned landing page with embedded technical proof
+- CNDC trace explorer showing real communication flow
+- DBMS query lab showing table rows, constraints, indexes, and schema details
+- admin implementation control room using the same evidence surface
 
-## 5. Demo Accounts
-
-Application accounts:
+## 6. Demo Accounts
 
 - Farmer: `farmer1` / `FarmerDemo123!`
 - Verifier: `verifier1` / `VerifierDemo123!`
 - Admin: `admin` / `AdminDemo123!`
 - Sensor API user: `sensor_api` / `SensorDemo123!`
 
-ThingSpeak channel used in the project:
-
-- Channel ID: `3313997`
-
-ThingSpeak field mapping:
+ThingSpeak mapping used by the app:
 
 - `field1` -> `Nitrogen`
 - `field2` -> `Phosphorus`
@@ -141,101 +112,20 @@ ThingSpeak field mapping:
 - `field5` -> `Organic_Carbon`
 - `field6` -> `depth_cm`
 
-`Organic_Carbon` is the key field required for carbon-credit calculation.
+`Organic_Carbon` is the required field for carbon-credit calculation.
 
-## 6. Technology Stack
+## 7. Local URLs
 
-Frontend:
+- Frontend: `http://localhost:5173`
+- Backend root: `http://127.0.0.1:8000`
+- Health: `http://127.0.0.1:8000/health`
+- Docs: `http://127.0.0.1:8000/docs`
+- Public implementation evidence: `http://127.0.0.1:8000/api/implementation/evidence`
 
-- React 18
-- TypeScript
-- Vite
-- React Router
-- Zustand
-- Axios
-- Recharts
-- Tailwind CSS
-
-Backend:
-
-- FastAPI
-- SQLAlchemy 2.x
-- Pydantic v2
-- python-jose
-- passlib bcrypt
-
-Database:
-
-- PostgreSQL
-- Alembic environment for schema management
-
-External integration:
-
-- ThingSpeak
-
-## 7. Repository Structure
-
-```text
-carbon_credit_backend/
-|-- alembic/
-|-- app/
-|   |-- api/
-|   |-- auth/
-|   |-- core/
-|   |-- crud/
-|   |-- db/
-|   |-- models/
-|   |-- routers/
-|   |-- schemas/
-|   |-- services/
-|   `-- main.py
-|-- docs/                       GitHub Pages build output
-|-- frontend/
-|   |-- src/
-|   |-- public/
-|   `-- package.json
-|-- scripts/
-|-- tests/
-|-- DEMO_README.md
-|-- INSTALL_DEPENDENCIES.md
-|-- main.py
-`-- README.md
-```
-
-## 8. Quick Local Run
-
-Backend:
-
-```powershell
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-Copy-Item .env.example .env
-alembic upgrade head
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
-
-Frontend:
-
-```powershell
-cd frontend
-npm install
-Copy-Item .env.example .env
-npm run dev
-```
-
-Useful local URLs:
-
-- `http://127.0.0.1:8000`
-- `http://127.0.0.1:8000/health`
-- `http://127.0.0.1:8000/docs`
-- `http://localhost:5173`
-
-## 9. Main API Areas
+## 8. Main API Areas
 
 Authentication:
 
-- `POST /api/auth/register`
 - `POST /api/auth/login`
 - `GET /api/auth/me`
 
@@ -259,24 +149,101 @@ Admin:
 - `POST /api/admin/sync-thingspeak`
 - `POST /api/admin/trigger-carbon-calculation`
 - `GET /api/admin/users`
-- `POST /api/admin/users`
 
-Measurements:
+Technical proof:
 
-- `POST /api/measurements`
+- `GET /api/implementation/evidence`
 
-## 10. Current Known Gaps
+## 9. Technology Stack
 
-- the published GitHub Pages demo is still frontend-only
-- `Forgot password` is still a placeholder
-- CSV and PDF report export buttons are still placeholders
-- some frontend data helpers still rely on legacy `/api/v1` endpoints
-- production deployment should centralize all auth and environment settings more tightly
+Frontend:
 
-## 11. Recommended Reading Order
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Zustand
+- Axios
 
-If you are new to the project, use this order:
+Backend:
 
-1. `README.md` for project overview
-2. `DEMO_README.md` for presentation and walkthrough steps
-3. `INSTALL_DEPENDENCIES.md` for installation, testing, and rebuild commands
+- FastAPI
+- SQLAlchemy 2.x
+- Pydantic v2
+- python-jose
+- passlib bcrypt
+
+Database:
+
+- PostgreSQL
+- Alembic
+
+External integration:
+
+- ThingSpeak
+
+## 10. Repository Structure
+
+```text
+carbon_credit_backend/
+|-- alembic/
+|-- app/
+|-- docs/                       GitHub Pages build output only
+|-- frontend/
+|-- scripts/
+|-- tests/
+|-- DEMO_README.md
+|-- INSTALL_DEPENDENCIES.md
+|-- LOCAL_PRESENTATION_GUIDE.md
+|-- LOCAL_PRESENTATION_CHEATSHEET.md
+`-- README.md
+```
+
+## 11. Quick Local Start
+
+Backend:
+
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+Copy-Item .env.example .env
+alembic upgrade head
+.\venv\Scripts\python.exe -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Frontend:
+
+```powershell
+cd frontend
+npm install
+Copy-Item .env.example .env
+npm run dev
+```
+
+Demo reset:
+
+```powershell
+$env:PGPASSWORD='Masterbeast'
+& 'C:\Program Files\PostgreSQL\16\bin\psql.exe' -h localhost -U carbon_app_user -d carbon_credit_db -f '.\scripts\seed_demo.sql'
+```
+
+ThingSpeak sender:
+
+```powershell
+.\venv\Scripts\python.exe .\scripts\thingspeak_demo_batch.py
+```
+
+## 12. Public Demo Note
+
+The GitHub Pages site is only for visual sharing and limited walkthroughs.
+
+It uses the same frontend design, but it is still frontend-only and should not be used as proof of:
+
+- real database persistence
+- live backend behavior
+- live ThingSpeak import
+- live verifier workflow storage
+
+For actual presentation and evaluation, use the local app.

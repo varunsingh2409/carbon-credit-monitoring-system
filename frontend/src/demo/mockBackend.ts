@@ -21,6 +21,7 @@ import type {
   VerificationHistoryItem,
   VerificationMeasurementDetail
 } from "@/types";
+import { demoImplementationSummary } from "@/demo/demoImplementationSummary";
 
 const DEMO_STATE_STORAGE_KEY = "carbon-credit-demo-state";
 const DEMO_TOKEN_PREFIX = "demo:";
@@ -275,42 +276,6 @@ const initialSyncResponses: Record<string, ThingSpeakSyncResponse> = {
     skipped_entries: [],
     message: "ThingSpeak demo data imported into Monsoon 2026 Demo."
   }
-};
-
-const implementationSummary: AdminImplementationSummary = {
-  thingspeak_base_url: "https://api.thingspeak.com",
-  thingspeak_channel_id: 2789421,
-  health_endpoint: "/health",
-  docs_endpoint: "/docs",
-  api_touchpoints: [
-    "/api/auth/login",
-    "/api/admin/statistics",
-    "/api/admin/sync-thingspeak",
-    "/api/admin/trigger-carbon-calculation",
-    "/api/verifier/approve/{id}"
-  ],
-  network_flow: [
-    "ThingSpeak provides external field data to the application over HTTP.",
-    "FastAPI exposes REST endpoints that exchange JSON with the frontend.",
-    "JWT protects authenticated admin, verifier, and farmer routes.",
-    "The React dashboards render live workflow state from API responses."
-  ],
-  dbms_highlights: [
-    "PostgreSQL stores normalized entities for users, farms, seasons, nutrients, and carbon records.",
-    "Foreign-key relationships connect farm, season, measurement, sequestration, and verification data.",
-    "Separate measurement and nutrient-result tables preserve relational integrity.",
-    "Constraints and indexes protect data quality and speed up filtering."
-  ],
-  database_entities: [
-    { label: "Users", table_name: "users", count: 3 },
-    { label: "Farms", table_name: "farm", count: 1 },
-    { label: "Seasons", table_name: "season", count: 3 },
-    { label: "Nutrients", table_name: "nutrient", count: 6 },
-    { label: "Measurements", table_name: "soil_measurement", count: 5 },
-    { label: "Results", table_name: "measurement_result", count: 15 },
-    { label: "Carbon Records", table_name: "carbon_sequestration", count: 2 },
-    { label: "Verifications", table_name: "carbon_verification", count: 1 }
-  ]
 };
 
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
@@ -722,7 +687,7 @@ export const demoBackend = {
 
   async getImplementationSummary(): Promise<AdminImplementationSummary> {
     await wait();
-    return clone(implementationSummary);
+    return clone(demoImplementationSummary);
   },
 
   async getMonthlyCredits(): Promise<MonthlyCredit[]> {

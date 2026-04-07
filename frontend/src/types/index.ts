@@ -213,6 +213,53 @@ export interface AdminImplementationEntityCount {
   count: number;
 }
 
+export interface AdminImplementationColumn {
+  name: string;
+  data_type: string;
+  nullable: boolean;
+  is_primary_key: boolean;
+  foreign_key: string | null;
+  default_value: string | null;
+}
+
+export interface AdminImplementationConstraint {
+  name: string;
+  kind: string;
+  definition: string;
+}
+
+export interface AdminImplementationIndex {
+  name: string;
+  columns: string[];
+  unique: boolean;
+}
+
+export interface AdminImplementationTableDetail {
+  label: string;
+  table_name: string;
+  purpose: string;
+  query: string;
+  row_count: number;
+  columns: AdminImplementationColumn[];
+  constraints: AdminImplementationConstraint[];
+  indexes: AdminImplementationIndex[];
+  preview_rows: Array<Record<string, string | number | boolean | null>>;
+}
+
+export interface AdminImplementationFlowStep {
+  step: number;
+  title: string;
+  source: string;
+  destination: string;
+  protocol: string;
+  method: string;
+  endpoint: string;
+  payload: Record<string, string | number | boolean | null> | null;
+  stored_tables: string[];
+  outcome: string;
+  evidence_points: string[];
+}
+
 export interface AdminImplementationSummary {
   thingspeak_base_url: string;
   thingspeak_channel_id: number | null;
@@ -222,6 +269,8 @@ export interface AdminImplementationSummary {
   network_flow: string[];
   dbms_highlights: string[];
   database_entities: AdminImplementationEntityCount[];
+  cndc_flow: AdminImplementationFlowStep[];
+  table_details: AdminImplementationTableDetail[];
 }
 
 export interface SeasonOption {

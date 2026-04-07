@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -23,6 +24,53 @@ class AdminImplementationEntityCount(BaseModel):
     count: int
 
 
+class AdminImplementationColumn(BaseModel):
+    name: str
+    data_type: str
+    nullable: bool
+    is_primary_key: bool = False
+    foreign_key: str | None = None
+    default_value: str | None = None
+
+
+class AdminImplementationConstraint(BaseModel):
+    name: str
+    kind: str
+    definition: str
+
+
+class AdminImplementationIndex(BaseModel):
+    name: str
+    columns: list[str]
+    unique: bool = False
+
+
+class AdminImplementationTableDetail(BaseModel):
+    label: str
+    table_name: str
+    purpose: str
+    query: str
+    row_count: int
+    columns: list[AdminImplementationColumn]
+    constraints: list[AdminImplementationConstraint]
+    indexes: list[AdminImplementationIndex]
+    preview_rows: list[dict[str, Any]]
+
+
+class AdminImplementationFlowStep(BaseModel):
+    step: int
+    title: str
+    source: str
+    destination: str
+    protocol: str
+    method: str
+    endpoint: str
+    payload: dict[str, Any] | None = None
+    stored_tables: list[str] = []
+    outcome: str
+    evidence_points: list[str]
+
+
 class AdminImplementationSummaryResponse(BaseModel):
     thingspeak_base_url: str
     thingspeak_channel_id: int | None = None
@@ -32,6 +80,8 @@ class AdminImplementationSummaryResponse(BaseModel):
     network_flow: list[str]
     dbms_highlights: list[str]
     database_entities: list[AdminImplementationEntityCount]
+    cndc_flow: list[AdminImplementationFlowStep]
+    table_details: list[AdminImplementationTableDetail]
 
 
 class AdminUserItem(BaseModel):

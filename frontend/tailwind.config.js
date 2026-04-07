@@ -23,8 +23,9 @@ export default {
         }
       },
       fontFamily: {
-        heading: ["Manrope", "sans-serif"],
-        body: ["Inter", "sans-serif"]
+        heading: ["Space Grotesk", "sans-serif"],
+        body: ["IBM Plex Sans", "sans-serif"],
+        mono: ["IBM Plex Mono", "ui-monospace", "monospace"]
       },
       boxShadow: {
         glass: "0 22px 50px rgba(31, 43, 57, 0.18)",
