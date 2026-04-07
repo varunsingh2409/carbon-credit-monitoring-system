@@ -161,7 +161,7 @@ function ImplementationEvidencePanel({
         ))}
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+      <div className="grid gap-6">
         <article className="surface-panel-strong overflow-hidden p-6 sm:p-7">
           <div className="flex items-start gap-4">
             <div className="rounded-2xl bg-blue-300/15 p-3 text-blue-200">
