@@ -44,7 +44,7 @@ function FlowStepper({
   onSelect: (step: number) => void;
 }) {
   return (
-    <div className="grid gap-3 md:grid-cols-5">
+    <div className="grid gap-3 lg:grid-cols-2">
       {flowSteps.map((step) => {
         const isActive = step.step === currentFlow.step;
 
@@ -63,6 +63,14 @@ function FlowStepper({
               Step {step.step}
             </p>
             <p className="mt-3 text-sm font-semibold text-white">{step.title}</p>
+            <p className="mt-2 text-xs uppercase tracking-[0.2em] text-blue-100/80">
+              {step.subject_focus}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-slate-300">
+              {step.source}
+              <span className="mx-2 text-slate-500">→</span>
+              {step.destination}
+            </p>
           </button>
         );
       })}
@@ -197,12 +205,42 @@ function ImplementationEvidencePanel({
             ))}
           </div>
 
-          <div className="mt-6">
-            <FlowStepper
-              currentFlow={currentFlow}
-              flowSteps={summary.cndc_flow}
-              onSelect={setSelectedFlowStep}
-            />
+          <div className="mt-6 grid gap-4">
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
+              <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
+                End-To-End Communication Chain
+              </p>
+              <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300">
+                Follow the exact sender-to-receiver path used by the system. Each
+                step shows who communicates, what is transmitted, and where the
+                message ends up in the workflow.
+              </p>
+
+              <div className="mt-5">
+                <FlowStepper
+                  currentFlow={currentFlow}
+                  flowSteps={summary.cndc_flow}
+                  onSelect={setSelectedFlowStep}
+                />
+              </div>
+            </div>
+
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
+              <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
+                CNDC Subject Specification
+              </p>
+              <div className="mt-4 grid gap-3">
+                {summary.network_flow.map((item) => (
+                  <div
+                    className="flex items-start gap-3 rounded-[1.1rem] border border-white/10 bg-white/[0.04] p-4"
+                    key={item}
+                  >
+                    <CheckCircle2 className="mt-0.5 text-blue-200" size={16} />
+                    <p className="text-sm leading-7 text-slate-300">{item}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="mt-6 rounded-[1.7rem] border border-white/10 bg-[linear-gradient(180deg,rgba(10,16,24,0.72),rgba(18,26,37,0.92))] p-5">
@@ -214,6 +252,9 @@ function ImplementationEvidencePanel({
                 <h4 className="mt-3 text-2xl font-bold text-white">
                   {currentFlow.title}
                 </h4>
+                <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300">
+                  {currentFlow.subject_focus}
+                </p>
               </div>
               <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs uppercase tracking-[0.22em] text-slate-300">
                 <span>{currentFlow.method}</span>
@@ -222,78 +263,91 @@ function ImplementationEvidencePanel({
               </div>
             </div>
 
-            <div className="mt-5 grid gap-4 md:grid-cols-[0.9fr_auto_0.9fr] md:items-center">
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] px-4 py-4">
-                <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                  Source
-                </p>
-                <p className="mt-2 text-sm font-semibold text-white">
-                  {currentFlow.source}
-                </p>
-              </div>
-              <div className="hidden justify-center md:flex">
-                <ArrowRight className="text-slate-500" size={18} />
-              </div>
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] px-4 py-4">
-                <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                  Destination
-                </p>
-                <p className="mt-2 text-sm font-semibold text-white">
-                  {currentFlow.destination}
-                </p>
-              </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {[
+                ["Sender", currentFlow.source],
+                ["Receiver", currentFlow.destination],
+                ["Transport Stack", currentFlow.transport_stack],
+                ["Data Format", currentFlow.data_format],
+                ["Security", currentFlow.security],
+                ["Endpoint", currentFlow.endpoint]
+              ].map(([label, value]) => (
+                <div
+                  className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] px-4 py-4"
+                  key={label}
+                >
+                  <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
+                    {label}
+                  </p>
+                  <p className="mt-2 text-sm font-semibold leading-6 text-white">
+                    {value}
+                  </p>
+                </div>
+              ))}
             </div>
 
-            <div className="mt-5 rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                Endpoint
-              </p>
-              <code className="mt-3 block overflow-x-auto font-mono text-sm text-emerald-100">
-                {currentFlow.endpoint}
-              </code>
-            </div>
-
-            <div className="mt-5 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="mt-5 grid gap-4">
               <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-4">
                 <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                  Payload
+                  Request Sent
                 </p>
                 <pre className="mt-3 overflow-x-auto rounded-[1rem] border border-white/10 bg-[#09121b] p-4 font-mono text-xs leading-7 text-slate-200">
-                  {JSON.stringify(currentFlow.payload, null, 2)}
+                  {currentFlow.payload
+                    ? JSON.stringify(currentFlow.payload, null, 2)
+                    : "GET request without a request body"}
                 </pre>
               </div>
-              <div className="space-y-4">
-                <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-4">
-                  <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                    Stored Tables
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {currentFlow.stored_tables.length > 0 ? (
-                      currentFlow.stored_tables.map((tableName) => (
-                        <code
-                          className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 font-mono text-xs text-slate-200"
-                          key={tableName}
-                        >
-                          {tableName}
-                        </code>
-                      ))
-                    ) : (
-                      <span className="text-sm text-slate-400">
-                        External step before database writes.
-                      </span>
-                    )}
-                  </div>
-                </div>
 
-                <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-4">
-                  <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                    Outcome
-                  </p>
-                  <p className="mt-3 text-sm leading-7 text-slate-300">
-                    {currentFlow.outcome}
-                  </p>
+              <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-4">
+                <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
+                  Communication Logic
+                </p>
+                <p className="mt-3 text-sm leading-7 text-slate-300">
+                  {currentFlow.outcome}
+                </p>
+              </div>
+
+              <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-4">
+                <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
+                  Response Returned
+                </p>
+                <pre className="mt-3 overflow-x-auto rounded-[1rem] border border-white/10 bg-[#09121b] p-4 font-mono text-xs leading-7 text-slate-200">
+                  {currentFlow.response_payload
+                    ? JSON.stringify(currentFlow.response_payload, null, 2)
+                    : "Response body not displayed for this step"}
+                </pre>
+              </div>
+
+              <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-4">
+                <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
+                  Persisted Tables
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {currentFlow.stored_tables.length > 0 ? (
+                    currentFlow.stored_tables.map((tableName) => (
+                      <code
+                        className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 font-mono text-xs text-slate-200"
+                        key={tableName}
+                      >
+                        {tableName}
+                      </code>
+                    ))
+                  ) : (
+                    <span className="text-sm text-slate-400">
+                      External communication step before database writes.
+                    </span>
+                  )}
                 </div>
               </div>
+            </div>
+
+            <div className="mt-5 rounded-[1.2rem] border border-blue-200/15 bg-blue-300/[0.08] p-4">
+              <p className="text-xs uppercase tracking-[0.22em] text-blue-100">
+                Why This Counts As CNDC
+              </p>
+              <p className="mt-3 text-sm leading-7 text-slate-100">
+                {currentFlow.cndc_reason}
+              </p>
             </div>
 
             <div className="mt-5 grid gap-3">

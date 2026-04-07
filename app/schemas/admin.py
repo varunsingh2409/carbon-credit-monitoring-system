@@ -62,12 +62,18 @@ class AdminImplementationFlowStep(BaseModel):
     title: str
     source: str
     destination: str
+    subject_focus: str
     protocol: str
     method: str
     endpoint: str
+    transport_stack: str
+    data_format: str
+    security: str
     payload: dict[str, Any] | None = None
+    response_payload: dict[str, Any] | None = None
     stored_tables: list[str] = []
     outcome: str
+    cndc_reason: str
     evidence_points: list[str]
 
 

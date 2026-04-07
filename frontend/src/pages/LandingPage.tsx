@@ -239,10 +239,32 @@ function LandingPage() {
                   <h2 className="mt-4 text-2xl font-bold text-white">
                     {leadFlow?.title ?? "ThingSpeak to FastAPI to verifier workflow"}
                   </h2>
+                  <p className="mt-3 text-sm leading-7 text-slate-300">
+                    {leadFlow?.subject_focus ??
+                      "A step-by-step communication path from external sensor data to verified approval."}
+                  </p>
                   <div className="mt-4 flex items-center gap-3 rounded-[1.1rem] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
                     <span>{leadFlow?.source ?? "Field sensor"}</span>
                     <ArrowRight className="text-slate-500" size={15} />
                     <span>{leadFlow?.destination ?? "ThingSpeak channel"}</span>
+                  </div>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-3">
+                      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">
+                        Transport
+                      </p>
+                      <p className="mt-2 text-sm text-white">
+                        {leadFlow?.transport_stack ?? "HTTPS -> HTTP POST -> TCP/IP"}
+                      </p>
+                    </div>
+                    <div className="rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-3">
+                      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">
+                        Data Format
+                      </p>
+                      <p className="mt-2 text-sm text-white">
+                        {leadFlow?.data_format ?? "ThingSpeak fields and JSON payloads"}
+                      </p>
+                    </div>
                   </div>
                   <code className="mt-4 block overflow-x-auto rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-3 font-mono text-xs text-emerald-100">
                     {leadFlow?.endpoint ?? "https://api.thingspeak.com/update"}

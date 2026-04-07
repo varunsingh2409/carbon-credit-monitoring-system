@@ -251,12 +251,18 @@ export interface AdminImplementationFlowStep {
   title: string;
   source: string;
   destination: string;
+  subject_focus: string;
   protocol: string;
   method: string;
   endpoint: string;
+  transport_stack: string;
+  data_format: string;
+  security: string;
   payload: Record<string, string | number | boolean | null> | null;
+  response_payload: Record<string, string | number | boolean | null> | null;
   stored_tables: string[];
   outcome: string;
+  cndc_reason: string;
   evidence_points: string[];
 }
 

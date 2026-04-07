@@ -13,10 +13,11 @@ export const demoImplementationSummary: AdminImplementationSummary = {
     "/api/verifier/approve/{id}"
   ],
   network_flow: [
-    "ThingSpeak acts as the external communication source for soil measurements.",
-    "FastAPI exposes protected REST endpoints for import, calculation, approval, and dashboard reads.",
-    "React consumes JSON responses from those endpoints and turns them into role-based workflows.",
-    "PostgreSQL keeps the workflow inspectable through linked tables, constraints, indexes, and persisted records."
+    "Communication starts from a sender node such as a field sensor, admin client, or verifier client.",
+    "Messages travel over the Internet using HTTPS and application-layer HTTP requests.",
+    "The system exchanges structured data as ThingSpeak form fields and JSON request-response bodies.",
+    "Security is enforced with channel write authorization and JWT bearer tokens on protected APIs.",
+    "Validated messages are persisted in PostgreSQL, making the communication outcome queryable and auditable."
   ],
   dbms_highlights: [
     "The schema is normalized across users, farmers, farms, seasons, measurements, carbon records, and verification history.",
@@ -42,9 +43,13 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       title: "External Soil Feed Arrives",
       source: "Field sensor or scripted batch sender",
       destination: "ThingSpeak channel",
+      subject_focus: "IoT uplink and source-to-cloud data transmission",
       protocol: "HTTP form write",
       method: "POST",
       endpoint: "https://api.thingspeak.com/update",
+      transport_stack: "HTTPS -> HTTP POST -> TCP/IP -> Internet",
+      data_format: "ThingSpeak field payload (field1-field6)",
+      security: "ThingSpeak channel write key authorizes ingestion",
       payload: {
         field1: 32.4,
         field2: 18.1,
@@ -53,9 +58,15 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         field5: 1680,
         field6: 20
       },
+      response_payload: {
+        entry_id: 1842,
+        status: 200
+      },
       stored_tables: [],
       outcome:
         "ThingSpeak stores a channel feed that becomes the external communication source for the carbon-credit workflow.",
+      cndc_reason:
+        "This step demonstrates sender, receiver, protocol, and structured data transfer across a public network before the application processes anything.",
       evidence_points: [
         "Proves CNDC with real network ingress before the web app touches the data.",
         "Uses a public IoT-style service instead of local mock payloads."
@@ -66,13 +77,24 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       title: "Admin Requests Import",
       source: "Admin panel",
       destination: "FastAPI backend",
+      subject_focus: "Client-server request/response with protected REST API",
       protocol: "HTTPS JSON",
       method: "POST",
       endpoint: "/api/admin/sync-thingspeak",
+      transport_stack: "HTTPS -> JSON REST -> FastAPI service",
+      data_format: "JSON request body and JSON import summary",
+      security: "JWT bearer token with admin role validation",
       payload: { season_id: 302, results: 5 },
+      response_payload: {
+        channel_id: 2789421,
+        imported_count: 5,
+        skipped_count: 0
+      },
       stored_tables: ["soil_measurement", "measurement_result", "nutrient"],
       outcome:
         "FastAPI reads ThingSpeak over HTTP, validates mappings, and writes normalized rows into measurement tables.",
+      cndc_reason:
+        "This step proves authenticated browser-to-server communication and shows that one network request can trigger cloud retrieval plus multiple database writes.",
       evidence_points: [
         "JWT protects the endpoint so only admins can trigger import.",
         "A single request fans out into multiple relational inserts."
@@ -83,13 +105,24 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       title: "Dashboards Read Database State",
       source: "React dashboards",
       destination: "FastAPI REST APIs",
+      subject_focus: "Application-layer REST retrieval for role-based dashboards",
       protocol: "HTTPS JSON",
       method: "GET",
       endpoint: "/api/farmer/dashboard",
+      transport_stack: "HTTPS -> HTTP GET -> JSON response",
+      data_format: "JSON response body consumed by React",
+      security: "JWT bearer token with role-based route checks",
       payload: null,
+      response_payload: {
+        active_seasons: 1,
+        pending_verifications: 1,
+        recentMeasurements: 5
+      },
       stored_tables: ["farm", "season", "soil_measurement", "measurement_result"],
       outcome:
         "Farmer and verifier screens render current measurements and workflow status from live database-backed responses.",
+      cndc_reason:
+        "This step demonstrates classic request-response communication where stored data is serialized into API messages and then rendered in the client.",
       evidence_points: [
         "Shows client-server communication beyond the landing page.",
         "Confirms the DBMS layer drives real UI state."
@@ -100,13 +133,24 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       title: "Carbon Calculation Is Triggered",
       source: "Admin panel",
       destination: "Carbon calculation service",
+      subject_focus: "Service orchestration between UI request and backend computation",
       protocol: "HTTPS JSON",
       method: "POST",
       endpoint: "/api/admin/trigger-carbon-calculation",
+      transport_stack: "HTTPS -> JSON REST -> calculation service -> PostgreSQL",
+      data_format: "JSON request body and calculated result payload",
+      security: "JWT bearer token with admin authorization",
       payload: { season_id: 302 },
+      response_payload: {
+        sequestration_id: 9001,
+        estimated_carbon_credit: 2.07,
+        status: "pending"
+      },
       stored_tables: ["carbon_sequestration", "season"],
       outcome:
         "The backend calculates carbon-credit estimates from organic-carbon evidence and persists a single season-level sequestration record.",
+      cndc_reason:
+        "This step shows remote-service invocation: the browser sends a command, the backend processes data, and a persistent result is returned and stored.",
       evidence_points: [
         "Ties analytical logic directly to relational state transitions.",
         "Creates a verifier-ready work item instead of a transient frontend result."
@@ -117,16 +161,27 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       title: "Verifier Approves Or Rejects",
       source: "Verifier dashboard",
       destination: "Verification workflow",
+      subject_focus: "Role-based approval message with auditable acknowledgement",
       protocol: "HTTPS JSON",
       method: "POST",
       endpoint: "/api/verifier/approve/{id}",
+      transport_stack: "HTTPS -> JSON REST -> verification workflow -> PostgreSQL",
+      data_format: "JSON decision payload and confirmation response",
+      security: "JWT bearer token with verifier authorization",
       payload: {
         approved_carbon_credit: 2.07,
         verifier_comments: "Measurement trail and farm area align with the reported credit."
       },
+      response_payload: {
+        verification_id: 7002,
+        status: "verified",
+        message: "Verification approved"
+      },
       stored_tables: ["carbon_verification", "carbon_sequestration", "season"],
       outcome:
         "A protected approval call stores the decision permanently and updates the overall workflow status for downstream dashboards.",
+      cndc_reason:
+        "This step demonstrates human-in-the-loop communication where an authenticated message produces an acknowledgement and permanent workflow history.",
       evidence_points: [
         "Makes the human-governance step visible in CNDC and DBMS terms.",
         "Persists auditable workflow history instead of only changing UI labels."
