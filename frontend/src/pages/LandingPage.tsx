@@ -65,6 +65,19 @@ function LandingPage() {
     "loading"
   );
 
+  const scrollToSection = (sectionId: string) => {
+    const target = document.getElementById(sectionId);
+    if (!target) {
+      return;
+    }
+
+    const offsetTop = target.getBoundingClientRect().top + window.scrollY - 104;
+    window.scrollTo({
+      top: Math.max(offsetTop, 0),
+      behavior: "smooth"
+    });
+  };
+
   useEffect(() => {
     let isMounted = true;
 
@@ -138,17 +151,18 @@ function LandingPage() {
 
             <nav className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] p-1.5 md:flex">
               {[
-                ["Story", "#story"],
-                ["Proof", "#implementation-proof"],
-                ["Roles", "#roles"]
-              ].map(([label, href]) => (
-                <a
+                ["Story", "story"],
+                ["Proof", "implementation-proof"],
+                ["Roles", "roles"]
+              ].map(([label, sectionId]) => (
+                <button
                   className="rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/[0.08] hover:text-white"
-                  href={href}
                   key={label}
+                  onClick={() => scrollToSection(sectionId)}
+                  type="button"
                 >
                   {label}
-                </a>
+                </button>
               ))}
             </nav>
 
@@ -176,10 +190,14 @@ function LandingPage() {
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <a className="button-primary px-7 py-3.5" href="#implementation-proof">
+              <button
+                className="button-primary px-7 py-3.5"
+                onClick={() => scrollToSection("implementation-proof")}
+                type="button"
+              >
                 Inspect Live Proof
                 <ArrowRight size={17} />
-              </a>
+              </button>
               <Link className="button-secondary px-7 py-3.5" to="/login">
                 Open Workspaces
               </Link>
@@ -352,9 +370,13 @@ function LandingPage() {
               Enter The Platform
               <ArrowRight size={17} />
             </Link>
-            <a className="button-secondary px-7 py-3.5" href="#implementation-proof">
+            <button
+              className="button-secondary px-7 py-3.5"
+              onClick={() => scrollToSection("implementation-proof")}
+              type="button"
+            >
               Review Technical Evidence
-            </a>
+            </button>
           </div>
         </div>
       </section>
