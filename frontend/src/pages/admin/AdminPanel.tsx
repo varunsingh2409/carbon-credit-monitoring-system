@@ -248,7 +248,7 @@ function AdminPanel() {
         {implementationSummary ? (
           <section className="mt-10 space-y-10">
             <ImplementationEvidencePanel
-              description="The admin surface now exposes the same technical evidence as the landing page, so CNDC and DBMS proof stays available during live workflow demonstrations."
+              description="The admin surface presents the same technical evidence as the landing page, so CNDC and DBMS proof remains available during live workflow demonstrations."
               eyebrow="Implementation Control Room"
               summary={implementationSummary}
               title="Inspect the exact CNDC and DBMS evidence behind the workflow"

@@ -68,7 +68,7 @@ function FlowStepper({
             </p>
             <p className="mt-3 text-sm leading-6 text-slate-300">
               {step.source}
-              <span className="mx-2 text-slate-500">→</span>
+              <span className="mx-2 text-slate-500">-&gt;</span>
               {step.destination}
             </p>
           </button>
@@ -183,8 +183,8 @@ function ImplementationEvidencePanel({
                 Real network flow with endpoints, payloads, and outcomes
               </h3>
               <p className="mt-3 text-sm leading-7 text-slate-400">
-                The website now exposes the actual communication path instead of
-                relying on talking points alone.
+                The platform exposes the communication path with its endpoints,
+                payloads, and outcomes in one place.
               </p>
             </div>
           </div>

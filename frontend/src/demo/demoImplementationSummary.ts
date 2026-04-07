@@ -24,7 +24,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
     "Check constraints protect season status, measurement depth, farm area, and verification states.",
     "Unique constraints prevent duplicate season-level sequestration rows and duplicate measurement imports.",
     "Indexes support fast filtering by role, season status, measurement date, and sequestration status.",
-    "The website now surfaces real row previews and exact constraint definitions instead of only descriptive copy."
+    "Row previews, exact constraint definitions, and live query results are available directly inside the website."
   ],
   database_entities: [
     { label: "Users", table_name: "users", count: 3 },
@@ -69,7 +69,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         "This step demonstrates sender, receiver, protocol, and structured data transfer across a public network before the application processes anything.",
       evidence_points: [
         "Proves CNDC with real network ingress before the web app touches the data.",
-        "Uses a public IoT-style service instead of local mock payloads."
+        "Routes external field data through a public IoT-style service before platform import."
       ]
     },
     {
@@ -153,7 +153,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         "This step shows remote-service invocation: the browser sends a command, the backend processes data, and a persistent result is returned and stored.",
       evidence_points: [
         "Ties analytical logic directly to relational state transitions.",
-        "Creates a verifier-ready work item instead of a transient frontend result."
+        "Creates a verifier-ready work item backed by persistent workflow state."
       ]
     },
     {
@@ -184,7 +184,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         "This step demonstrates human-in-the-loop communication where an authenticated message produces an acknowledgement and permanent workflow history.",
       evidence_points: [
         "Makes the human-governance step visible in CNDC and DBMS terms.",
-        "Persists auditable workflow history instead of only changing UI labels."
+        "Stores auditable workflow history in the verification records."
       ]
     }
   ],
@@ -300,7 +300,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       title: "Carbon credit-ready analytical report",
       status: "Implemented",
       evidence:
-        "The platform now exposes an integrated certification-readiness summary plus a faculty-facing analytical report artifact."
+        "The platform includes an integrated certification-readiness summary and a faculty-facing analytical report artifact."
     }
   ],
   table_details: [

@@ -202,7 +202,7 @@ FLOW_STEPS: tuple[AdminImplementationFlowStep, ...] = (
         ),
         evidence_points=[
             "Proves CNDC with real network ingress before the web app touches the data.",
-            "Uses a public IoT-style service instead of local mock payloads.",
+            "Routes external field data through a public IoT-style service before platform import.",
         ],
     ),
     AdminImplementationFlowStep(
@@ -294,7 +294,7 @@ FLOW_STEPS: tuple[AdminImplementationFlowStep, ...] = (
         ),
         evidence_points=[
             "Ties analytical logic directly to relational state transitions.",
-            "Creates a verifier-ready work item instead of a transient frontend result.",
+            "Creates a verifier-ready work item backed by persistent workflow state.",
         ],
     ),
     AdminImplementationFlowStep(
@@ -329,7 +329,7 @@ FLOW_STEPS: tuple[AdminImplementationFlowStep, ...] = (
         ),
         evidence_points=[
             "Makes the human-governance step visible in CNDC and DBMS terms.",
-            "Persists auditable workflow history instead of only changing UI labels.",
+            "Stores auditable workflow history in the verification records.",
         ],
     ),
 )
@@ -537,7 +537,7 @@ def build_implementation_summary(db: Session) -> AdminImplementationSummaryRespo
             "Check constraints protect season status, measurement depth, farm area, and verification states.",
             "Unique constraints prevent duplicate season-level sequestration rows and duplicate measurement imports.",
             "Indexes support fast filtering by role, season status, measurement date, and sequestration status.",
-            "The website now surfaces real row previews and exact constraint definitions instead of only descriptive copy.",
+            "Row previews, exact constraint definitions, and live query results are available directly inside the website.",
         ],
         database_entities=database_entities,
         cndc_flow=list(FLOW_STEPS),

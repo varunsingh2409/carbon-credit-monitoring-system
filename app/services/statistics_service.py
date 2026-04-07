@@ -506,6 +506,6 @@ def build_deliverable_statuses() -> list[AdminDeliverableStatus]:
         AdminDeliverableStatus(
             title="Carbon credit-ready analytical report",
             status="Implemented",
-            evidence="The platform now exposes an integrated certification-readiness summary plus a faculty-facing analytical report artifact.",
+            evidence="The platform includes an integrated certification-readiness summary and a faculty-facing analytical report artifact.",
         ),
     ]

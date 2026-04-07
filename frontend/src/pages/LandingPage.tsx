@@ -34,7 +34,7 @@ const roleSurfaces = [
     icon: ShieldCheck,
     title: "Admin Workspace",
     description:
-      "Imports ThingSpeak data, triggers carbon calculation, and now exposes the CNDC and DBMS proof inside the product."
+      "Imports ThingSpeak data, triggers carbon calculation, and presents the CNDC and DBMS evidence inside the product."
   }
 ];
 
@@ -180,13 +180,13 @@ function LandingPage() {
             </p>
 
             <h1 className="mt-6 max-w-5xl text-5xl font-extrabold leading-[0.94] text-white sm:text-6xl lg:text-[5.4rem]">
-              Verification should expose the network trace and the database truth.
+              Carbon-credit verification with visible network trace and database truth.
             </h1>
 
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-              This redesign keeps carbon-credit verification at the center, but
-              makes CNDC and DBMS proof part of the actual product. Visitors can
-              now inspect communication flow, query surfaces, table rows,
+              The platform centers carbon-credit verification and presents CNDC
+              and DBMS evidence inside the product. Visitors can inspect
+              communication flow, query surfaces, table rows,
               constraints, and approval evidence without leaving the website.
             </p>
 
@@ -332,7 +332,7 @@ function LandingPage() {
         {implementationSummary ? (
           <ImplementationEvidencePanel
             anchorId="implementation-proof"
-            description="The evidence surface is now built into the website so evaluators can inspect the CNDC and DBMS implementation directly, not just hear it explained."
+            description="The evidence surface is built into the website so evaluators can inspect the CNDC and DBMS implementation directly inside the product."
             eyebrow="Implementation Evidence"
             summary={implementationSummary}
             title="Queryable proof for CNDC and DBMS"
@@ -379,9 +379,9 @@ function LandingPage() {
               </h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-slate-400">
-              The website still centers carbon-credit verification, but each
-              role now sits inside a clearer technical narrative that can be
-              demonstrated end to end.
+              The platform centers carbon-credit verification while giving each
+              role a clear technical context that can be demonstrated end to
+              end.
             </p>
           </div>
 
@@ -422,13 +422,13 @@ function LandingPage() {
             <div className="max-w-3xl">
               <p className="eyebrow">Closing Position</p>
               <h2 className="mt-3 text-3xl font-extrabold text-white sm:text-4xl">
-                A carbon-credit site that now proves its own implementation.
+                A carbon-credit platform with visible implementation proof.
               </h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-slate-200">
-              The redesign does not change the purpose of the product. It
-              changes the confidence of the explanation by putting the proof on
-              screen.
+              Verification, communication, and database evidence are presented
+              together so the explanation stays aligned with the implemented
+              system.
             </p>
           </div>
 
