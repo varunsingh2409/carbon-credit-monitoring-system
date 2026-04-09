@@ -18,3 +18,10 @@ def test_health_endpoint_reports_ok() -> None:
 
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
+
+
+def test_implementation_artifact_endpoint_serves_real_seed_sql() -> None:
+    response = client.get("/api/implementation/artifacts/seed-demo-sql")
+
+    assert response.status_code == 200
+    assert "Resetting Carbon Credit demo data" in response.text

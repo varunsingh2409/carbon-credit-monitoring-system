@@ -297,6 +297,17 @@ export interface AdminDeliverableStatus {
   evidence: string;
 }
 
+export interface AdminImplementationArtifact {
+  artifact_id: string;
+  title: string;
+  description: string;
+  category: string;
+  subject_focus: string;
+  file_name: string;
+  href: string;
+  used_in_live_app: boolean;
+}
+
 export interface AdminImplementationTableDetail {
   label: string;
   table_name: string;
@@ -341,6 +352,7 @@ export interface AdminImplementationSummary {
   cndc_flow: AdminImplementationFlowStep[];
   inferential_summary: AdminInferentialSummary;
   certification_report: AdminCertificationReportSummary;
+  implementation_artifacts: AdminImplementationArtifact[];
   deliverable_statuses: AdminDeliverableStatus[];
   table_details: AdminImplementationTableDetail[];
 }

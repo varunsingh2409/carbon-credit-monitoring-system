@@ -265,6 +265,85 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       "The 95% bootstrap interval for the credit estimate is 1.89 to 2.24."
     ]
   },
+  implementation_artifacts: [
+    {
+      artifact_id: "bootstrap-db",
+      title: "Database bootstrap script",
+      description:
+        "This is the live bootstrap used by the project. It creates the PostgreSQL schema from the SQLAlchemy models before applying the demo seed SQL.",
+      category: "DBMS Core",
+      subject_focus: "DBMS",
+      file_name: "bootstrap_db.py",
+      href: "/api/implementation/artifacts/bootstrap-db",
+      used_in_live_app: true
+    },
+    {
+      artifact_id: "seed-demo-sql",
+      title: "Database seed SQL",
+      description:
+        "This idempotent SQL file reseeds the actual demo users, nutrients, farms, seasons, measurements, and verification history used during local demonstrations.",
+      category: "DBMS Core",
+      subject_focus: "DBMS",
+      file_name: "seed_demo.sql",
+      href: "/api/implementation/artifacts/seed-demo-sql",
+      used_in_live_app: true
+    },
+    {
+      artifact_id: "er-diagram",
+      title: "Soil carbon ER diagram",
+      description:
+        "Entity-relationship reference for the same normalized tables surfaced in the admin database evidence panel.",
+      category: "Schema Design",
+      subject_focus: "DBMS",
+      file_name: "SOIL_CARBON_ER_DIAGRAM.md",
+      href: "/api/implementation/artifacts/er-diagram",
+      used_in_live_app: false
+    },
+    {
+      artifact_id: "cndc-note",
+      title: "CNDC security and authenticity note",
+      description:
+        "Faculty-facing note that explains the network path, API protection, and authenticity controls behind ThingSpeak ingestion and role-based operations.",
+      category: "CNDC Evidence",
+      subject_focus: "CNDC",
+      file_name: "CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md",
+      href: "/api/implementation/artifacts/cndc-note",
+      used_in_live_app: false
+    },
+    {
+      artifact_id: "r-analysis",
+      title: "R analysis script",
+      description:
+        "Supporting statistical script for the wider analytics layer that complements the live inferential summary inside the app.",
+      category: "Analytics",
+      subject_focus: "Statistics",
+      file_name: "soil_carbon_analysis.R",
+      href: "/api/implementation/artifacts/r-analysis",
+      used_in_live_app: false
+    },
+    {
+      artifact_id: "analytical-report",
+      title: "Carbon credit analytical report",
+      description:
+        "Presentation-ready report artifact that combines the carbon-credit result, supporting analytics, and certification framing.",
+      category: "Reporting",
+      subject_focus: "Analytics",
+      file_name: "CARBON_CREDIT_ANALYTICAL_REPORT.md",
+      href: "/api/implementation/artifacts/analytical-report",
+      used_in_live_app: false
+    },
+    {
+      artifact_id: "integration-map",
+      title: "Project integration map",
+      description:
+        "Quick reference that shows how CNDC, DBMS, analytics, and reporting pieces fit together for the overall subject integration story.",
+      category: "Integration",
+      subject_focus: "CNDC + DBMS",
+      file_name: "SUBMISSION_MAP.md",
+      href: "/api/implementation/artifacts/integration-map",
+      used_in_live_app: false
+    }
+  ],
   deliverable_statuses: [
     {
       title: "Secure sensor-network and data transmission design",

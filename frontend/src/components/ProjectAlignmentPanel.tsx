@@ -1,4 +1,5 @@
 import {
+  ArrowUpRight,
   BarChart3,
   CheckCircle2,
   Database,
@@ -15,6 +16,7 @@ interface ProjectAlignmentPanelProps {
   eyebrow?: string;
   title: string;
   description: string;
+  showImplementationArtifacts?: boolean;
 }
 
 const formatMetric = (value: number) => {
@@ -30,7 +32,8 @@ function ProjectAlignmentPanel({
   anchorId,
   eyebrow,
   title,
-  description
+  description,
+  showImplementationArtifacts = false
 }: ProjectAlignmentPanelProps) {
   const topCorrelation = summary.inferential_summary.correlations[0] ?? null;
   const { confidence_interval: confidenceInterval, hypothesis_test: hypothesisTest, regression } =
@@ -382,6 +385,73 @@ function ProjectAlignmentPanel({
             </div>
           </div>
         </div>
+
+        {showImplementationArtifacts && summary.implementation_artifacts.length > 0 ? (
+          <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
+            <div className="flex items-start gap-3">
+              <div className="rounded-2xl bg-white/[0.08] p-3 text-slate-100">
+                <Database size={18} />
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
+                  Implementation Artifacts
+                </p>
+                <h4 className="mt-3 text-2xl font-bold text-white">
+                  Open the actual files behind the database and integration story
+                </h4>
+                <p className="mt-3 max-w-4xl text-sm leading-7 text-slate-300">
+                  The live app creates the schema through the bootstrap script and
+                  then applies the seed SQL below. The remaining links support the
+                  DBMS, CNDC, analytics, and reporting explanation without turning
+                  the interface into a changelog.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-5 grid gap-4 xl:grid-cols-2">
+              {summary.implementation_artifacts.map((item) => (
+                <a
+                  className="group rounded-[1.2rem] border border-white/10 bg-white/[0.05] p-4 transition hover:border-emerald-100/30 hover:bg-white/[0.07]"
+                  href={item.href}
+                  key={item.artifact_id}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">
+                        {item.category}
+                      </p>
+                      <h5 className="mt-2 text-lg font-semibold text-white transition group-hover:text-emerald-100">
+                        {item.title}
+                      </h5>
+                    </div>
+                    <ArrowUpRight
+                      className="shrink-0 text-slate-400 transition group-hover:text-emerald-100"
+                      size={18}
+                    />
+                  </div>
+
+                  <p className="mt-3 text-sm leading-7 text-slate-300">
+                    {item.description}
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-300">
+                      {item.subject_focus}
+                    </span>
+                    <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-300">
+                      {item.file_name}
+                    </span>
+                    <span className="rounded-full border border-emerald-100/20 bg-emerald-100/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-emerald-100">
+                      {item.used_in_live_app ? "Used by live app" : "Supporting artifact"}
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         <div className="mt-6 grid gap-4">
           {summary.deliverable_statuses.map((item) => (

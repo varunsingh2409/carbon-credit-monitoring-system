@@ -2,8 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import {
   Activity,
   BarChart3,
-  Download,
-  FileDown,
   PlayCircle,
   Radio,
   Users,
@@ -256,6 +254,7 @@ function AdminPanel() {
             <ProjectAlignmentPanel
               description="This is a supporting panel for the broader project brief. For your actual semester evaluation, the main explanation should still stay on the CNDC and DBMS evidence above."
               eyebrow="Supporting Panel"
+              showImplementationArtifacts
               summary={implementationSummary}
               title="Optional analytics and submission support"
             />
@@ -465,39 +464,6 @@ function AdminPanel() {
               >
                 Manage Users
               </button>
-            </section>
-
-            <section className="surface-panel p-6">
-              <div className="flex items-center gap-3">
-                <div className="rounded-2xl bg-white/10 p-3 text-accent-purple">
-                  <FileDown size={18} />
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-white">System Reports</h2>
-                  <p className="text-sm text-slate-400">
-                    Export summaries for downstream stakeholders
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                <button
-                  className="button-secondary rounded-[1.25rem] px-5 py-3"
-                  onClick={() => toast("CSV export will be connected to a report endpoint.")}
-                  type="button"
-                >
-                  <Download size={16} />
-                  Export CSV
-                </button>
-                <button
-                  className="button-secondary rounded-[1.25rem] px-5 py-3"
-                  onClick={() => toast("PDF export will be connected to a report endpoint.")}
-                  type="button"
-                >
-                  <FileDown size={16} />
-                  Export PDF
-                </button>
-              </div>
             </section>
 
             <section className="rounded-[2rem] border border-accent-green/20 bg-gradient-to-br from-accent-green/[0.12] to-accent-blue/[0.12] p-6 shadow-[0_18px_50px_rgba(101,184,165,0.1)]">

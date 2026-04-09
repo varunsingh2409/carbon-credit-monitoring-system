@@ -108,6 +108,17 @@ class AdminDeliverableStatus(BaseModel):
     evidence: str
 
 
+class AdminImplementationArtifact(BaseModel):
+    artifact_id: str
+    title: str
+    description: str
+    category: str
+    subject_focus: str
+    file_name: str
+    href: str
+    used_in_live_app: bool = False
+
+
 class AdminImplementationTableDetail(BaseModel):
     label: str
     table_name: str
@@ -152,6 +163,7 @@ class AdminImplementationSummaryResponse(BaseModel):
     cndc_flow: list[AdminImplementationFlowStep]
     inferential_summary: AdminInferentialSummary
     certification_report: AdminCertificationReportSummary
+    implementation_artifacts: list[AdminImplementationArtifact]
     deliverable_statuses: list[AdminDeliverableStatus]
     table_details: list[AdminImplementationTableDetail]
 

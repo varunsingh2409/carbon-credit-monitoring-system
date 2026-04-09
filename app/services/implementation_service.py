@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date, datetime
 from decimal import Decimal
+from pathlib import Path
 from typing import Any
 
 from sqlalchemy import func, select
@@ -23,6 +24,7 @@ from app.models.season import Season
 from app.models.user import User
 from app.schemas.admin import (
     AdminCertificationReportSummary,
+    AdminImplementationArtifact,
     AdminImplementationColumn,
     AdminImplementationConstraint,
     AdminImplementationEntityCount,
@@ -39,6 +41,9 @@ from app.services.statistics_service import (
 )
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+
 @dataclass(frozen=True)
 class _TableBlueprint:
     label: str
@@ -48,6 +53,17 @@ class _TableBlueprint:
     sort_column: str
     sort_desc: bool = False
     limit: int = 8
+
+
+@dataclass(frozen=True)
+class ImplementationArtifactBlueprint:
+    artifact_id: str
+    relative_path: str
+    title: str
+    description: str
+    category: str
+    subject_focus: str
+    used_in_live_app: bool = False
 
 
 TABLE_BLUEPRINTS: tuple[_TableBlueprint, ...] = (
@@ -165,6 +181,89 @@ TABLE_BLUEPRINTS: tuple[_TableBlueprint, ...] = (
         ),
         sort_column="verification_id",
         sort_desc=True,
+    ),
+)
+
+
+ARTIFACT_BLUEPRINTS: tuple[ImplementationArtifactBlueprint, ...] = (
+    ImplementationArtifactBlueprint(
+        artifact_id="bootstrap-db",
+        relative_path="scripts/bootstrap_db.py",
+        title="Database bootstrap script",
+        description=(
+            "This is the live bootstrap used by the project. It creates the PostgreSQL schema "
+            "from the SQLAlchemy models before applying the demo seed SQL."
+        ),
+        category="DBMS Core",
+        subject_focus="DBMS",
+        used_in_live_app=True,
+    ),
+    ImplementationArtifactBlueprint(
+        artifact_id="seed-demo-sql",
+        relative_path="scripts/seed_demo.sql",
+        title="Database seed SQL",
+        description=(
+            "This idempotent SQL file reseeds the actual demo users, nutrients, farms, seasons, "
+            "measurements, and verification history used during local demonstrations."
+        ),
+        category="DBMS Core",
+        subject_focus="DBMS",
+        used_in_live_app=True,
+    ),
+    ImplementationArtifactBlueprint(
+        artifact_id="er-diagram",
+        relative_path="deliverables/SOIL_CARBON_ER_DIAGRAM.md",
+        title="Soil carbon ER diagram",
+        description=(
+            "Entity-relationship reference for the same normalized tables surfaced in the admin "
+            "database evidence panel."
+        ),
+        category="Schema Design",
+        subject_focus="DBMS",
+    ),
+    ImplementationArtifactBlueprint(
+        artifact_id="cndc-note",
+        relative_path="deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md",
+        title="CNDC security and authenticity note",
+        description=(
+            "Faculty-facing note that explains the network path, API protection, and authenticity "
+            "controls behind ThingSpeak ingestion and role-based operations."
+        ),
+        category="CNDC Evidence",
+        subject_focus="CNDC",
+    ),
+    ImplementationArtifactBlueprint(
+        artifact_id="r-analysis",
+        relative_path="deliverables/r_analysis/soil_carbon_analysis.R",
+        title="R analysis script",
+        description=(
+            "Supporting statistical script for the wider analytics layer that complements the live "
+            "inferential summary inside the app."
+        ),
+        category="Analytics",
+        subject_focus="Statistics",
+    ),
+    ImplementationArtifactBlueprint(
+        artifact_id="analytical-report",
+        relative_path="deliverables/CARBON_CREDIT_ANALYTICAL_REPORT.md",
+        title="Carbon credit analytical report",
+        description=(
+            "Presentation-ready report artifact that combines the carbon-credit result, supporting "
+            "analytics, and certification framing."
+        ),
+        category="Reporting",
+        subject_focus="Analytics",
+    ),
+    ImplementationArtifactBlueprint(
+        artifact_id="integration-map",
+        relative_path="deliverables/SUBMISSION_MAP.md",
+        title="Project integration map",
+        description=(
+            "Quick reference that shows how CNDC, DBMS, analytics, and reporting pieces fit "
+            "together for the overall subject integration story."
+        ),
+        category="Integration",
+        subject_focus="CNDC + DBMS",
     ),
 )
 
@@ -333,6 +432,53 @@ FLOW_STEPS: tuple[AdminImplementationFlowStep, ...] = (
         ],
     ),
 )
+
+
+def get_implementation_artifact_blueprint(
+    artifact_id: str,
+) -> ImplementationArtifactBlueprint | None:
+    return next(
+        (artifact for artifact in ARTIFACT_BLUEPRINTS if artifact.artifact_id == artifact_id),
+        None,
+    )
+
+
+def get_implementation_artifact_path(artifact_id: str) -> Path | None:
+    artifact = get_implementation_artifact_blueprint(artifact_id)
+    if artifact is None:
+        return None
+
+    artifact_path = (PROJECT_ROOT / artifact.relative_path).resolve()
+    try:
+        artifact_path.relative_to(PROJECT_ROOT)
+    except ValueError:
+        return None
+
+    return artifact_path if artifact_path.is_file() else None
+
+
+def _build_implementation_artifacts() -> list[AdminImplementationArtifact]:
+    artifacts: list[AdminImplementationArtifact] = []
+
+    for artifact in ARTIFACT_BLUEPRINTS:
+        artifact_path = get_implementation_artifact_path(artifact.artifact_id)
+        if artifact_path is None:
+            continue
+
+        artifacts.append(
+            AdminImplementationArtifact(
+                artifact_id=artifact.artifact_id,
+                title=artifact.title,
+                description=artifact.description,
+                category=artifact.category,
+                subject_focus=artifact.subject_focus,
+                file_name=artifact_path.name,
+                href=f"/api/implementation/artifacts/{artifact.artifact_id}",
+                used_in_live_app=artifact.used_in_live_app,
+            )
+        )
+
+    return artifacts
 
 
 def _serialize_value(value: Any) -> Any:
@@ -543,6 +689,7 @@ def build_implementation_summary(db: Session) -> AdminImplementationSummaryRespo
         cndc_flow=list(FLOW_STEPS),
         inferential_summary=inferential_summary,
         certification_report=certification_report,
+        implementation_artifacts=_build_implementation_artifacts(),
         deliverable_statuses=build_deliverable_statuses(),
         table_details=table_details,
     )
