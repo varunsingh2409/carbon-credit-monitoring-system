@@ -82,6 +82,7 @@ Show:
 - ThingSpeak sync
 - carbon calculation
 - implementation control room
+- implementation artifact links for the live bootstrap, seed SQL, and faculty files
 - optional supporting analytics panel if needed
 
 Say:
@@ -146,10 +147,14 @@ One-line answer:
 
 Faculty deliverable files:
 
+- `scripts/bootstrap_db.py`
+- `scripts/seed_demo.sql`
 - `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
 - `deliverables/SOIL_CARBON_ER_DIAGRAM.md`
 - `deliverables/r_analysis/soil_carbon_analysis.R`
 - `deliverables/CARBON_CREDIT_ANALYTICAL_REPORT.md`
+
+Admin implementation-artifact links open these same files directly from the local app.
 
 Reset demo data:
 

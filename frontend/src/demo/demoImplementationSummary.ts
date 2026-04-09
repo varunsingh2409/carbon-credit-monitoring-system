@@ -1,5 +1,17 @@
 import type { AdminImplementationSummary } from "@/types";
 
+const demoArtifactHref = (fileName: string) => {
+  if (typeof window === "undefined") {
+    return `/implementation-artifacts/${fileName}`;
+  }
+
+  if (import.meta.env.DEV) {
+    return `${window.location.origin}/implementation-artifacts/${fileName}`;
+  }
+
+  return new URL(`../implementation-artifacts/${fileName}`, import.meta.url).toString();
+};
+
 export const demoImplementationSummary: AdminImplementationSummary = {
   thingspeak_base_url: "https://api.thingspeak.com",
   thingspeak_channel_id: 2789421,
@@ -274,7 +286,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       category: "DBMS Core",
       subject_focus: "DBMS",
       file_name: "bootstrap_db.py",
-      href: "/api/implementation/artifacts/bootstrap-db",
+      href: demoArtifactHref("bootstrap_db.py"),
       used_in_live_app: true
     },
     {
@@ -285,7 +297,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       category: "DBMS Core",
       subject_focus: "DBMS",
       file_name: "seed_demo.sql",
-      href: "/api/implementation/artifacts/seed-demo-sql",
+      href: demoArtifactHref("seed_demo.sql"),
       used_in_live_app: true
     },
     {
@@ -296,7 +308,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       category: "Schema Design",
       subject_focus: "DBMS",
       file_name: "SOIL_CARBON_ER_DIAGRAM.md",
-      href: "/api/implementation/artifacts/er-diagram",
+      href: demoArtifactHref("SOIL_CARBON_ER_DIAGRAM.md"),
       used_in_live_app: false
     },
     {
@@ -307,7 +319,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       category: "CNDC Evidence",
       subject_focus: "CNDC",
       file_name: "CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md",
-      href: "/api/implementation/artifacts/cndc-note",
+      href: demoArtifactHref("CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md"),
       used_in_live_app: false
     },
     {
@@ -318,7 +330,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       category: "Analytics",
       subject_focus: "Statistics",
       file_name: "soil_carbon_analysis.R",
-      href: "/api/implementation/artifacts/r-analysis",
+      href: demoArtifactHref("soil_carbon_analysis.R"),
       used_in_live_app: false
     },
     {
@@ -329,7 +341,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       category: "Reporting",
       subject_focus: "Analytics",
       file_name: "CARBON_CREDIT_ANALYTICAL_REPORT.md",
-      href: "/api/implementation/artifacts/analytical-report",
+      href: demoArtifactHref("CARBON_CREDIT_ANALYTICAL_REPORT.md"),
       used_in_live_app: false
     },
     {
@@ -340,7 +352,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       category: "Integration",
       subject_focus: "CNDC + DBMS",
       file_name: "SUBMISSION_MAP.md",
-      href: "/api/implementation/artifacts/integration-map",
+      href: demoArtifactHref("SUBMISSION_MAP.md"),
       used_in_live_app: false
     }
   ],

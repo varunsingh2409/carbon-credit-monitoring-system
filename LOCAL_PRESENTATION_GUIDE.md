@@ -80,15 +80,14 @@ These features are ready and safe to demonstrate:
 15. CNDC trace explorer inside the app
 16. DBMS query lab inside the app
 17. optional supporting analytics and submission panel inside the app
+18. implementation artifact links for the live bootstrap, seed SQL, and faculty files
 
 ## 4. What Exists But Should Not Be Presented As Fully Finished
 
 These parts exist in the UI, but are still placeholders or partial extensions:
 
 1. `Forgot password`
-2. `Export CSV`
-3. `Export PDF`
-4. full user-management CRUD
+2. full user-management CRUD
 
 If someone clicks one of these, say:
 
@@ -194,6 +193,10 @@ Frontend folder:
 Database reset file:
 
 `C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\scripts\seed_demo.sql`
+
+Database bootstrap file:
+
+`C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\scripts\bootstrap_db.py`
 
 ThingSpeak demo sender:
 
@@ -577,12 +580,12 @@ Show:
 6. CNDC trace
 7. DBMS query lab
 8. User Management modal
-9. System Reports section
+9. implementation artifact links for bootstrap, seed SQL, and deliverables
 10. System Status
 
 What to say:
 
-> The admin panel is the operational control center. It shows platform health, triggers workflows, and includes the same technical evidence explorer as the landing page.
+> The admin panel is the operational control center. It shows platform health, triggers workflows, includes the same technical evidence explorer as the landing page, and opens the real bootstrap, seed, and deliverable files directly when faculty asks for implementation artifacts.
 
 CNDC relevance:
 

@@ -94,6 +94,7 @@ Main tables:
 - farmer dashboard with farms, seasons, measurements, and carbon outcomes
 - verifier dashboard with pending review workflow and evidence details
 - admin panel with statistics, ThingSpeak sync, carbon calculation, and user visibility
+- admin support panel with direct links to the live database bootstrap, demo seed SQL, and faculty artifacts
 - landing page with embedded technical proof
 - CNDC trace explorer showing real communication flow
 - DBMS query lab showing table rows, constraints, indexes, and schema details
@@ -158,6 +159,7 @@ Admin:
 Technical proof:
 
 - `GET /api/implementation/evidence`
+- `GET /api/implementation/artifacts/{artifact_id}`
 
 ## 9. Technology Stack
 
@@ -218,6 +220,8 @@ Faculty-facing submission files are kept in:
 - `deliverables/SUBMISSION_MAP.md`
 
 These files support the local app demonstration. They are secondary to the CNDC and DBMS proof shown in the app.
+
+The admin panel now exposes direct artifact links for the real schema/bootstrap script, the real demo seed SQL, and these supporting deliverables so you can open them during viva or faculty questions without leaving the app context.
 
 ## 12. Quick Local Start
 

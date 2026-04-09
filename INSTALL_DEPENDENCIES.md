@@ -65,9 +65,12 @@ Useful backend URLs:
 - `http://127.0.0.1:8000/health`
 - `http://127.0.0.1:8000/docs`
 - `http://127.0.0.1:8000/api/implementation/evidence`
+- `http://127.0.0.1:8000/api/implementation/artifacts/seed-demo-sql`
 
 Faculty deliverable files:
 
+- `scripts/bootstrap_db.py`
+- `scripts/seed_demo.sql`
 - `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
 - `deliverables/SOIL_CARBON_ER_DIAGRAM.md`
 - `deliverables/r_analysis/soil_carbon_analysis.R`
@@ -160,6 +163,7 @@ Use this checklist before the actual presentation:
 - backend `/health` returns `{"status":"ok"}`
 - backend `/docs` opens
 - backend `/api/implementation/evidence` returns CNDC flow and table details, with optional supporting analytics if needed
+- admin support panel opens the implementation artifact links for the live bootstrap and seed SQL
 - frontend opens at `http://localhost:5173`
 - landing page shows the implementation evidence explorer and presents CNDC/DBMS as the main story
 - farmer login works
@@ -221,6 +225,8 @@ Copy-Item .\frontend\dist\* .\docs -Recurse -Force
 Copy-Item .\docs\index.html .\docs\404.html -Force
 if (-not (Test-Path .\docs\.nojekyll)) { New-Item .\docs\.nojekyll -ItemType File | Out-Null }
 ```
+
+The published build also carries the static implementation-artifact copies from `frontend\public\implementation-artifacts`, so the demo website can open the same files without a live backend.
 
 Commit and push:
 

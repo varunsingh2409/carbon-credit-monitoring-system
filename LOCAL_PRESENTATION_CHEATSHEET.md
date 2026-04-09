@@ -120,7 +120,7 @@ The verifier reviews evidence before a carbon claim is accepted.
 
 ### Admin
 
-The admin imports data, triggers calculation, monitors the platform, and uses the implementation control room to explain the technical proof.
+The admin imports data, triggers calculation, monitors the platform, and uses the implementation control room plus the artifact links for bootstrap SQL support and faculty files.
 
 ### CNDC
 
@@ -197,9 +197,7 @@ estimated credit = (net carbon increase x farm area x 3.67) / 1000
 ## 16. Do Not Demo These As Finished Features
 
 1. forgot password
-2. export CSV
-3. export PDF
-4. full user-management CRUD
+2. full user-management CRUD
 
 ## 17. Quick Answers
 
