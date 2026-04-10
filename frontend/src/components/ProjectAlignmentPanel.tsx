@@ -27,6 +27,26 @@ const formatMetric = (value: number) => {
   return value.toFixed(4).replace(/0+$/, "").replace(/\.$/, "");
 };
 
+const getArtifactHref = (href: string) => {
+  if (/^[a-zA-Z][a-zA-Z\d+.-]*:/.test(href)) {
+    return href;
+  }
+
+  if (href.startsWith("/api/")) {
+    const rawApiUrl =
+      import.meta.env.VITE_API_URL ??
+      (typeof window !== "undefined" ? window.location.origin : "http://localhost:8000");
+    const backendOrigin = rawApiUrl.replace(/\/api\/?$/, "").replace(/\/$/, "");
+    return `${backendOrigin}${href}`;
+  }
+
+  if (typeof window !== "undefined") {
+    return new URL(href, window.location.origin).toString();
+  }
+
+  return href;
+};
+
 function ProjectAlignmentPanel({
   summary,
   anchorId,
@@ -412,7 +432,7 @@ function ProjectAlignmentPanel({
               {summary.implementation_artifacts.map((item) => (
                 <a
                   className="group rounded-[1.2rem] border border-white/10 bg-white/[0.05] p-4 transition hover:border-emerald-100/30 hover:bg-white/[0.07]"
-                  href={item.href}
+                  href={getArtifactHref(item.href)}
                   key={item.artifact_id}
                   rel="noreferrer"
                   target="_blank"
