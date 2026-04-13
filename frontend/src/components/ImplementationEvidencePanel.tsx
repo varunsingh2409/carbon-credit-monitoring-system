@@ -34,6 +34,55 @@ const formatCellValue = (value: boolean | number | string | null) => {
   return String(value);
 };
 
+const normalizationStages = [
+  {
+    label: "1NF",
+    title: "Atomic soil readings",
+    description:
+      "Measurement values are stored as one nutrient per row instead of repeating nutrient columns in the measurement event.",
+    proof: "soil_measurement + measurement_result"
+  },
+  {
+    label: "2NF",
+    title: "Whole-key dependency",
+    description:
+      "The composite key (measurement_id, nutrient_id) determines measured_value; nutrient metadata is kept outside that table.",
+    proof: "(measurement_id, nutrient_id) -> measured_value"
+  },
+  {
+    label: "3NF",
+    title: "No transitive metadata drift",
+    description:
+      "Units and optimal ranges depend on nutrient_id, so they live in nutrient rather than beside every recorded value.",
+    proof: "nutrient_id -> unit, optimal ranges"
+  }
+];
+
+const normalizationFlow = [
+  {
+    table: "soil_measurement",
+    role: "event header",
+    dependency: "measurement_id -> farm, season, date, depth"
+  },
+  {
+    table: "measurement_result",
+    role: "value bridge",
+    dependency: "(measurement_id, nutrient_id) -> measured_value"
+  },
+  {
+    table: "nutrient",
+    role: "lookup catalog",
+    dependency: "nutrient_id -> name, unit, optimal range"
+  }
+];
+
+const functionalDependencyExamples = [
+  "username -> user_id, role",
+  "season_id -> carbon_sequestration",
+  "sequestration_id -> carbon_verification",
+  "farm_id, season_id, measurement_date, depth_cm -> measurement_id"
+];
+
 function FlowStepper({
   currentFlow,
   flowSteps,
@@ -380,6 +429,103 @@ function ImplementationEvidencePanel({
                 Each tab shows the exact query being surfaced, the table schema,
                 the constraint set, and the current query result sample.
               </p>
+            </div>
+          </div>
+
+          <div className="mt-6 overflow-hidden rounded-[1.8rem] border border-emerald-100/15 bg-[radial-gradient(circle_at_top_left,rgba(101,184,165,0.18),transparent_34%),linear-gradient(135deg,rgba(9,18,27,0.82),rgba(20,32,43,0.95))] p-5 sm:p-6">
+            <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+              <div className="max-w-3xl">
+                <p className="text-xs uppercase tracking-[0.24em] text-emerald-100">
+                  Normalization Atlas
+                </p>
+                <h4 className="mt-3 text-2xl font-bold text-white">
+                  From raw sensor-style rows to a clean relational shape
+                </h4>
+                <p className="mt-3 text-sm leading-7 text-slate-300">
+                  The database avoids one wide measurement table. It separates the
+                  measurement event, nutrient value, and nutrient definition so
+                  functional dependencies stay visible and update anomalies stay low.
+                </p>
+              </div>
+              <div className="rounded-full border border-emerald-100/20 bg-emerald-100/10 px-4 py-2 text-xs uppercase tracking-[0.2em] text-emerald-100">
+                1NF -&gt; 2NF -&gt; 3NF
+              </div>
+            </div>
+
+            <div className="mt-6 grid gap-4 xl:grid-cols-[0.88fr_1.12fr]">
+              <div className="grid gap-3">
+                {normalizationStages.map((stage) => (
+                  <div
+                    className="rounded-[1.3rem] border border-white/10 bg-white/[0.05] p-4"
+                    key={stage.label}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100/10 font-mono text-sm font-bold text-emerald-100">
+                        {stage.label}
+                      </div>
+                      <div>
+                        <h5 className="text-base font-semibold text-white">
+                          {stage.title}
+                        </h5>
+                        <p className="mt-2 text-sm leading-7 text-slate-300">
+                          {stage.description}
+                        </p>
+                        <code className="mt-3 inline-flex rounded-full border border-white/10 bg-[#09121b] px-3 py-1.5 font-mono text-xs text-emerald-100">
+                          {stage.proof}
+                        </code>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="rounded-[1.3rem] border border-white/10 bg-white/[0.05] p-4">
+                <div className="flex items-center gap-3">
+                  <Workflow className="text-emerald-100" size={18} />
+                  <p className="text-xs uppercase tracking-[0.22em] text-slate-300">
+                    Measurement Decomposition
+                  </p>
+                </div>
+
+                <div className="mt-5 grid gap-3 lg:grid-cols-[1fr_auto_1fr_auto_1fr] lg:items-stretch">
+                  {normalizationFlow.map((item, index) => (
+                    <div className="contents" key={item.table}>
+                      <div className="rounded-[1.2rem] border border-white/10 bg-[#09121b]/80 p-4">
+                        <p className="font-mono text-sm font-semibold text-white">
+                          {item.table}
+                        </p>
+                        <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-400">
+                          {item.role}
+                        </p>
+                        <p className="mt-4 font-mono text-xs leading-6 text-emerald-100">
+                          {item.dependency}
+                        </p>
+                      </div>
+                      {index < normalizationFlow.length - 1 ? (
+                        <div className="hidden items-center px-1 text-emerald-100 lg:flex">
+                          <ArrowRight size={18} />
+                        </div>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-5 rounded-[1.2rem] border border-blue-200/15 bg-blue-300/[0.08] p-4">
+                  <p className="text-xs uppercase tracking-[0.22em] text-blue-100">
+                    Functional Dependency Proof Lines
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {functionalDependencyExamples.map((dependency) => (
+                      <code
+                        className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 font-mono text-xs text-slate-100"
+                        key={dependency}
+                      >
+                        {dependency}
+                      </code>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
