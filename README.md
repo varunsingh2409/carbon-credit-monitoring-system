@@ -213,7 +213,9 @@ carbon_credit_backend/
 Faculty-facing submission files are kept in:
 
 - `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
+- `deliverables/CNDC_OSI_MODEL_MAPPING.md`
 - `deliverables/SOIL_CARBON_ER_DIAGRAM.md`
+- `deliverables/DBMS_NORMALIZATION_AND_FUNCTIONAL_DEPENDENCIES.md`
 - `deliverables/r_analysis/soil_carbon_measurements.csv`
 - `deliverables/r_analysis/soil_carbon_analysis.R`
 - `deliverables/CARBON_CREDIT_ANALYTICAL_REPORT.md`

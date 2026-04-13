@@ -314,6 +314,17 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       used_in_live_app: false
     },
     {
+      artifact_id: "dbms-normalization-fds",
+      title: "DBMS normalization and functional dependencies",
+      description:
+        "Faculty-facing note focused on normalization, candidate keys, functional dependencies, and controlled audit-snapshot storage.",
+      category: "DBMS Core",
+      subject_focus: "DBMS",
+      file_name: "DBMS_NORMALIZATION_AND_FUNCTIONAL_DEPENDENCIES.md",
+      href: demoArtifactHref("DBMS_NORMALIZATION_AND_FUNCTIONAL_DEPENDENCIES.md"),
+      used_in_live_app: false
+    },
+    {
       artifact_id: "cndc-note",
       title: "CNDC security and authenticity note",
       description:
@@ -322,6 +333,17 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       subject_focus: "CNDC",
       file_name: "CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md",
       href: demoArtifactHref("CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md"),
+      used_in_live_app: false
+    },
+    {
+      artifact_id: "cndc-osi-model",
+      title: "CNDC OSI model mapping",
+      description:
+        "OSI-layer reference that maps the ThingSpeak, FastAPI, JWT, TCP/IP, and database communication path to CNDC concepts.",
+      category: "CNDC Evidence",
+      subject_focus: "CNDC",
+      file_name: "CNDC_OSI_MODEL_MAPPING.md",
+      href: demoArtifactHref("CNDC_OSI_MODEL_MAPPING.md"),
       used_in_live_app: false
     },
     {

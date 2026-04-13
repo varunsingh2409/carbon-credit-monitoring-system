@@ -222,12 +222,34 @@ ARTIFACT_BLUEPRINTS: tuple[ImplementationArtifactBlueprint, ...] = (
         subject_focus="DBMS",
     ),
     ImplementationArtifactBlueprint(
+        artifact_id="dbms-normalization-fds",
+        relative_path="deliverables/DBMS_NORMALIZATION_AND_FUNCTIONAL_DEPENDENCIES.md",
+        title="DBMS normalization and functional dependencies",
+        description=(
+            "Faculty-facing note focused on normalization, candidate keys, functional "
+            "dependencies, and controlled audit-snapshot storage."
+        ),
+        category="DBMS Core",
+        subject_focus="DBMS",
+    ),
+    ImplementationArtifactBlueprint(
         artifact_id="cndc-note",
         relative_path="deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md",
         title="CNDC security and authenticity note",
         description=(
             "Faculty-facing note that explains the network path, API protection, and authenticity "
             "controls behind ThingSpeak ingestion and role-based operations."
+        ),
+        category="CNDC Evidence",
+        subject_focus="CNDC",
+    ),
+    ImplementationArtifactBlueprint(
+        artifact_id="cndc-osi-model",
+        relative_path="deliverables/CNDC_OSI_MODEL_MAPPING.md",
+        title="CNDC OSI model mapping",
+        description=(
+            "OSI-layer reference that maps the ThingSpeak, FastAPI, JWT, TCP/IP, and "
+            "database communication path to CNDC concepts."
         ),
         category="CNDC Evidence",
         subject_focus="CNDC",
