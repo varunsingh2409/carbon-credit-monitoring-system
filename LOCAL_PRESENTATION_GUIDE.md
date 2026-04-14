@@ -31,10 +31,11 @@ Use the guide in this order:
 If you are in a hurry:
 
 1. read section 16 for the demo order
-2. read section 24 for CNDC talking points
-3. read section 25 for DBMS talking points
-4. keep the optional supporting analytics panel as backup material only
-5. keep section 33 open for emergency fixes
+2. keep `DBMS_EVALUATION_RUBRIC_README.md` open if the DBMS faculty follows the rubric
+3. read section 24 for CNDC talking points
+4. read section 25 for DBMS talking points
+5. keep the optional supporting analytics panel as backup material only
+6. keep section 33 open for emergency fixes
 
 ## 2. Project In One Minute
 
@@ -205,6 +206,10 @@ ThingSpeak demo sender:
 Faculty deliverables folder:
 
 `C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\deliverables`
+
+DBMS rubric mapping readme:
+
+`C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\DBMS_EVALUATION_RUBRIC_README.md`
 
 ## 8. Architecture In Simple Words
 
@@ -889,16 +894,26 @@ Use these points during evaluation:
 Use these points during evaluation:
 
 1. PostgreSQL is the main database
-2. the schema is relational and normalized
+2. the schema is relational and normalized to a practical 3NF shape
 3. users, farms, seasons, measurements, results, sequestration, and verification are stored separately
 4. foreign keys connect the workflow
 5. approvals and calculations are permanently stored
 6. admin counts come from live database queries
-7. the system demonstrates both data storage and workflow persistence
+7. the Normalization Atlas explains `soil_measurement`, `measurement_result`, and `nutrient`
+8. the system demonstrates both data storage and workflow persistence
 
 ### One-line DBMS answer
 
 > DBMS is demonstrated through a relational PostgreSQL schema, connected tables, persistent workflow records, and database-driven dashboards.
+
+For the faculty rubric, use this exact order:
+
+1. Normalisation: show the Normalization Atlas and explain practical 3NF.
+2. Schema constraints: show table constraints and indexes in the DBMS Query Lab.
+3. Data population: show `scripts\seed_demo.sql`, run ThingSpeak import, and show row counts.
+4. Query demonstration: explain SELECT, JOIN, GROUP BY, and nested query examples from `DBMS_EVALUATION_RUBRIC_README.md`.
+5. Conceptual viva: explain the ERD flow and why one flat table would create anomalies.
+6. Implementation viva: point to `app\models`, `scripts\seed_demo.sql`, ThingSpeak service, carbon calculator, and the evidence panel.
 
 ## 26. Feature-To-CNDC Map
 

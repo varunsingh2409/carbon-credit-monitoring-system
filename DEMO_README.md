@@ -2,6 +2,8 @@
 
 This file is for the real local full-stack presentation.
 
+If the faculty follows the DBMS rubric, keep `DBMS_EVALUATION_RUBRIC_README.md` open. It maps each marking item to the exact app area, file, and viva explanation.
+
 Use the local app when you need to prove:
 
 - real FastAPI backend behavior
@@ -120,10 +122,11 @@ One-line answer:
 ## 5. DBMS Talking Points
 
 - PostgreSQL stores all persistent records
-- the schema is relational and normalized
+- the schema is relational and normalized to a practical 3NF shape, with BCNF-style determinants where suitable
 - measurements, nutrients, seasons, sequestration, and verification are stored in connected tables
 - constraints and indexes protect data quality and queryability
 - the DBMS query lab shows real tables, row samples, constraints, and indexes in the app
+- the Normalization Atlas shows why `soil_measurement`, `measurement_result`, and `nutrient` are split instead of stored as one wide table
 
 One-line answer:
 
@@ -147,6 +150,7 @@ One-line answer:
 
 Faculty deliverable files:
 
+- `DBMS_EVALUATION_RUBRIC_README.md`
 - `scripts/bootstrap_db.py`
 - `scripts/seed_demo.sql`
 - `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`

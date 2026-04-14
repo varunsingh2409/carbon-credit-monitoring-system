@@ -69,6 +69,7 @@ Useful backend URLs:
 
 Faculty deliverable files:
 
+- `DBMS_EVALUATION_RUBRIC_README.md`
 - `scripts/bootstrap_db.py`
 - `scripts/seed_demo.sql`
 - `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
@@ -166,6 +167,7 @@ Use this checklist before the actual presentation:
 - backend `/docs` opens
 - backend `/api/implementation/evidence` returns CNDC flow and table details, with optional supporting analytics if needed
 - admin support panel opens the implementation artifact links for the live bootstrap and seed SQL
+- `DBMS_EVALUATION_RUBRIC_README.md` is open if the faculty evaluates using the DBMS rubric
 - frontend opens at `http://localhost:5173`
 - landing page shows the implementation evidence explorer and presents CNDC/DBMS as the main story
 - farmer login works

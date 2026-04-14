@@ -6,6 +6,10 @@ Full preparation guide:
 
 [LOCAL_PRESENTATION_GUIDE.md](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/LOCAL_PRESENTATION_GUIDE.md)
 
+DBMS rubric guide:
+
+[DBMS_EVALUATION_RUBRIC_README.md](C:/Users/popul/Downloads/carbon_credit_backend/mnt/data/carbon_credit_backend/DBMS_EVALUATION_RUBRIC_README.md)
+
 ## 1. Use The Local App
 
 Open:
@@ -162,11 +166,21 @@ All dashboards reflect the completed workflow end to end.
 ## 12. Strongest DBMS Points
 
 1. PostgreSQL is the main database
-2. the schema is relational
+2. the schema is relational and normalized to a practical 3NF shape
 3. measurements and results are stored separately
 4. carbon and verification records are persisted
 5. admin counts come from live database queries
-6. the website shows queries, row samples, constraints, and indexes
+6. the Normalization Atlas explains the measurement decomposition
+7. the website shows queries, row samples, constraints, and indexes
+
+Rubric order:
+
+1. normalization
+2. schema constraints
+3. data population
+4. SELECT, JOIN, GROUP BY, and nested queries
+5. ERD and design-choice viva
+6. implementation-knowledge viva
 
 ## 13. Carbon Formula
 
@@ -207,7 +221,7 @@ Because the project demonstrates external communication, REST APIs, JSON exchang
 
 ### Why DBMS?
 
-Because the project demonstrates PostgreSQL tables, relationships, persistent records, workflow history, and a queryable DBMS explorer with constraints and rows.
+Because the project demonstrates normalized PostgreSQL tables, relationships, persistent records, workflow history, and a queryable DBMS explorer with constraints and rows.
 
 ### What is the core workflow?
 

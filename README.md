@@ -28,10 +28,11 @@ Your main semester evaluation focus should stay on CNDC and DBMS. The supporting
 Use these files in this order:
 
 1. `README.md` for the local overview
-2. `DEMO_README.md` for the live presentation flow
-3. `INSTALL_DEPENDENCIES.md` for setup, reset, testing, and rebuild commands
-4. `LOCAL_PRESENTATION_GUIDE.md` for the full speaking guide
-5. `LOCAL_PRESENTATION_CHEATSHEET.md` for the short version during rehearsal
+2. `DBMS_EVALUATION_RUBRIC_README.md` for the faculty rubric mapping
+3. `DEMO_README.md` for the live presentation flow
+4. `INSTALL_DEPENDENCIES.md` for setup, reset, testing, and rebuild commands
+5. `LOCAL_PRESENTATION_GUIDE.md` for the full speaking guide
+6. `LOCAL_PRESENTATION_CHEATSHEET.md` for the short version during rehearsal
 
 ## 2. Core Workflow
 
@@ -70,6 +71,7 @@ This project demonstrates DBMS through:
 
 - PostgreSQL as the main database
 - normalized relational tables
+- practical 3NF design with BCNF-style determinants where suitable
 - foreign keys across the measurement and verification workflow
 - unique constraints and check constraints
 - stored carbon-calculation results
@@ -201,6 +203,7 @@ carbon_credit_backend/
 |-- frontend/
 |-- scripts/
 |-- tests/
+|-- DBMS_EVALUATION_RUBRIC_README.md
 |-- DEMO_README.md
 |-- INSTALL_DEPENDENCIES.md
 |-- LOCAL_PRESENTATION_GUIDE.md
@@ -210,8 +213,9 @@ carbon_credit_backend/
 
 ## 11. Faculty Deliverables
 
-Faculty-facing submission files are kept in:
+Faculty-facing submission and guide files are kept in:
 
+- `DBMS_EVALUATION_RUBRIC_README.md`
 - `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
 - `deliverables/CNDC_OSI_MODEL_MAPPING.md`
 - `deliverables/SOIL_CARBON_ER_DIAGRAM.md`
