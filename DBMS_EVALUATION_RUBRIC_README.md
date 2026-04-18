@@ -1,15 +1,15 @@
 # DBMS Evaluation Rubric Readme
 
-Use this file when the DBMS faculty follows the rubric shown in class. It maps each marking point to what the project already demonstrates, what to open during the viva, and the safest explanation to give.
+This file maps the DBMS rubric shown in class to what the project already demonstrates, the app areas/files used during viva, and the safest explanation for each marking point.
 
 Primary demonstration path:
 
-1. Use the local full-stack app at `http://localhost:5173`.
+1. Local full-stack app: `http://localhost:5173`.
 2. Log in as `admin` with `admin / AdminDemo123!`.
 3. Open the implementation control room and DBMS Query Lab.
 4. Show the Normalization Atlas before showing the raw table samples.
-5. Open `deliverables/DBMS_NORMALIZATION_AND_FUNCTIONAL_DEPENDENCIES.md` if the faculty asks for the written proof.
-6. Use `scripts/seed_demo.sql` for data population proof and ThingSpeak import for live measurement rows.
+5. Written proof: `deliverables/DBMS_NORMALIZATION_AND_FUNCTIONAL_DEPENDENCIES.md`.
+6. Data population proof: `scripts/seed_demo.sql` plus ThingSpeak import for live measurement rows.
 
 Important precision:
 
@@ -29,7 +29,7 @@ What to show:
 
 Best explanation:
 
-> The core operational schema is normalized up to 3NF, and many relations also satisfy the practical idea of BCNF because their determinants are primary keys or unique keys. The strongest example is measurement storage. We do not store one wide row with repeated nutrient columns. A measurement event is stored in `soil_measurement`, each nutrient value is stored in `measurement_result`, and nutrient metadata is stored once in `nutrient`.
+> The core operational schema is normalized up to 3NF, and many relations also satisfy the practical idea of BCNF because their determinants are primary keys or unique keys. The strongest example is measurement storage. The design does not store one wide row with repeated nutrient columns. A measurement event is stored in `soil_measurement`, each nutrient value is stored in `measurement_result`, and nutrient metadata is stored once in `nutrient`.
 
 Why 1NF is satisfied:
 
@@ -173,7 +173,7 @@ UNION ALL SELECT 'carbon_verification', COUNT(*) FROM carbon_verification;
 
 Safe viva wording:
 
-> The seed gives a stable base dataset, and the live ThingSpeak import adds the measurement and nutrient-result rows. For the rubric's 20 to 30+ row expectation, I would show the 5 imported measurement events and the 25 nutrient-result rows created from one normal ThingSpeak batch when those entries are new, because the project is normalized across related tables instead of stored as one artificial flat table.
+> The seed gives a stable base dataset, and the live ThingSpeak import adds the measurement and nutrient-result rows. For the rubric's 20 to 30+ row expectation, the demonstration shows the 5 imported measurement events and the 25 nutrient-result rows created from one normal ThingSpeak batch when those entries are new, because the project is normalized across related tables instead of stored as one artificial flat table.
 
 If duplicate entries are skipped:
 
@@ -184,7 +184,7 @@ If duplicate entries are skipped:
 What to show:
 
 - DBMS Query Lab for read-only table queries and returned rows.
-- Backend Swagger docs if the faculty asks for API-level proof.
+- Backend Swagger docs for API-level proof.
 - PowerShell or `psql` only if the faculty specifically wants raw SQL execution.
 
 SELECT example:
@@ -264,7 +264,7 @@ What to explain first:
 
 Best viva answer:
 
-> I designed the DBMS around the workflow. A farmer owns farms, a farm has seasons, a season has soil measurements, each measurement has nutrient results, and carbon sequestration plus verification store the final workflow outcome. The normalized split reduces anomalies, while constraints preserve valid roles, valid statuses, valid dates, valid depths, and uniqueness where duplicate rows would create wrong results.
+> The DBMS is designed around the workflow. A farmer owns farms, a farm has seasons, a season has soil measurements, each measurement has nutrient results, and carbon sequestration plus verification store the final workflow outcome. The normalized split reduces anomalies, while constraints preserve valid roles, valid statuses, valid dates, valid depths, and uniqueness where duplicate rows would create wrong results.
 
 If asked why the ERD is not one table:
 
@@ -318,7 +318,7 @@ Good closing answer:
 
 ## Quick Rubric Checklist
 
-Before the DBMS teacher evaluates, make sure you can show:
+Before DBMS evaluation, the following proof points should be visible:
 
 - Normalization choice: practical 3NF with BCNF-style determinants.
 - Schema constraints: primary keys, foreign keys, unique constraints, check constraints, and indexes.

@@ -127,8 +127,8 @@ function ProjectAlignmentPanel({
             </h3>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-400">
               CNDC and DBMS remain the core implementation focus. This section
-              is only supportive material in case faculty asks how the broader
-              problem statement was extended beyond your main subjects.
+              is supportive material for the broader problem statement beyond
+              the main CNDC and DBMS subjects.
             </p>
           </div>
         </div>
@@ -338,9 +338,8 @@ function ProjectAlignmentPanel({
               Optional files and report alignment
             </h3>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-400">
-              These items are included so you can answer broader project or
-              submission questions if they come up. They are not intended to
-              replace the CNDC and DBMS explanation that should lead the demo.
+              These items support broader project or submission questions. They
+              do not replace the CNDC and DBMS explanation that leads the demo.
             </p>
           </div>
         </div>

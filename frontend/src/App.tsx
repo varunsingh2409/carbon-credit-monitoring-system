@@ -29,11 +29,11 @@ function UnauthorizedPage() {
           Access Restricted
         </p>
         <h1 className="mt-4 text-4xl font-extrabold text-white">
-          You do not have permission to view this page
+          Access is not permitted for this role
         </h1>
         <p className="mt-4 text-slate-300">
-          Your account is authenticated, but the requested route is limited to a
-          different system role.
+          The authenticated account is assigned to a different system role than
+          the requested route.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
           <Link

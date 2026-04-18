@@ -51,7 +51,7 @@ const getErrorMessage = (error: unknown) => {
     return error.response.data.detail;
   }
 
-  return "Login failed. Please check your credentials.";
+  return "Login failed. Please check the credentials.";
 };
 
 function LoginPage() {
@@ -137,7 +137,7 @@ function LoginPage() {
           </p>
           <h1 className="mt-3 text-4xl font-extrabold text-white">Welcome Back</h1>
           <p className="mt-3 text-sm leading-7 text-slate-400">
-            Sign in to access your carbon-credit workspace and continue from the
+            Sign in to access the carbon-credit workspace and continue from the
             latest farm, verification, or admin activity.
           </p>
         </div>
@@ -190,7 +190,7 @@ function LoginPage() {
               <input
                 className="w-full bg-transparent text-white outline-none placeholder:text-slate-300/45"
                 id="username"
-                placeholder="Enter your username"
+                placeholder="Username"
                 {...register("username")}
               />
             </div>
@@ -211,7 +211,7 @@ function LoginPage() {
               <input
                 className="w-full bg-transparent text-white outline-none placeholder:text-slate-300/45"
                 id="password"
-                placeholder="Enter your password"
+                placeholder="Password"
                 type="password"
                 {...register("password")}
               />

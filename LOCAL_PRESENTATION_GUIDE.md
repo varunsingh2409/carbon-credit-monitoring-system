@@ -2,7 +2,7 @@
 
 This is the complete local preparation guide for presenting the project smoothly.
 
-Use this guide if you want to:
+This guide supports:
 
 1. understand every important feature
 2. start the project locally
@@ -28,14 +28,14 @@ Use the guide in this order:
 4. use sections 24 to 29 for CNDC and DBMS explanation
 5. use sections 30 to 33 for viva-style questions and backup proof
 
-If you are in a hurry:
+Quick-use path:
 
 1. read section 16 for the demo order
-2. keep `DBMS_EVALUATION_RUBRIC_README.md` open if the DBMS faculty follows the rubric
+2. open `DBMS_EVALUATION_RUBRIC_README.md` when the DBMS rubric is used
 3. read section 24 for CNDC talking points
 4. read section 25 for DBMS talking points
 5. keep the artifact links and report files as backup material only
-6. keep section 33 open for emergency fixes
+6. keep section 33 available for emergency fixes
 
 ## 2. Project In One Minute
 
@@ -331,7 +331,7 @@ Try this:
 
 ## 13. One-Time Setup If Needed
 
-If this machine already ran the project before, you can usually skip this section.
+When this machine already ran the project before, this section is usually optional.
 
 ### Backend setup
 
@@ -449,7 +449,7 @@ Important check:
 
 ## 16. Correct Demonstration Order
 
-Use this order exactly:
+Recommended order:
 
 1. landing page
 2. login page
@@ -469,7 +469,7 @@ This order is best because it moves from introduction -> users -> technical impl
 
 ## 17. Opening Script
 
-Use this opening:
+Opening script:
 
 > This is the Carbon Credit Monitoring System. It is designed for farmers, verifiers, and administrators. The system receives soil-style data from an external source, validates and stores it, calculates carbon-credit estimates, routes them through verification, and then shows the outcome in role-based dashboards.
 
@@ -679,7 +679,7 @@ What the script sends:
 
 What to say:
 
-> I am sending live sensor-style data into ThingSpeak. This proves the workflow starts outside the web application and comes from an external communication source.
+> The terminal sends live sensor-style data into ThingSpeak. This proves the workflow starts outside the web application and comes from an external communication source.
 
 CNDC relevance:
 
@@ -816,9 +816,9 @@ What to say:
 
 > Now all three roles reflect the completed workflow. The farmer sees the outcome, the verifier sees the decision history, and the admin sees the operational result.
 
-This is your strongest end-to-end proof.
+This is the strongest end-to-end proof.
 
-## 19. What Each Major Screen Teaches You
+## 19. What Each Major Screen Demonstrates
 
 ### Landing page teaches
 
@@ -894,13 +894,13 @@ If time is short:
 5. approve as verifier
 6. show farmer dashboard
 
-Use this summary:
+Summary script:
 
 > The app receives external data, stores it in PostgreSQL, calculates carbon credits, routes the result through verifier approval, and then shows the final result to the farmer.
 
 ## 23. Closing Script
 
-Use this closing:
+Closing script:
 
 > This project demonstrates a complete carbon-credit workflow from external communication to stored database records and verified outcomes. It is relevant for CNDC because it uses ThingSpeak, REST APIs, JSON, and protected communication. It is relevant for DBMS because it uses PostgreSQL, relational tables, persistent records, and workflow history.
 
@@ -1214,9 +1214,9 @@ $env:PGPASSWORD='Masterbeast'
 
 Fix:
 
-1. make sure PostgreSQL is running
-2. make sure backend dependencies are installed
-3. make sure `.env` exists
+1. confirm PostgreSQL is running
+2. confirm backend dependencies are installed
+3. confirm `.env` exists
 
 ### Problem: frontend does not open
 
@@ -1256,7 +1256,7 @@ Fix:
 
 Cause:
 
-- you opened the published site instead of the local site
+- the published site was opened instead of the local site
 
 Fix:
 
@@ -1265,7 +1265,7 @@ Fix:
 
 ## 34. Final Confidence Checklist
 
-Before you start presenting, confirm:
+Before presentation, confirm:
 
 1. PostgreSQL is running
 2. demo reset completed
@@ -1279,4 +1279,4 @@ Before you start presenting, confirm:
 10. laptop is charging
 11. internet is stable
 
-If all of these are true, you are ready.
+When all of these checks pass, the local demonstration is ready.

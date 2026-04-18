@@ -188,9 +188,8 @@ function AdminPanel() {
             DBMS and CNDC demonstration control
           </h1>
           <p className="mt-4 max-w-3xl text-slate-300">
-            Use this page during presentation to show data sent to ThingSpeak,
-            data received into PostgreSQL, and the carbon claim created for
-            verifier review.
+            This page presents data sent to ThingSpeak, data received into
+            PostgreSQL, and the carbon claim created for verifier review.
           </p>
         </section>
 
@@ -244,7 +243,7 @@ function AdminPanel() {
                   Presentation Workflow
                 </h2>
                 <p className="text-sm text-slate-400">
-                  Follow these five steps to prove data movement and database population.
+                  Five-step evidence path for data movement and database population.
                 </p>
               </div>
             </div>
@@ -265,7 +264,7 @@ function AdminPanel() {
 
             <div className="mt-6 rounded-[1.25rem] border border-blue-100/15 bg-blue-300/[0.06] p-4">
               <p className="text-xs uppercase tracking-[0.18em] text-blue-100">
-                What faculty should see
+                Demonstration Evidence
               </p>
               <p className="mt-2 text-sm leading-6 text-slate-300">
                 The system is not explaining design progress here. It is exposing
@@ -476,7 +475,7 @@ function AdminPanel() {
         {implementationSummary ? (
           <section className="mt-10">
             <ImplementationEvidencePanel
-              description="Use this evidence panel after the live import to show exact tables, row counts, constraints, indexes, CNDC flow, and downloadable SQL artifacts."
+              description="The evidence panel shows exact tables, row counts, constraints, indexes, CNDC flow, and downloadable SQL artifacts after the live import."
               eyebrow="Database and Network Evidence"
               summary={implementationSummary}
               title="Final implementation proof"

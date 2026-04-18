@@ -299,7 +299,7 @@ function VerificationDetails() {
                 <textarea
                   className="min-h-[150px] w-full rounded-[1.5rem] border border-white/10 bg-white/10 px-4 py-3 text-white outline-none transition placeholder:text-slate-300/45 focus:border-white/25 focus:bg-white/[0.12]"
                   id="verifier_comments"
-                  placeholder="Add your review notes, validation observations, or decision rationale"
+                  placeholder="Add review notes, validation observations, or decision rationale"
                   {...register("verifier_comments")}
                 />
                 {errors.verifier_comments ? (

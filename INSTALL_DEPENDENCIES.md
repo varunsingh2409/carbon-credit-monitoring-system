@@ -129,7 +129,7 @@ This resets:
 
 ## 5. ThingSpeak Demo Sender
 
-Use this to push fresh external records before import:
+ThingSpeak demo sender for fresh external records before import:
 
 ```powershell
 .\venv\Scripts\python.exe .\scripts\thingspeak_demo_batch.py
@@ -168,7 +168,7 @@ npm run build
 
 ## 7. Local Presentation Verification
 
-Use this checklist before the actual presentation:
+Checklist before the actual presentation:
 
 - backend `/health` returns `{"status":"ok"}`
 - backend `/docs` opens

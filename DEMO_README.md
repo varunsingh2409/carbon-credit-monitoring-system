@@ -2,9 +2,9 @@
 
 This file is for the real local full-stack presentation.
 
-If the faculty follows the DBMS rubric, keep `DBMS_EVALUATION_RUBRIC_README.md` open. It maps each marking item to the exact app area, file, and viva explanation.
+When the DBMS rubric is used, `DBMS_EVALUATION_RUBRIC_README.md` maps each marking item to the exact app area, file, and viva explanation.
 
-Use the local app when you need to prove:
+The local app proves:
 
 - real FastAPI backend behavior
 - real PostgreSQL persistence
@@ -148,7 +148,7 @@ Data-population proof line:
 - the app shows a confidence interval for the carbon-credit estimate
 - the final report status is presented as certification-readiness, not just as a raw number
 
-Use this only if faculty asks beyond CNDC and DBMS. It should not lead the demonstration.
+This section is secondary material for questions beyond CNDC and DBMS. It should not lead the demonstration.
 
 One-line answer:
 
@@ -218,9 +218,9 @@ Before presenting, confirm:
 
 ## 9. Public Demo Note
 
-The published website is useful when you only need to share the look of the product.
+The published website is useful for visual sharing only.
 
-It is not the version you should rely on for proving:
+It is not the proof version for:
 
 - live database writes
 - live ThingSpeak import

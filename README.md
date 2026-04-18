@@ -23,7 +23,7 @@ Use the local app for the actual presentation because it proves:
 - real carbon calculation
 - real verifier approval and stored workflow history
 
-Your main semester evaluation focus should stay on CNDC and DBMS. The supporting analytics/reporting layer is available only if faculty asks about the broader problem statement.
+The main semester evaluation focus is CNDC and DBMS. The supporting analytics/reporting layer is secondary and only supports broader problem-statement discussion.
 
 Use these files in this order:
 
@@ -235,7 +235,7 @@ Faculty-facing submission and guide files are kept in:
 
 These files support the local app demonstration. They are secondary to the CNDC and DBMS proof shown in the app.
 
-The admin panel now exposes direct artifact links for the real schema/bootstrap script, the formal constraints/indexes SQL, the real demo seed SQL, and these supporting deliverables so you can open them during viva or faculty questions without leaving the app context.
+The admin panel exposes direct artifact links for the real schema/bootstrap script, the formal constraints/indexes SQL, the real demo seed SQL, and these supporting deliverables so they remain available during viva or faculty questions without leaving the app context.
 
 ## 12. Quick Local Start
 

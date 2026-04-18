@@ -1,6 +1,6 @@
 # Carbon Credit Monitoring System Local Demo Cheat Sheet
 
-Use this during rehearsal or while presenting.
+This file supports rehearsal and live presentation.
 
 Full preparation guide:
 
@@ -16,7 +16,7 @@ Open:
 
 `http://localhost:5173`
 
-Do not use the GitHub Pages website for the full feature demonstration.
+The GitHub Pages website is not used for the full feature demonstration.
 
 ## 2. Credentials
 
