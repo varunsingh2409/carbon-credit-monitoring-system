@@ -23,7 +23,7 @@ import type {
 } from "@/types";
 import { demoImplementationSummary } from "@/demo/demoImplementationSummary";
 
-const DEMO_STATE_STORAGE_KEY = "carbon-credit-demo-state";
+const DEMO_STATE_STORAGE_KEY = "carbon-credit-demo-state-v2";
 const DEMO_TOKEN_PREFIX = "demo:";
 const TOKEN_STORAGE_KEY = "carbon-credit-token";
 const DEMO_CHANNEL_ID = 2789421;
@@ -95,9 +95,9 @@ const initialFarm: FarmerFarmDashboard = {
   farm_id: 101,
   farm_name: "Punjab Mitti Farm",
   location: "Ludhiana, Punjab",
-  total_area_hectares: 24.5,
+  total_area_hectares: 50,
   soil_type: "Loamy",
-  baseline_carbon: 142.4,
+  baseline_carbon: 1000,
   seasons: [
     {
       season_id: 302,
@@ -107,10 +107,10 @@ const initialFarm: FarmerFarmDashboard = {
       crop_type: "Rice",
       status: "completed",
       carbon_data: {
-        baseline_carbon: 142.4,
-        current_carbon: 165.38,
-        net_increase: 22.98,
-        estimated_credit: 2.07,
+        baseline_carbon: 1000,
+        current_carbon: 1123.4,
+        net_increase: 123.4,
+        estimated_credit: 22.64,
         verification_status: "pending"
       }
     },
@@ -122,10 +122,10 @@ const initialFarm: FarmerFarmDashboard = {
       crop_type: "Wheat",
       status: "verified",
       carbon_data: {
-        baseline_carbon: 138.7,
-        current_carbon: 156.9,
-        net_increase: 18.2,
-        estimated_credit: 1.6,
+        baseline_carbon: 1000,
+        current_carbon: 1042.5,
+        net_increase: 42.5,
+        estimated_credit: 7.8,
         verification_status: "approved"
       }
     },
@@ -151,9 +151,9 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       longitude: 75.853,
       sensor_id: "TS-PUNJAB-01",
       nutrients: [
-        { nutrient_name: "Nitrogen", measured_value: 189, unit: "kg/ha" },
+        { nutrient_name: "Nitrogen", measured_value: 31.2, unit: "ppm" },
         { nutrient_name: "Moisture", measured_value: 26.1, unit: "%" },
-        { nutrient_name: "Organic Carbon", measured_value: 2.87, unit: "%" }
+        { nutrient_name: "Organic Carbon", measured_value: 1038, unit: "kg/ha" }
       ]
     },
     {
@@ -164,9 +164,9 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       longitude: 75.853,
       sensor_id: "TS-PUNJAB-01",
       nutrients: [
-        { nutrient_name: "Nitrogen", measured_value: 193, unit: "kg/ha" },
+        { nutrient_name: "Nitrogen", measured_value: 32.5, unit: "ppm" },
         { nutrient_name: "Moisture", measured_value: 27.5, unit: "%" },
-        { nutrient_name: "Organic Carbon", measured_value: 3.01, unit: "%" }
+        { nutrient_name: "Organic Carbon", measured_value: 1047, unit: "kg/ha" }
       ]
     }
   ],
@@ -179,11 +179,11 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       longitude: 75.853,
       sensor_id: "TS-PUNJAB-01",
       nutrients: [
-        { nutrient_name: "Nitrogen", measured_value: 211, unit: "kg/ha" },
-        { nutrient_name: "Phosphorus", measured_value: 118, unit: "kg/ha" },
-        { nutrient_name: "Potassium", measured_value: 342, unit: "kg/ha" },
-        { nutrient_name: "Moisture", measured_value: 31.4, unit: "%" },
-        { nutrient_name: "Organic Carbon", measured_value: 3.41, unit: "%" }
+        { nutrient_name: "Nitrogen", measured_value: 31.8, unit: "ppm" },
+        { nutrient_name: "Phosphorus", measured_value: 18.4, unit: "ppm" },
+        { nutrient_name: "Potassium", measured_value: 142.6, unit: "ppm" },
+        { nutrient_name: "Moisture", measured_value: 24.3, unit: "%" },
+        { nutrient_name: "Organic Carbon", measured_value: 1098, unit: "kg/ha" }
       ]
     },
     {
@@ -194,11 +194,11 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       longitude: 75.853,
       sensor_id: "TS-PUNJAB-01",
       nutrients: [
-        { nutrient_name: "Nitrogen", measured_value: 214, unit: "kg/ha" },
-        { nutrient_name: "Phosphorus", measured_value: 121, unit: "kg/ha" },
-        { nutrient_name: "Potassium", measured_value: 348, unit: "kg/ha" },
-        { nutrient_name: "Moisture", measured_value: 32.2, unit: "%" },
-        { nutrient_name: "Organic Carbon", measured_value: 3.46, unit: "%" }
+        { nutrient_name: "Nitrogen", measured_value: 33.1, unit: "ppm" },
+        { nutrient_name: "Phosphorus", measured_value: 19.2, unit: "ppm" },
+        { nutrient_name: "Potassium", measured_value: 145.1, unit: "ppm" },
+        { nutrient_name: "Moisture", measured_value: 25.2, unit: "%" },
+        { nutrient_name: "Organic Carbon", measured_value: 1110, unit: "kg/ha" }
       ]
     },
     {
@@ -209,11 +209,11 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       longitude: 75.853,
       sensor_id: "TS-PUNJAB-01",
       nutrients: [
-        { nutrient_name: "Nitrogen", measured_value: 218, unit: "kg/ha" },
-        { nutrient_name: "Phosphorus", measured_value: 125, unit: "kg/ha" },
-        { nutrient_name: "Potassium", measured_value: 352, unit: "kg/ha" },
-        { nutrient_name: "Moisture", measured_value: 33.1, unit: "%" },
-        { nutrient_name: "Organic Carbon", measured_value: 3.55, unit: "%" }
+        { nutrient_name: "Nitrogen", measured_value: 34.4, unit: "ppm" },
+        { nutrient_name: "Phosphorus", measured_value: 20.1, unit: "ppm" },
+        { nutrient_name: "Potassium", measured_value: 147.8, unit: "ppm" },
+        { nutrient_name: "Moisture", measured_value: 26.1, unit: "%" },
+        { nutrient_name: "Organic Carbon", measured_value: 1124, unit: "kg/ha" }
       ]
     },
     {
@@ -224,11 +224,11 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       longitude: 75.853,
       sensor_id: "TS-PUNJAB-01",
       nutrients: [
-        { nutrient_name: "Nitrogen", measured_value: 221, unit: "kg/ha" },
-        { nutrient_name: "Phosphorus", measured_value: 128, unit: "kg/ha" },
-        { nutrient_name: "Potassium", measured_value: 357, unit: "kg/ha" },
-        { nutrient_name: "Moisture", measured_value: 33.9, unit: "%" },
-        { nutrient_name: "Organic Carbon", measured_value: 3.61, unit: "%" }
+        { nutrient_name: "Nitrogen", measured_value: 35.5, unit: "ppm" },
+        { nutrient_name: "Phosphorus", measured_value: 21.3, unit: "ppm" },
+        { nutrient_name: "Potassium", measured_value: 150.3, unit: "ppm" },
+        { nutrient_name: "Moisture", measured_value: 27, unit: "%" },
+        { nutrient_name: "Organic Carbon", measured_value: 1136, unit: "kg/ha" }
       ]
     },
     {
@@ -239,11 +239,11 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       longitude: 75.853,
       sensor_id: "TS-PUNJAB-01",
       nutrients: [
-        { nutrient_name: "Nitrogen", measured_value: 226, unit: "kg/ha" },
-        { nutrient_name: "Phosphorus", measured_value: 131, unit: "kg/ha" },
-        { nutrient_name: "Potassium", measured_value: 363, unit: "kg/ha" },
-        { nutrient_name: "Moisture", measured_value: 34.6, unit: "%" },
-        { nutrient_name: "Organic Carbon", measured_value: 3.68, unit: "%" }
+        { nutrient_name: "Nitrogen", measured_value: 36.9, unit: "ppm" },
+        { nutrient_name: "Phosphorus", measured_value: 22.4, unit: "ppm" },
+        { nutrient_name: "Potassium", measured_value: 153.1, unit: "ppm" },
+        { nutrient_name: "Moisture", measured_value: 27.8, unit: "%" },
+        { nutrient_name: "Organic Carbon", measured_value: 1149, unit: "kg/ha" }
       ]
     }
   ],
@@ -259,11 +259,11 @@ const initialRecords: DemoRecord[] = [
     farmer_name: "Ramesh Kumar",
     season_name: "Monsoon 2026 Demo",
     location: "Ludhiana, Punjab",
-    area_hectares: 24.5,
-    baseline_carbon: 142.4,
-    current_carbon: 165.38,
-    net_carbon_increase: 22.98,
-    estimated_carbon_credit: 2.07,
+    area_hectares: 50,
+    baseline_carbon: 1000,
+    current_carbon: 1123.4,
+    net_carbon_increase: 123.4,
+    estimated_carbon_credit: 22.64,
     status: "pending",
     calculation_date: "2026-04-03T10:30:00.000Z",
     verification: null
@@ -276,11 +276,11 @@ const initialRecords: DemoRecord[] = [
     farmer_name: "Ramesh Kumar",
     season_name: "Rabi 2025 Baseline",
     location: "Ludhiana, Punjab",
-    area_hectares: 24.5,
-    baseline_carbon: 138.7,
-    current_carbon: 156.9,
-    net_carbon_increase: 18.2,
-    estimated_carbon_credit: 1.6,
+    area_hectares: 50,
+    baseline_carbon: 1000,
+    current_carbon: 1042.5,
+    net_carbon_increase: 42.5,
+    estimated_carbon_credit: 7.8,
     status: "verified",
     calculation_date: "2026-01-18T09:15:00.000Z",
     verification: {
@@ -289,17 +289,17 @@ const initialRecords: DemoRecord[] = [
       verification_date: "2026-01-19T11:00:00.000Z",
       verification_status: "approved",
       verifier_comments: "Sampling depth and carbon trend matched the season evidence.",
-      approved_carbon_credit: 1.6
+      approved_carbon_credit: 7.8
     }
   }
 ];
 
 const initialMonthlyCredits: MonthlyCredit[] = [
-  { month: "Nov", credits: 0.76 },
-  { month: "Dec", credits: 1.02 },
-  { month: "Jan", credits: 1.6 },
-  { month: "Feb", credits: 1.21 },
-  { month: "Mar", credits: 1.08 },
+  { month: "Nov", credits: 1.75 },
+  { month: "Dec", credits: 2.15 },
+  { month: "Jan", credits: 7.8 },
+  { month: "Feb", credits: 3.4 },
+  { month: "Mar", credits: 4.2 },
   { month: "Apr", credits: 0 }
 ];
 
@@ -485,76 +485,76 @@ const createSyncedMeasurements = (): VerificationMeasurementDetail[] => [
   {
     measurement_id: 30301,
     measurement_date: "2026-04-04T07:50:00.000Z",
-    depth_cm: 22,
+    depth_cm: 10,
     latitude: 30.901,
     longitude: 75.853,
     sensor_id: "TS-PUNJAB-01",
     nutrients: [
-      { nutrient_name: "Nitrogen", measured_value: 172, unit: "kg/ha" },
-      { nutrient_name: "Phosphorus", measured_value: 98, unit: "kg/ha" },
-      { nutrient_name: "Potassium", measured_value: 306, unit: "kg/ha" },
-      { nutrient_name: "Moisture", measured_value: 24.7, unit: "%" },
-      { nutrient_name: "Organic Carbon", measured_value: 2.76, unit: "%" }
+      { nutrient_name: "Nitrogen", measured_value: 31.8, unit: "ppm" },
+      { nutrient_name: "Phosphorus", measured_value: 18.4, unit: "ppm" },
+      { nutrient_name: "Potassium", measured_value: 142.6, unit: "ppm" },
+      { nutrient_name: "Moisture", measured_value: 24.3, unit: "%" },
+      { nutrient_name: "Organic Carbon", measured_value: 1098, unit: "kg/ha" }
     ]
   },
   {
     measurement_id: 30302,
     measurement_date: "2026-04-04T08:20:00.000Z",
-    depth_cm: 22,
+    depth_cm: 10,
     latitude: 30.901,
     longitude: 75.853,
     sensor_id: "TS-PUNJAB-01",
     nutrients: [
-      { nutrient_name: "Nitrogen", measured_value: 176, unit: "kg/ha" },
-      { nutrient_name: "Phosphorus", measured_value: 101, unit: "kg/ha" },
-      { nutrient_name: "Potassium", measured_value: 312, unit: "kg/ha" },
-      { nutrient_name: "Moisture", measured_value: 25.3, unit: "%" },
-      { nutrient_name: "Organic Carbon", measured_value: 2.83, unit: "%" }
+      { nutrient_name: "Nitrogen", measured_value: 33.1, unit: "ppm" },
+      { nutrient_name: "Phosphorus", measured_value: 19.2, unit: "ppm" },
+      { nutrient_name: "Potassium", measured_value: 145.1, unit: "ppm" },
+      { nutrient_name: "Moisture", measured_value: 25.2, unit: "%" },
+      { nutrient_name: "Organic Carbon", measured_value: 1110, unit: "kg/ha" }
     ]
   },
   {
     measurement_id: 30303,
     measurement_date: "2026-04-04T08:55:00.000Z",
-    depth_cm: 22,
+    depth_cm: 10,
     latitude: 30.901,
     longitude: 75.853,
     sensor_id: "TS-PUNJAB-01",
     nutrients: [
-      { nutrient_name: "Nitrogen", measured_value: 181, unit: "kg/ha" },
-      { nutrient_name: "Phosphorus", measured_value: 105, unit: "kg/ha" },
-      { nutrient_name: "Potassium", measured_value: 318, unit: "kg/ha" },
+      { nutrient_name: "Nitrogen", measured_value: 34.4, unit: "ppm" },
+      { nutrient_name: "Phosphorus", measured_value: 20.1, unit: "ppm" },
+      { nutrient_name: "Potassium", measured_value: 147.8, unit: "ppm" },
       { nutrient_name: "Moisture", measured_value: 26.1, unit: "%" },
-      { nutrient_name: "Organic Carbon", measured_value: 2.91, unit: "%" }
+      { nutrient_name: "Organic Carbon", measured_value: 1124, unit: "kg/ha" }
     ]
   },
   {
     measurement_id: 30304,
     measurement_date: "2026-04-04T09:25:00.000Z",
-    depth_cm: 22,
+    depth_cm: 10,
     latitude: 30.901,
     longitude: 75.853,
     sensor_id: "TS-PUNJAB-01",
     nutrients: [
-      { nutrient_name: "Nitrogen", measured_value: 185, unit: "kg/ha" },
-      { nutrient_name: "Phosphorus", measured_value: 108, unit: "kg/ha" },
-      { nutrient_name: "Potassium", measured_value: 323, unit: "kg/ha" },
-      { nutrient_name: "Moisture", measured_value: 26.8, unit: "%" },
-      { nutrient_name: "Organic Carbon", measured_value: 2.98, unit: "%" }
+      { nutrient_name: "Nitrogen", measured_value: 35.5, unit: "ppm" },
+      { nutrient_name: "Phosphorus", measured_value: 21.3, unit: "ppm" },
+      { nutrient_name: "Potassium", measured_value: 150.3, unit: "ppm" },
+      { nutrient_name: "Moisture", measured_value: 27, unit: "%" },
+      { nutrient_name: "Organic Carbon", measured_value: 1136, unit: "kg/ha" }
     ]
   },
   {
     measurement_id: 30305,
     measurement_date: "2026-04-04T09:55:00.000Z",
-    depth_cm: 22,
+    depth_cm: 10,
     latitude: 30.901,
     longitude: 75.853,
     sensor_id: "TS-PUNJAB-01",
     nutrients: [
-      { nutrient_name: "Nitrogen", measured_value: 189, unit: "kg/ha" },
-      { nutrient_name: "Phosphorus", measured_value: 111, unit: "kg/ha" },
-      { nutrient_name: "Potassium", measured_value: 329, unit: "kg/ha" },
-      { nutrient_name: "Moisture", measured_value: 27.4, unit: "%" },
-      { nutrient_name: "Organic Carbon", measured_value: 3.04, unit: "%" }
+      { nutrient_name: "Nitrogen", measured_value: 36.9, unit: "ppm" },
+      { nutrient_name: "Phosphorus", measured_value: 22.4, unit: "ppm" },
+      { nutrient_name: "Potassium", measured_value: 153.1, unit: "ppm" },
+      { nutrient_name: "Moisture", measured_value: 27.8, unit: "%" },
+      { nutrient_name: "Organic Carbon", measured_value: 1149, unit: "kg/ha" }
     ]
   }
 ];
@@ -860,8 +860,10 @@ export const demoBackend = {
     const averageOrganicCarbon =
       measurements.reduce((sum, measurement) => sum + getOrganicCarbon(measurement), 0) /
       measurements.length;
-    const currentCarbon = Number((state.farm.baseline_carbon + averageOrganicCarbon * 6.2).toFixed(2));
-    const netIncrease = Number((currentCarbon - state.farm.baseline_carbon).toFixed(2));
+    const currentCarbon = Number(averageOrganicCarbon.toFixed(2));
+    const netIncrease = Number(
+      Math.max(currentCarbon - state.farm.baseline_carbon, 0).toFixed(2)
+    );
     const estimatedCredit = Number(((netIncrease * state.farm.total_area_hectares * 3.67) / 1000).toFixed(2));
 
     const record: DemoRecord = {

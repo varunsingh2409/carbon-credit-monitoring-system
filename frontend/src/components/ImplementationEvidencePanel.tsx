@@ -101,7 +101,7 @@ function FlowStepper({
           <button
             className={`rounded-[1.4rem] border px-4 py-4 text-left transition ${
               isActive
-                ? "border-blue-200/30 bg-blue-300/[0.14] shadow-[0_18px_42px_rgba(44,96,172,0.18)]"
+                ? "border-red-200/30 bg-red-300/[0.14] shadow-[0_18px_42px_rgba(226,54,40,0.18)]"
                 : "border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.08]"
             }`}
             key={step.step}
@@ -112,7 +112,7 @@ function FlowStepper({
               Step {step.step}
             </p>
             <p className="mt-3 text-sm font-semibold text-white">{step.title}</p>
-            <p className="mt-2 text-xs uppercase tracking-[0.2em] text-blue-100/80">
+            <p className="mt-2 text-xs uppercase tracking-[0.2em] text-red-100/80">
               {step.subject_focus}
             </p>
             <p className="mt-3 text-sm leading-6 text-slate-300">
@@ -145,7 +145,7 @@ function TablePicker({
           <button
             className={`rounded-full border px-4 py-2 text-sm transition ${
               isActive
-                ? "border-emerald-100/30 bg-emerald-200/10 text-white"
+                ? "border-red-100/30 bg-red-200/10 text-white"
                 : "border-white/10 bg-white/[0.04] text-slate-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
             }`}
             key={table.table_name}
@@ -221,7 +221,7 @@ function ImplementationEvidencePanel({
       <div className="grid gap-6">
         <article className="surface-panel-strong overflow-hidden p-6 sm:p-7">
           <div className="flex items-start gap-4">
-            <div className="rounded-2xl bg-blue-300/15 p-3 text-blue-200">
+            <div className="rounded-2xl bg-red-300/15 p-3 text-red-200">
               <Radio size={20} />
             </div>
             <div>
@@ -284,7 +284,7 @@ function ImplementationEvidencePanel({
                     className="flex items-start gap-3 rounded-[1.1rem] border border-white/10 bg-white/[0.04] p-4"
                     key={item}
                   >
-                    <CheckCircle2 className="mt-0.5 text-blue-200" size={16} />
+                    <CheckCircle2 className="mt-0.5 text-red-200" size={16} />
                     <p className="text-sm leading-7 text-slate-300">{item}</p>
                   </div>
                 ))}
@@ -292,10 +292,10 @@ function ImplementationEvidencePanel({
             </div>
           </div>
 
-          <div className="mt-6 rounded-[1.7rem] border border-white/10 bg-[linear-gradient(180deg,rgba(10,16,24,0.72),rgba(18,26,37,0.92))] p-5">
+          <div className="mt-6 rounded-[1.7rem] border border-white/10 bg-[linear-gradient(180deg,rgba(24,10,13,0.72),rgba(49,20,25,0.92))] p-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-blue-100">
+                <p className="text-xs uppercase tracking-[0.24em] text-red-100">
                   Active Trace
                 </p>
                 <h4 className="mt-3 text-2xl font-bold text-white">
@@ -340,7 +340,7 @@ function ImplementationEvidencePanel({
                 <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                   Request Sent
                 </p>
-                <pre className="mt-3 overflow-x-auto rounded-[1rem] border border-white/10 bg-[#09121b] p-4 font-mono text-xs leading-7 text-slate-200">
+                <pre className="mt-3 overflow-x-auto rounded-[1rem] border border-white/10 bg-[#14090c] p-4 font-mono text-xs leading-7 text-slate-200">
                   {currentFlow.payload
                     ? JSON.stringify(currentFlow.payload, null, 2)
                     : "GET request without a request body"}
@@ -360,7 +360,7 @@ function ImplementationEvidencePanel({
                 <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                   Response Returned
                 </p>
-                <pre className="mt-3 overflow-x-auto rounded-[1rem] border border-white/10 bg-[#09121b] p-4 font-mono text-xs leading-7 text-slate-200">
+                <pre className="mt-3 overflow-x-auto rounded-[1rem] border border-white/10 bg-[#14090c] p-4 font-mono text-xs leading-7 text-slate-200">
                   {currentFlow.response_payload
                     ? JSON.stringify(currentFlow.response_payload, null, 2)
                     : "Response body not displayed for this step"}
@@ -390,8 +390,8 @@ function ImplementationEvidencePanel({
               </div>
             </div>
 
-            <div className="mt-5 rounded-[1.2rem] border border-blue-200/15 bg-blue-300/[0.08] p-4">
-              <p className="text-xs uppercase tracking-[0.22em] text-blue-100">
+            <div className="mt-5 rounded-[1.2rem] border border-red-200/15 bg-red-300/[0.08] p-4">
+              <p className="text-xs uppercase tracking-[0.22em] text-red-100">
                 Why This Counts As CNDC
               </p>
               <p className="mt-3 text-sm leading-7 text-slate-100">
@@ -405,7 +405,7 @@ function ImplementationEvidencePanel({
                   className="flex items-start gap-3 rounded-[1.1rem] border border-white/10 bg-white/[0.04] p-4"
                   key={point}
                 >
-                  <CheckCircle2 className="mt-0.5 text-blue-200" size={16} />
+                  <CheckCircle2 className="mt-0.5 text-red-200" size={16} />
                   <p className="text-sm leading-7 text-slate-300">{point}</p>
                 </div>
               ))}
@@ -415,7 +415,7 @@ function ImplementationEvidencePanel({
 
         <article className="surface-panel-strong overflow-hidden p-6 sm:p-7">
           <div className="flex items-start gap-4">
-            <div className="rounded-2xl bg-emerald-200/10 p-3 text-emerald-100">
+            <div className="rounded-2xl bg-red-200/10 p-3 text-red-100">
               <Database size={20} />
             </div>
             <div>
@@ -432,10 +432,10 @@ function ImplementationEvidencePanel({
             </div>
           </div>
 
-          <div className="mt-6 overflow-hidden rounded-[1.8rem] border border-emerald-100/15 bg-[radial-gradient(circle_at_top_left,rgba(101,184,165,0.18),transparent_34%),linear-gradient(135deg,rgba(9,18,27,0.82),rgba(20,32,43,0.95))] p-5 sm:p-6">
+          <div className="mt-6 overflow-hidden rounded-[1.8rem] border border-red-100/15 bg-[radial-gradient(circle_at_top_left,rgba(226,54,40,0.18),transparent_34%),linear-gradient(135deg,rgba(24,10,13,0.82),rgba(49,20,25,0.95))] p-5 sm:p-6">
             <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
               <div className="max-w-3xl">
-                <p className="text-xs uppercase tracking-[0.24em] text-emerald-100">
+                <p className="text-xs uppercase tracking-[0.24em] text-red-100">
                   Normalization Atlas
                 </p>
                 <h4 className="mt-3 text-2xl font-bold text-white">
@@ -447,7 +447,7 @@ function ImplementationEvidencePanel({
                   functional dependencies stay visible and update anomalies stay low.
                 </p>
               </div>
-              <div className="rounded-full border border-emerald-100/20 bg-emerald-100/10 px-4 py-2 text-xs uppercase tracking-[0.2em] text-emerald-100">
+              <div className="rounded-full border border-red-100/20 bg-red-100/10 px-4 py-2 text-xs uppercase tracking-[0.2em] text-red-100">
                 1NF -&gt; 2NF -&gt; 3NF
               </div>
             </div>
@@ -460,7 +460,7 @@ function ImplementationEvidencePanel({
                     key={stage.label}
                   >
                     <div className="flex items-start gap-3">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100/10 font-mono text-sm font-bold text-emerald-100">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-red-100/10 font-mono text-sm font-bold text-red-100">
                         {stage.label}
                       </div>
                       <div>
@@ -470,7 +470,7 @@ function ImplementationEvidencePanel({
                         <p className="mt-2 text-sm leading-7 text-slate-300">
                           {stage.description}
                         </p>
-                        <code className="mt-3 inline-flex rounded-full border border-white/10 bg-[#09121b] px-3 py-1.5 font-mono text-xs text-emerald-100">
+                        <code className="mt-3 inline-flex rounded-full border border-white/10 bg-[#14090c] px-3 py-1.5 font-mono text-xs text-red-100">
                           {stage.proof}
                         </code>
                       </div>
@@ -481,7 +481,7 @@ function ImplementationEvidencePanel({
 
               <div className="rounded-[1.3rem] border border-white/10 bg-white/[0.05] p-4">
                 <div className="flex items-center gap-3">
-                  <Workflow className="text-emerald-100" size={18} />
+                  <Workflow className="text-red-100" size={18} />
                   <p className="text-xs uppercase tracking-[0.22em] text-slate-300">
                     Measurement Decomposition
                   </p>
@@ -490,19 +490,19 @@ function ImplementationEvidencePanel({
                 <div className="mt-5 grid gap-3 lg:grid-cols-[1fr_auto_1fr_auto_1fr] lg:items-stretch">
                   {normalizationFlow.map((item, index) => (
                     <div className="contents" key={item.table}>
-                      <div className="rounded-[1.2rem] border border-white/10 bg-[#09121b]/80 p-4">
+                      <div className="rounded-[1.2rem] border border-white/10 bg-[#14090c]/80 p-4">
                         <p className="font-mono text-sm font-semibold text-white">
                           {item.table}
                         </p>
                         <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-400">
                           {item.role}
                         </p>
-                        <p className="mt-4 font-mono text-xs leading-6 text-emerald-100">
+                        <p className="mt-4 font-mono text-xs leading-6 text-red-100">
                           {item.dependency}
                         </p>
                       </div>
                       {index < normalizationFlow.length - 1 ? (
-                        <div className="hidden items-center px-1 text-emerald-100 lg:flex">
+                        <div className="hidden items-center px-1 text-red-100 lg:flex">
                           <ArrowRight size={18} />
                         </div>
                       ) : null}
@@ -510,8 +510,8 @@ function ImplementationEvidencePanel({
                   ))}
                 </div>
 
-                <div className="mt-5 rounded-[1.2rem] border border-blue-200/15 bg-blue-300/[0.08] p-4">
-                  <p className="text-xs uppercase tracking-[0.22em] text-blue-100">
+                <div className="mt-5 rounded-[1.2rem] border border-red-200/15 bg-red-300/[0.08] p-4">
+                  <p className="text-xs uppercase tracking-[0.22em] text-red-100">
                     Functional Dependency Proof Lines
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -537,10 +537,10 @@ function ImplementationEvidencePanel({
             />
           </div>
 
-          <div className="mt-6 rounded-[1.7rem] border border-white/10 bg-[linear-gradient(180deg,rgba(12,19,28,0.8),rgba(17,26,36,0.94))] p-5">
+          <div className="mt-6 rounded-[1.7rem] border border-white/10 bg-[linear-gradient(180deg,rgba(24,10,13,0.8),rgba(49,20,25,0.94))] p-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-emerald-100">
+                <p className="text-xs uppercase tracking-[0.24em] text-red-100">
                   Selected Table
                 </p>
                 <h4 className="mt-3 text-2xl font-bold text-white">
@@ -560,7 +560,7 @@ function ImplementationEvidencePanel({
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                 Query Surface
               </p>
-              <pre className="mt-3 overflow-x-auto rounded-[1rem] border border-white/10 bg-[#09121b] p-4 font-mono text-xs leading-7 text-emerald-100">
+              <pre className="mt-3 overflow-x-auto rounded-[1rem] border border-white/10 bg-[#14090c] p-4 font-mono text-xs leading-7 text-red-100">
                 {currentTable.query}
               </pre>
             </div>
@@ -610,7 +610,7 @@ function ImplementationEvidencePanel({
             <div className="mt-5 grid gap-5 xl:grid-cols-[1.05fr_0.95fr]">
               <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-4">
                 <div className="flex items-center gap-3">
-                  <TableProperties className="text-emerald-100" size={18} />
+                  <TableProperties className="text-red-100" size={18} />
                   <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                     Columns
                   </p>
@@ -631,7 +631,7 @@ function ImplementationEvidencePanel({
                       </div>
                       <div className="mt-3 flex flex-wrap gap-2">
                         {column.is_primary_key ? (
-                          <span className="rounded-full border border-emerald-100/20 bg-emerald-200/10 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-emerald-100">
+                          <span className="rounded-full border border-red-100/20 bg-red-200/10 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-red-100">
                             Primary Key
                           </span>
                         ) : null}
@@ -657,7 +657,7 @@ function ImplementationEvidencePanel({
               <div className="space-y-5">
                 <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-4">
                   <div className="flex items-center gap-3">
-                    <Workflow className="text-blue-200" size={18} />
+                    <Workflow className="text-red-200" size={18} />
                     <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                       Constraints
                     </p>
@@ -686,7 +686,7 @@ function ImplementationEvidencePanel({
 
                 <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-4">
                   <div className="flex items-center gap-3">
-                    <Database className="text-emerald-100" size={18} />
+                    <Database className="text-red-100" size={18} />
                     <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                       Indexes
                     </p>

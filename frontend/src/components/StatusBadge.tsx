@@ -16,12 +16,12 @@ const statusStyles: Record<
   }
 > = {
   active: {
-    dot: "bg-blue-100",
-    shell: "border-blue-200/30 bg-blue-300/20 text-blue-100"
+    dot: "bg-red-100",
+    shell: "border-red-200/30 bg-red-300/20 text-red-100"
   },
   completed: {
-    dot: "bg-cyan-100",
-    shell: "border-cyan-200/30 bg-cyan-300/20 text-cyan-100"
+    dot: "bg-orange-100",
+    shell: "border-orange-200/30 bg-orange-300/20 text-orange-100"
   },
   pending: {
     dot: "bg-amber-100",
@@ -32,8 +32,8 @@ const statusStyles: Record<
     shell: "border-rose-200/30 bg-rose-300/20 text-rose-100"
   },
   verified: {
-    dot: "bg-emerald-50",
-    shell: "border-accent-green/30 bg-accent-green/20 text-emerald-50"
+    dot: "bg-red-50",
+    shell: "border-accent-green/30 bg-accent-green/20 text-red-50"
   }
 };
 

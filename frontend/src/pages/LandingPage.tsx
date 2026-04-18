@@ -4,7 +4,6 @@ import {
   CheckCircle2,
   ClipboardCheck,
   Database,
-  Leaf,
   Radio,
   ShieldCheck,
   UserRound,
@@ -14,6 +13,7 @@ import { Link } from "react-router-dom";
 
 import { implementationApi } from "@/api/implementationApi";
 import ImplementationEvidencePanel from "@/components/ImplementationEvidencePanel";
+import UniversityLogo from "@/components/UniversityLogo";
 import type { AdminImplementationSummary } from "@/types";
 
 const roleSurfaces = [
@@ -130,9 +130,7 @@ function LandingPage() {
         <header className="absolute inset-x-0 top-0 z-20">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
             <Link className="flex items-center gap-3" to="/">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-accent-green via-accent-emerald to-accent-blue text-white shadow-accent">
-                <Leaf size={22} />
-              </div>
+              <UniversityLogo className="h-12 w-12 p-1" />
               <div>
                 <p className="font-heading text-lg font-extrabold tracking-tight text-white">
                   Carbon Credit
@@ -168,7 +166,7 @@ function LandingPage() {
 
         <div className="mx-auto grid min-h-[720px] max-w-7xl gap-12 px-4 pb-16 pt-32 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
           <div className="flex flex-col justify-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-100/90">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-red-100/90">
               Carbon credit verification platform
             </p>
 
@@ -217,14 +215,14 @@ function LandingPage() {
               <div className="relative space-y-5">
                 <div className="flex items-center justify-between rounded-[1.4rem] border border-white/10 bg-white/[0.06] px-4 py-3 text-xs uppercase tracking-[0.24em] text-slate-300">
                   <span>Evidence Preview</span>
-                  <span className="rounded-full border border-emerald-100/20 bg-emerald-200/10 px-3 py-1 text-emerald-100">
+                  <span className="rounded-full border border-red-100/20 bg-red-200/10 px-3 py-1 text-red-100">
                     Final App
                   </span>
                 </div>
 
                 <div className="rounded-[1.5rem] border border-white/10 bg-[linear-gradient(180deg,rgba(9,18,27,0.88),rgba(16,24,34,0.98))] p-5">
                   <div className="flex items-center gap-3">
-                    <Radio className="text-blue-200" size={18} />
+                    <Radio className="text-red-200" size={18} />
                     <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                       CNDC preview
                     </p>
@@ -259,14 +257,14 @@ function LandingPage() {
                       </p>
                     </div>
                   </div>
-                  <code className="mt-4 block overflow-x-auto rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-3 font-mono text-xs text-emerald-100">
+                  <code className="mt-4 block overflow-x-auto rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-3 font-mono text-xs text-red-100">
                     {leadFlow?.endpoint ?? "https://api.thingspeak.com/update"}
                   </code>
                 </div>
 
                 <div className="rounded-[1.5rem] border border-white/10 bg-[linear-gradient(180deg,rgba(9,18,27,0.88),rgba(16,24,34,0.98))] p-5">
                   <div className="flex items-center gap-3">
-                    <Database className="text-emerald-100" size={18} />
+                    <Database className="text-red-100" size={18} />
                     <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                       DBMS preview
                     </p>
@@ -397,7 +395,7 @@ function LandingPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
-        <div className="rounded-[2.2rem] border border-emerald-100/15 bg-[linear-gradient(135deg,rgba(101,184,165,0.14),rgba(127,167,217,0.12))] p-8 sm:p-10">
+        <div className="rounded-[2.2rem] border border-red-100/15 bg-[linear-gradient(135deg,rgba(226,54,40,0.14),rgba(126,23,32,0.12))] p-8 sm:p-10">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
               <p className="eyebrow">Closing Position</p>
@@ -422,7 +420,7 @@ function LandingPage() {
                 className="flex items-start gap-3 rounded-[1.4rem] border border-white/10 bg-white/[0.06] p-4"
                 key={item}
               >
-                <CheckCircle2 className="mt-0.5 text-emerald-100" size={18} />
+                <CheckCircle2 className="mt-0.5 text-red-100" size={18} />
                 <p className="text-sm leading-7 text-slate-100">{item}</p>
               </div>
             ))}

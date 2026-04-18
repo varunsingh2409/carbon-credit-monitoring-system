@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { KeyRound, Leaf, UserCircle2 } from "lucide-react";
+import { KeyRound, UserCircle2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 import { authApi } from "@/api/authApi";
+import UniversityLogo from "@/components/UniversityLogo";
 import { isPublishedDemoMode } from "@/demo/demoMode";
 import { demoCredentialPresets } from "@/demo/mockBackend";
 import { useAuthStore } from "@/store/authStore";
@@ -127,9 +128,7 @@ function LoginPage() {
   return (
     <main className="relative flex min-h-[calc(100vh-88px)] items-center justify-center overflow-hidden px-4 py-16 sm:px-6">
       <section className="surface-panel-strong relative w-full max-w-md overflow-hidden p-8">
-        <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-[1.25rem] border border-white/10 bg-white/[0.06] text-emerald-100">
-          <Leaf size={28} />
-        </div>
+        <UniversityLogo className="relative mx-auto h-20 w-20 p-1.5" />
 
         <div className="relative mt-6 text-center">
           <p className="eyebrow">
@@ -145,7 +144,7 @@ function LoginPage() {
         <form className="mt-8 space-y-5" onSubmit={onSubmit}>
           {isPublishedDemoMode ? (
             <div className="rounded-[1.5rem] border border-accent-green/20 bg-accent-green/[0.08] p-4">
-              <p className="text-xs uppercase tracking-[0.18em] text-emerald-100/80">
+              <p className="text-xs uppercase tracking-[0.18em] text-red-100/80">
                 GitHub Pages Demo Mode
               </p>
               <p className="mt-2 text-sm leading-7 text-slate-200">
@@ -230,7 +229,7 @@ function LoginPage() {
                   <button
                     className={`rounded-full px-3 py-2 text-sm font-semibold capitalize transition ${
                       isActive
-                        ? "bg-emerald-600 text-white"
+                        ? "bg-accent-green text-white"
                         : "border border-white/10 bg-white/10 text-slate-200 hover:bg-white/10"
                     }`}
                     key={role}
@@ -260,7 +259,7 @@ function LoginPage() {
         </div>
 
         <div className="mt-5 text-center text-sm">
-          <Link className="font-medium text-accent-blue transition hover:text-blue-300" to="/">
+          <Link className="font-medium text-red-100 transition hover:text-white" to="/">
             Back to home
           </Link>
         </div>

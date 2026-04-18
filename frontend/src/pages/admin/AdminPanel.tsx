@@ -235,7 +235,7 @@ function AdminPanel() {
         <section className="mt-10 grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
           <div className="surface-panel p-6">
             <div className="flex items-center gap-3">
-              <div className="rounded-2xl bg-white/10 p-3 text-emerald-200">
+              <div className="rounded-2xl bg-white/10 p-3 text-red-100">
                 <CheckCircle2 size={18} />
               </div>
               <div>
@@ -254,7 +254,7 @@ function AdminPanel() {
                   className="flex gap-4 rounded-[1.25rem] border border-white/10 bg-white/[0.04] p-4"
                   key={step}
                 >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-emerald-100/20 bg-emerald-200/10 text-sm font-bold text-emerald-100">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-red-100/20 bg-red-200/10 text-sm font-bold text-red-100">
                     {index + 1}
                   </span>
                   <p className="text-sm leading-6 text-slate-200">{step}</p>
@@ -262,8 +262,8 @@ function AdminPanel() {
               ))}
             </ol>
 
-            <div className="mt-6 rounded-[1.25rem] border border-blue-100/15 bg-blue-300/[0.06] p-4">
-              <p className="text-xs uppercase tracking-[0.18em] text-blue-100">
+            <div className="mt-6 rounded-[1.25rem] border border-red-100/15 bg-red-300/[0.06] p-4">
+              <p className="text-xs uppercase tracking-[0.18em] text-red-100">
                 Demonstration Evidence
               </p>
               <p className="mt-2 text-sm leading-6 text-slate-300">
@@ -277,7 +277,7 @@ function AdminPanel() {
           <div className="space-y-5">
             <section className="surface-panel p-6">
               <div className="flex items-center gap-3">
-                <div className="rounded-2xl bg-white/10 p-3 text-emerald-300">
+                <div className="rounded-2xl bg-white/10 p-3 text-red-100">
                   <Radio size={18} />
                 </div>
                 <div>
@@ -298,7 +298,7 @@ function AdminPanel() {
                       className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 sm:flex-row sm:items-center sm:justify-between"
                       key={mapping.field}
                     >
-                      <span className="font-mono text-xs text-emerald-100">
+                      <span className="font-mono text-xs text-red-100">
                         {mapping.field} -&gt; {mapping.label}
                       </span>
                       <span className="text-xs text-slate-400">{mapping.sample}</span>
@@ -308,8 +308,8 @@ function AdminPanel() {
               </div>
 
               <div className="mt-4 grid gap-3 lg:grid-cols-2">
-                <div className="rounded-[1.25rem] border border-emerald-100/15 bg-emerald-200/[0.07] px-4 py-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">
+                <div className="rounded-[1.25rem] border border-red-100/15 bg-red-200/[0.07] px-4 py-4">
+                  <p className="text-xs uppercase tracking-[0.18em] text-red-100">
                     Sent To ThingSpeak
                   </p>
                   <p className="mt-2 text-sm leading-6 text-slate-300">
@@ -322,14 +322,14 @@ function AdminPanel() {
                         className="rounded-full border border-white/10 bg-white/[0.08] px-3 py-1.5 font-mono text-[11px] text-slate-100"
                         key={row.row}
                       >
-                        row {row.row}: OC {row.organicCarbon}, depth {row.depth}
+                        row {row.row}: OC {row.organicCarbon} kg/ha, depth {row.depth} cm
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div className="rounded-[1.25rem] border border-blue-100/15 bg-blue-300/[0.07] px-4 py-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-blue-100">
+                <div className="rounded-[1.25rem] border border-red-100/15 bg-red-300/[0.07] px-4 py-4">
+                  <p className="text-xs uppercase tracking-[0.18em] text-red-100">
                     Received By Backend
                   </p>
                   <p className="mt-2 text-sm leading-6 text-slate-300">
@@ -370,7 +370,7 @@ function AdminPanel() {
                     </div>
                     <div className="surface-card-muted px-4 py-3">
                       <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Imported</p>
-                      <p className="mt-2 text-lg font-semibold text-emerald-300">
+                      <p className="mt-2 text-lg font-semibold text-red-100">
                         {thingSpeakResult.imported_count}
                       </p>
                     </div>
@@ -386,8 +386,8 @@ function AdminPanel() {
                     {thingSpeakResult.message}
                   </p>
 
-                  <div className="mt-4 rounded-2xl border border-emerald-100/15 bg-emerald-200/[0.06] px-4 py-3">
-                    <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">
+                  <div className="mt-4 rounded-2xl border border-red-100/15 bg-red-200/[0.06] px-4 py-3">
+                    <p className="text-xs uppercase tracking-[0.18em] text-red-100">
                       Database Population Verification
                     </p>
                     <p className="mt-2 text-sm leading-6 text-slate-300">
@@ -421,7 +421,7 @@ function AdminPanel() {
 
             <section className="surface-panel p-6">
               <div className="flex items-center gap-3">
-                <div className="rounded-2xl bg-white/10 p-3 text-blue-300">
+                <div className="rounded-2xl bg-white/10 p-3 text-red-100">
                   <PlayCircle size={18} />
                 </div>
                 <div>

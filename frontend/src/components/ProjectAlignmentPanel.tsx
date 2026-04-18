@@ -115,7 +115,7 @@ function ProjectAlignmentPanel({
 
       <article className="surface-panel-strong overflow-hidden p-6 sm:p-7">
         <div className="flex items-start gap-4">
-          <div className="rounded-2xl bg-emerald-200/10 p-3 text-emerald-100">
+          <div className="rounded-2xl bg-red-200/10 p-3 text-red-100">
             <BarChart3 size={20} />
           </div>
           <div>
@@ -136,7 +136,7 @@ function ProjectAlignmentPanel({
         <div className="mt-6 grid gap-5 xl:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
             <div className="flex items-center gap-3">
-              <Radio className="text-blue-200" size={18} />
+              <Radio className="text-red-200" size={18} />
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                 Correlations
               </p>
@@ -167,7 +167,7 @@ function ProjectAlignmentPanel({
           <div className="space-y-5">
             <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
               <div className="flex items-center gap-3">
-                <BarChart3 className="text-emerald-100" size={18} />
+                <BarChart3 className="text-red-100" size={18} />
                 <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                   Regression
                 </p>
@@ -196,8 +196,8 @@ function ProjectAlignmentPanel({
                     {regression.interpretation}
                   </p>
                   <p className="font-mono text-xs leading-6 text-slate-300">
-                    Organic Carbon = {formatMetric(regression.intercept)} + (
-                    {formatMetric(regression.slope)} x {regression.predictor})
+                    Organic Carbon (kg/ha) = {formatMetric(regression.intercept)} kg/ha + (
+                    {formatMetric(regression.slope)} kg/ha per unit x {regression.predictor})
                   </p>
                 </div>
               ) : (
@@ -210,7 +210,7 @@ function ProjectAlignmentPanel({
 
             <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
               <div className="flex items-center gap-3">
-                <ShieldCheck className="text-blue-200" size={18} />
+                <ShieldCheck className="text-red-200" size={18} />
                 <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                   Hypothesis Test
                 </p>
@@ -223,7 +223,7 @@ function ProjectAlignmentPanel({
                         Baseline Mean
                       </p>
                       <p className="mt-2 text-sm font-semibold text-white">
-                        {hypothesisTest.baseline_label}: {formatMetric(hypothesisTest.baseline_mean)}
+                        {hypothesisTest.baseline_label}: {formatMetric(hypothesisTest.baseline_mean)} kg/ha
                       </p>
                     </div>
                     <div className="rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-3">
@@ -231,7 +231,7 @@ function ProjectAlignmentPanel({
                         Comparison Mean
                       </p>
                       <p className="mt-2 text-sm font-semibold text-white">
-                        {hypothesisTest.comparison_label}: {formatMetric(hypothesisTest.comparison_mean)}
+                        {hypothesisTest.comparison_label}: {formatMetric(hypothesisTest.comparison_mean)} kg/ha
                       </p>
                     </div>
                   </div>
@@ -255,7 +255,7 @@ function ProjectAlignmentPanel({
         <div className="mt-5 grid gap-5 xl:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
             <div className="flex items-center gap-3">
-              <FileText className="text-emerald-100" size={18} />
+              <FileText className="text-red-100" size={18} />
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                 Confidence Interval
               </p>
@@ -271,7 +271,7 @@ function ProjectAlignmentPanel({
                       Estimate
                     </p>
                     <p className="mt-2 text-sm font-semibold text-white">
-                      {formatMetric(confidenceInterval.estimate)}
+                      {formatMetric(confidenceInterval.estimate)} tCO2e
                     </p>
                   </div>
                   <div className="rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-3">
@@ -279,7 +279,7 @@ function ProjectAlignmentPanel({
                       Lower Bound
                     </p>
                     <p className="mt-2 text-sm font-semibold text-white">
-                      {formatMetric(confidenceInterval.lower_bound)}
+                      {formatMetric(confidenceInterval.lower_bound)} tCO2e
                     </p>
                   </div>
                   <div className="rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-3">
@@ -287,7 +287,7 @@ function ProjectAlignmentPanel({
                       Upper Bound
                     </p>
                     <p className="mt-2 text-sm font-semibold text-white">
-                      {formatMetric(confidenceInterval.upper_bound)}
+                      {formatMetric(confidenceInterval.upper_bound)} tCO2e
                     </p>
                   </div>
                 </div>
@@ -305,7 +305,7 @@ function ProjectAlignmentPanel({
 
           <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
             <div className="flex items-center gap-3">
-              <CheckCircle2 className="text-blue-200" size={18} />
+              <CheckCircle2 className="text-red-200" size={18} />
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                 Limitations
               </p>
@@ -316,7 +316,7 @@ function ProjectAlignmentPanel({
                   className="flex items-start gap-3 rounded-[1rem] border border-white/10 bg-white/[0.04] p-4"
                   key={item}
                 >
-                  <CheckCircle2 className="mt-0.5 text-blue-200" size={16} />
+                  <CheckCircle2 className="mt-0.5 text-red-200" size={16} />
                   <p className="text-sm leading-7 text-slate-300">{item}</p>
                 </div>
               ))}
@@ -327,7 +327,7 @@ function ProjectAlignmentPanel({
 
       <article className="surface-panel-strong overflow-hidden p-6 sm:p-7">
         <div className="flex items-start gap-4">
-          <div className="rounded-2xl bg-blue-300/15 p-3 text-blue-200">
+          <div className="rounded-2xl bg-red-300/15 p-3 text-red-200">
             <FileText size={20} />
           </div>
           <div>
@@ -344,10 +344,10 @@ function ProjectAlignmentPanel({
           </div>
         </div>
 
-        <div className="mt-6 rounded-[1.5rem] border border-emerald-100/15 bg-[linear-gradient(135deg,rgba(101,184,165,0.14),rgba(127,167,217,0.12))] p-5">
+        <div className="mt-6 rounded-[1.5rem] border border-red-100/15 bg-[linear-gradient(135deg,rgba(226,54,40,0.14),rgba(126,23,32,0.12))] p-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-emerald-100">
+              <p className="text-xs uppercase tracking-[0.22em] text-red-100">
                 Certification Summary
               </p>
               <h4 className="mt-3 text-2xl font-bold text-white">
@@ -366,7 +366,7 @@ function ProjectAlignmentPanel({
           <div className="mt-5 grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
             <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.06] p-4">
               <div className="flex items-center gap-3">
-                <FileText className="text-emerald-100" size={18} />
+                <FileText className="text-red-100" size={18} />
                 <p className="text-xs uppercase tracking-[0.22em] text-slate-200">
                   Report Sections
                 </p>
@@ -385,7 +385,7 @@ function ProjectAlignmentPanel({
 
             <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.06] p-4">
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="text-blue-100" size={18} />
+                <CheckCircle2 className="text-red-100" size={18} />
                 <p className="text-xs uppercase tracking-[0.22em] text-slate-200">
                   Key Findings
                 </p>
@@ -396,7 +396,7 @@ function ProjectAlignmentPanel({
                     className="flex items-start gap-3 rounded-[1rem] border border-white/10 bg-white/[0.05] p-4"
                     key={item}
                   >
-                    <CheckCircle2 className="mt-0.5 text-blue-100" size={16} />
+                    <CheckCircle2 className="mt-0.5 text-red-100" size={16} />
                     <p className="text-sm leading-7 text-slate-100">{item}</p>
                   </div>
                 ))}
@@ -430,7 +430,7 @@ function ProjectAlignmentPanel({
             <div className="mt-5 grid gap-4 xl:grid-cols-2">
               {summary.implementation_artifacts.map((item) => (
                 <a
-                  className="group rounded-[1.2rem] border border-white/10 bg-white/[0.05] p-4 transition hover:border-emerald-100/30 hover:bg-white/[0.07]"
+                  className="group rounded-[1.2rem] border border-white/10 bg-white/[0.05] p-4 transition hover:border-red-100/30 hover:bg-white/[0.07]"
                   href={getArtifactHref(item.href)}
                   key={item.artifact_id}
                   rel="noreferrer"
@@ -441,12 +441,12 @@ function ProjectAlignmentPanel({
                       <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">
                         {item.category}
                       </p>
-                      <h5 className="mt-2 text-lg font-semibold text-white transition group-hover:text-emerald-100">
+                      <h5 className="mt-2 text-lg font-semibold text-white transition group-hover:text-red-100">
                         {item.title}
                       </h5>
                     </div>
                     <ArrowUpRight
-                      className="shrink-0 text-slate-400 transition group-hover:text-emerald-100"
+                      className="shrink-0 text-slate-400 transition group-hover:text-red-100"
                       size={18}
                     />
                   </div>
@@ -462,7 +462,7 @@ function ProjectAlignmentPanel({
                     <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-300">
                       {item.file_name}
                     </span>
-                    <span className="rounded-full border border-emerald-100/20 bg-emerald-100/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-emerald-100">
+                    <span className="rounded-full border border-red-100/20 bg-red-100/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-red-100">
                       {item.used_in_live_app ? "Used by live app" : "Supporting artifact"}
                     </span>
                   </div>

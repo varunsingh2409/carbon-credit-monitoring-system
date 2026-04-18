@@ -67,24 +67,24 @@ const colorMap: Record<
   }
 > = {
   blue: {
-    icon: "bg-blue-400/20 text-blue-100 ring-1 ring-inset ring-blue-200/30",
-    text: "text-blue-100"
+    icon: "bg-red-200/15 text-red-100 ring-1 ring-inset ring-red-100/25",
+    text: "text-red-100"
   },
   cyan: {
-    icon: "bg-cyan-400/20 text-cyan-100 ring-1 ring-inset ring-cyan-200/30",
-    text: "text-cyan-100"
+    icon: "bg-orange-200/15 text-orange-100 ring-1 ring-inset ring-orange-100/25",
+    text: "text-orange-100"
   },
   green: {
-    icon: "bg-accent-green/20 text-emerald-50 ring-1 ring-inset ring-accent-green/30",
-    text: "text-emerald-50"
+    icon: "bg-accent-green/20 text-red-50 ring-1 ring-inset ring-accent-green/30",
+    text: "text-red-50"
   },
   pink: {
-    icon: "bg-pink-400/20 text-pink-100 ring-1 ring-inset ring-pink-200/30",
-    text: "text-pink-100"
+    icon: "bg-rose-300/20 text-rose-100 ring-1 ring-inset ring-rose-100/30",
+    text: "text-rose-100"
   },
   purple: {
-    icon: "bg-accent-purple/20 text-violet-50 ring-1 ring-inset ring-accent-purple/30",
-    text: "text-violet-50"
+    icon: "bg-accent-purple/25 text-red-50 ring-1 ring-inset ring-accent-purple/35",
+    text: "text-red-50"
   },
   red: {
     icon: "bg-red-400/20 text-red-100 ring-1 ring-inset ring-red-200/30",

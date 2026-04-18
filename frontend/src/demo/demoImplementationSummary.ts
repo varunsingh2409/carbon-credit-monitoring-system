@@ -225,11 +225,11 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       predictor: "Moisture",
       response: "Organic Carbon",
       sample_size: 5,
-      intercept: 0.3256,
-      slope: 0.0976,
-      r_squared: 0.9986,
+      intercept: 744.2504,
+      slope: 14.5379,
+      r_squared: 0.999,
       interpretation:
-        "Each one-unit increase in Moisture is associated with a 0.0976 unit change in organic carbon in this dataset."
+        "Each one percentage-point increase in moisture is associated with a 14.5379 kg/ha change in organic carbon in this dataset."
     },
     hypothesis_test: {
       test_name: "Exact permutation test on seasonal organic-carbon means",
@@ -239,18 +239,18 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         "The comparison season has a different mean organic carbon than the baseline season.",
       baseline_label: "Rabi 2025 Baseline",
       comparison_label: "Monsoon 2026 Demo",
-      baseline_mean: 2.94,
-      comparison_mean: 3.4733,
+      baseline_mean: 1042.5,
+      comparison_mean: 1123.4,
       p_value: 0.1,
       conclusion:
-        "The comparison season mean is 0.5333 units above the baseline mean, but the result is not statistically significant at the 5% level because the demo sample is still small."
+        "The comparison season mean is 80.9 kg/ha above the baseline mean, but the result is not statistically significant at the 5% level because the demo sample is still small."
     },
     confidence_interval: {
       metric: "Estimated credit for Monsoon 2026 Demo",
       confidence_level: 0.95,
-      estimate: 2.07,
-      lower_bound: 1.89,
-      upper_bound: 2.24,
+      estimate: 22.64,
+      lower_bound: 20.8,
+      upper_bound: 24.2,
       interpretation:
         "Bootstrap interval derived from the season's organic-carbon observations and the same sequestration logic used by the platform."
     },
@@ -275,8 +275,8 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       "5 measurement events across 2 seasons are included in the inferential layer.",
       "Moisture shows a positive correlation of 0.9993 with organic carbon.",
       "The strongest regression explains 99.86% of the observed organic-carbon variance.",
-      "The seasonal hypothesis test produced p = 0.1, with mean organic carbon rising from 2.94 to 3.4733.",
-      "The 95% bootstrap interval for the credit estimate is 1.89 to 2.24."
+      "The seasonal hypothesis test produced p = 0.1, with mean organic carbon rising from 1042.5 kg/ha to 1123.4 kg/ha.",
+      "The 95% bootstrap interval for the credit estimate is 20.8 to 24.2 tCO2e."
     ]
   },
   implementation_artifacts: [
@@ -525,7 +525,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         { name: "idx_farm_location", columns: ["location"], unique: false }
       ],
       preview_rows: [
-        { farm_id: 101, farmer_id: 1, farm_name: "Punjab Mitti Farm", location: "Ludhiana, Punjab", total_area_hectares: 24.5, baseline_carbon: 142.4 }
+        { farm_id: 101, farmer_id: 1, farm_name: "Punjab Mitti Farm", location: "Ludhiana, Punjab", total_area_hectares: 50, baseline_carbon: 1000 }
       ]
     },
     {
@@ -627,9 +627,9 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         { name: "idx_soil_measurement_season_date", columns: ["season_id", "measurement_date"], unique: false }
       ],
       preview_rows: [
-        { measurement_id: 30203, farm_id: 101, season_id: 302, measurement_date: "2026-04-02T09:00:00.000Z", depth_cm: 20, sensor_id: "TS-PUNJAB-01" },
-        { measurement_id: 30202, farm_id: 101, season_id: 302, measurement_date: "2026-03-28T08:45:00.000Z", depth_cm: 20, sensor_id: "TS-PUNJAB-01" },
-        { measurement_id: 30201, farm_id: 101, season_id: 302, measurement_date: "2026-03-24T08:35:00.000Z", depth_cm: 20, sensor_id: "TS-PUNJAB-01" },
+        { measurement_id: 30203, farm_id: 101, season_id: 302, measurement_date: "2026-04-02T09:00:00.000Z", depth_cm: 10, sensor_id: "TS-PUNJAB-01" },
+        { measurement_id: 30202, farm_id: 101, season_id: 302, measurement_date: "2026-03-28T08:45:00.000Z", depth_cm: 10, sensor_id: "TS-PUNJAB-01" },
+        { measurement_id: 30201, farm_id: 101, season_id: 302, measurement_date: "2026-03-24T08:35:00.000Z", depth_cm: 10, sensor_id: "TS-PUNJAB-01" },
         { measurement_id: 30102, farm_id: 101, season_id: 301, measurement_date: "2026-01-06T09:10:00.000Z", depth_cm: 20, sensor_id: "TS-PUNJAB-01" },
         { measurement_id: 30101, farm_id: 101, season_id: 301, measurement_date: "2025-12-18T08:40:00.000Z", depth_cm: 20, sensor_id: "TS-PUNJAB-01" }
       ]
@@ -654,14 +654,14 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       ],
       indexes: [{ name: "idx_measurement_result_nutrient_id", columns: ["nutrient_id"], unique: false }],
       preview_rows: [
-        { measurement_id: 30203, nutrient_id: 1, measured_value: 218 },
-        { measurement_id: 30203, nutrient_id: 2, measured_value: 125 },
-        { measurement_id: 30203, nutrient_id: 3, measured_value: 352 },
-        { measurement_id: 30203, nutrient_id: 4, measured_value: 33.1 },
-        { measurement_id: 30203, nutrient_id: 5, measured_value: 3.55 },
-        { measurement_id: 30202, nutrient_id: 1, measured_value: 214 },
-        { measurement_id: 30202, nutrient_id: 4, measured_value: 32.2 },
-        { measurement_id: 30202, nutrient_id: 5, measured_value: 3.46 }
+        { measurement_id: 30203, nutrient_id: 1, measured_value: 34.4 },
+        { measurement_id: 30203, nutrient_id: 2, measured_value: 20.1 },
+        { measurement_id: 30203, nutrient_id: 3, measured_value: 147.8 },
+        { measurement_id: 30203, nutrient_id: 4, measured_value: 26.1 },
+        { measurement_id: 30203, nutrient_id: 5, measured_value: 1124 },
+        { measurement_id: 30202, nutrient_id: 1, measured_value: 33.1 },
+        { measurement_id: 30202, nutrient_id: 4, measured_value: 25.2 },
+        { measurement_id: 30202, nutrient_id: 5, measured_value: 1110 }
       ]
     },
     {
@@ -699,8 +699,8 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         { name: "idx_carbon_sequestration_status_date", columns: ["status", "calculation_date"], unique: false }
       ],
       preview_rows: [
-        { sequestration_id: 9002, farm_id: 101, season_id: 301, estimated_carbon_credit: 1.6, status: "verified", calculation_date: "2026-01-18T09:15:00.000Z" },
-        { sequestration_id: 9001, farm_id: 101, season_id: 302, estimated_carbon_credit: 2.07, status: "pending", calculation_date: "2026-04-03T10:30:00.000Z" }
+        { sequestration_id: 9002, farm_id: 101, season_id: 301, estimated_carbon_credit: 7.8, status: "verified", calculation_date: "2026-01-18T09:15:00.000Z" },
+        { sequestration_id: 9001, farm_id: 101, season_id: 302, estimated_carbon_credit: 22.64, status: "pending", calculation_date: "2026-04-03T10:30:00.000Z" }
       ]
     },
     {
@@ -733,7 +733,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         { name: "idx_carbon_verification_status_date", columns: ["verification_status", "verification_date"], unique: false }
       ],
       preview_rows: [
-        { verification_id: 7001, sequestration_id: 9002, verifier_id: 2, verification_status: "approved", approved_carbon_credit: 1.6, verification_date: "2026-01-19T11:00:00.000Z" }
+        { verification_id: 7001, sequestration_id: 9002, verifier_id: 2, verification_status: "approved", approved_carbon_credit: 7.8, verification_date: "2026-01-19T11:00:00.000Z" }
       ]
     }
   ]

@@ -1,8 +1,9 @@
 import { clsx } from "clsx";
-import { Leaf, LogIn, LogOut, ShieldCheck } from "lucide-react";
+import { LogIn, LogOut, ShieldCheck } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
+import UniversityLogo from "@/components/UniversityLogo";
 import type { User } from "@/types";
 
 interface NavbarProps {
@@ -33,12 +34,10 @@ function Navbar({ currentUser, onLogout }: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[rgba(27,38,51,0.72)] backdrop-blur-2xl">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-100/60 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red-100/60 to-transparent" />
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <Link className="flex items-center gap-3" to="/">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-accent-green via-accent-emerald to-accent-blue text-white shadow-accent">
-            <Leaf size={22} />
-          </div>
+          <UniversityLogo className="h-12 w-12 p-1" />
           <div>
             <p className="font-heading text-lg font-extrabold tracking-tight text-white">
               Carbon Credit
@@ -67,7 +66,7 @@ function Navbar({ currentUser, onLogout }: NavbarProps) {
           {currentUser ? (
             <>
               <div className="hidden items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-2.5 shadow-[0_12px_30px_rgba(26,36,49,0.16)] sm:flex">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-green/20 text-emerald-50">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-green/20 text-red-50">
                   <ShieldCheck size={16} />
                 </div>
                 <div className="text-right">

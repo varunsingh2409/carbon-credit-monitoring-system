@@ -112,7 +112,7 @@ function VerifierDashboard() {
       <section className="mb-8 grid gap-4 lg:grid-cols-3">
         {verificationWorkflow.map(([title, description]) => (
           <div className="surface-card-muted p-5" key={title}>
-            <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">{title}</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-red-100">{title}</p>
             <p className="mt-3 text-sm leading-6 text-slate-300">{description}</p>
           </div>
         ))}
@@ -163,11 +163,11 @@ function VerifierDashboard() {
                       <p>Season: {item.season_name}</p>
                       <p>Measurement rows: {item.measurement_count}</p>
                       <p className="inline-flex items-center gap-2">
-                        <MapPinned size={15} className="text-accent-green" />
+                        <MapPinned size={15} className="text-red-100" />
                         {item.location}
                       </p>
                       <p className="inline-flex items-center gap-2">
-                        <CalendarDays size={15} className="text-blue-300" />
+                        <CalendarDays size={15} className="text-red-200" />
                         Calculated {formatDate(item.calculation_date)}
                       </p>
                     </div>
@@ -188,17 +188,17 @@ function VerifierDashboard() {
                 <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
                   <div className="surface-card-muted p-4">
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                      Net Carbon Increase
+                      Net Carbon Increase (kg/ha)
                     </p>
-                    <p className="mt-2 text-xl font-bold text-blue-300">
-                      {item.net_carbon_increase.toFixed(2)}
+                    <p className="mt-2 text-xl font-bold text-red-200">
+                      {item.net_carbon_increase.toFixed(2)} kg/ha
                     </p>
                   </div>
                   <div className="surface-card-muted p-4">
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                      Estimated Credit
+                      Estimated Credit (tCO2e)
                     </p>
-                    <p className="mt-2 text-xl font-bold text-accent-purple">
+                    <p className="mt-2 text-xl font-bold text-red-50">
                       {item.estimated_carbon_credit.toFixed(2)} tCO2e
                     </p>
                   </div>
@@ -212,18 +212,18 @@ function VerifierDashboard() {
                   </div>
                   <div className="surface-card-muted p-4">
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                      Baseline Carbon
+                      Baseline Carbon (kg/ha)
                     </p>
                     <p className="mt-2 text-xl font-bold text-white">
-                      {item.baseline_carbon.toFixed(2)}
+                      {item.baseline_carbon.toFixed(2)} kg/ha
                     </p>
                   </div>
                   <div className="surface-card-muted p-4">
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                      Current Carbon
+                      Current Carbon (kg/ha)
                     </p>
-                    <p className="mt-2 text-xl font-bold text-accent-green">
-                      {item.current_carbon.toFixed(2)}
+                    <p className="mt-2 text-xl font-bold text-red-100">
+                      {item.current_carbon.toFixed(2)} kg/ha
                     </p>
                   </div>
                 </div>
@@ -264,7 +264,7 @@ function VerifierDashboard() {
                     <th className="px-6 py-4 font-medium">Farm</th>
                     <th className="px-6 py-4 font-medium">Farmer</th>
                     <th className="px-6 py-4 font-medium">Season</th>
-                    <th className="px-6 py-4 font-medium">Credit</th>
+                    <th className="px-6 py-4 font-medium">Credit (tCO2e)</th>
                     <th className="px-6 py-4 font-medium">Status</th>
                     <th className="px-6 py-4 font-medium">Date</th>
                   </tr>
@@ -284,7 +284,7 @@ function VerifierDashboard() {
                       <td className="px-6 py-4 text-sm text-slate-300">
                         {item.season_name}
                       </td>
-                      <td className="px-6 py-4 text-sm text-accent-purple">
+                      <td className="px-6 py-4 text-sm text-red-100">
                         {item.approved_or_estimated_credit.toFixed(2)} tCO2e
                       </td>
                       <td className="px-6 py-4 text-sm">

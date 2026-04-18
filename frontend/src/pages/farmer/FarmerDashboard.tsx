@@ -44,9 +44,9 @@ const normalizeVerificationStatus = (status: string): StatusBadgeValue => {
 const getSeasonCardTone = (status: FarmerSeasonDashboard["status"]) => {
   switch (status) {
     case "active":
-      return "border-blue-200/20 bg-blue-300/[0.08]";
+      return "border-red-200/20 bg-red-300/[0.08]";
     case "completed":
-      return "border-cyan-200/20 bg-cyan-300/[0.08]";
+      return "border-orange-200/20 bg-orange-300/[0.08]";
     case "verified":
       return "border-accent-green/25 bg-accent-green/[0.08]";
     case "rejected":
@@ -204,7 +204,7 @@ function FarmerDashboard() {
           ["3. Verification", "The verifier approves or rejects the same calculated claim shown here."]
         ].map(([title, description]) => (
           <div className="surface-card-muted p-5" key={title}>
-            <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">{title}</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-red-100">{title}</p>
             <p className="mt-3 text-sm leading-6 text-slate-300">{description}</p>
           </div>
         ))}
@@ -280,34 +280,34 @@ function FarmerDashboard() {
                           <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                             <div className="surface-card-muted p-4">
                               <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                                Baseline Carbon
+                                Baseline Carbon (kg/ha)
                               </p>
                               <p className="mt-2 text-xl font-bold text-white">
-                                {season.carbon_data.baseline_carbon.toFixed(2)}
+                                {season.carbon_data.baseline_carbon.toFixed(2)} kg/ha
                               </p>
                             </div>
-                            <div className="rounded-2xl border border-accent-green/20 bg-accent-green/[0.06] p-4 shadow-[0_12px_28px_rgba(34,197,94,0.08)]">
+                            <div className="rounded-2xl border border-accent-green/20 bg-accent-green/[0.06] p-4 shadow-[0_12px_28px_rgba(226,54,40,0.08)]">
                               <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                                Current Carbon
+                                Current Carbon (kg/ha)
                               </p>
-                              <p className="mt-2 text-xl font-bold text-accent-green">
-                                {season.carbon_data.current_carbon.toFixed(2)}
+                              <p className="mt-2 text-xl font-bold text-red-100">
+                                {season.carbon_data.current_carbon.toFixed(2)} kg/ha
                               </p>
                             </div>
-                            <div className="rounded-2xl border border-blue-400/20 bg-blue-500/[0.06] p-4 shadow-[0_12px_28px_rgba(59,130,246,0.08)]">
+                            <div className="rounded-2xl border border-red-200/20 bg-red-300/[0.06] p-4 shadow-[0_12px_28px_rgba(226,54,40,0.08)]">
                               <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                                Net Increase
+                                Net Increase (kg/ha)
                               </p>
-                              <p className="mt-2 text-xl font-bold text-blue-300">
-                                {season.carbon_data.net_increase.toFixed(2)}
+                              <p className="mt-2 text-xl font-bold text-red-200">
+                                {season.carbon_data.net_increase.toFixed(2)} kg/ha
                               </p>
                             </div>
-                            <div className="rounded-2xl border border-accent-purple/20 bg-accent-purple/[0.06] p-4 shadow-[0_12px_28px_rgba(139,92,246,0.08)]">
+                            <div className="rounded-2xl border border-accent-purple/20 bg-accent-purple/[0.06] p-4 shadow-[0_12px_28px_rgba(126,23,32,0.1)]">
                               <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                                Estimated Credits
+                                Estimated Credits (tCO2e)
                               </p>
-                              <p className="mt-2 text-xl font-bold text-accent-purple">
-                                {season.carbon_data.estimated_credit.toFixed(2)}
+                              <p className="mt-2 text-xl font-bold text-red-50">
+                                {season.carbon_data.estimated_credit.toFixed(2)} tCO2e
                               </p>
                               <div className="mt-3">
                                 <StatusBadge
@@ -365,18 +365,22 @@ function FarmerDashboard() {
             </div>
             <div className="surface-card-muted p-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Organic Carbon
+                Organic Carbon (kg/ha)
               </p>
               <p className="mt-2 text-xl font-bold text-white">
-                {latestMeasurement?.organicCarbon?.toFixed(2) ?? "N/A"}
+                {latestMeasurement?.organicCarbon != null
+                  ? `${latestMeasurement.organicCarbon.toFixed(2)} kg/ha`
+                  : "N/A"}
               </p>
             </div>
             <div className="surface-card-muted p-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Nitrogen
+                Nitrogen (ppm)
               </p>
               <p className="mt-2 text-xl font-bold text-white">
-                {latestMeasurement?.nitrogen?.toFixed(2) ?? "N/A"}
+                {latestMeasurement?.nitrogen != null
+                  ? `${latestMeasurement.nitrogen.toFixed(2)} ppm`
+                  : "N/A"}
               </p>
             </div>
           </div>
@@ -405,9 +409,9 @@ function FarmerDashboard() {
                   <tr>
                     <th className="px-6 py-4 font-medium">Date</th>
                     <th className="px-6 py-4 font-medium">Farm</th>
-                    <th className="px-6 py-4 font-medium">Depth</th>
-                    <th className="px-6 py-4 font-medium">Organic Carbon</th>
-                    <th className="px-6 py-4 font-medium">Nitrogen</th>
+                    <th className="px-6 py-4 font-medium">Depth (cm)</th>
+                    <th className="px-6 py-4 font-medium">Organic Carbon (kg/ha)</th>
+                    <th className="px-6 py-4 font-medium">Nitrogen (ppm)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -425,11 +429,15 @@ function FarmerDashboard() {
                       <td className="px-6 py-4 text-sm text-slate-300">
                         {measurement.depth.toFixed(2)} cm
                       </td>
-                      <td className="px-6 py-4 text-sm font-semibold text-accent-green">
-                        {measurement.organicCarbon?.toFixed(2) ?? "N/A"}
+                      <td className="px-6 py-4 text-sm font-semibold text-red-100">
+                        {measurement.organicCarbon != null
+                          ? `${measurement.organicCarbon.toFixed(2)} kg/ha`
+                          : "N/A"}
                       </td>
                       <td className="px-6 py-4 text-sm text-slate-300">
-                        {measurement.nitrogen?.toFixed(2) ?? "N/A"}
+                        {measurement.nitrogen != null
+                          ? `${measurement.nitrogen.toFixed(2)} ppm`
+                          : "N/A"}
                       </td>
                     </tr>
                   ))}

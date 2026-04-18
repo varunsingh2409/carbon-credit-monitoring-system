@@ -198,7 +198,7 @@ function VerificationDetails() {
           ["3. Stored Decision", "Approval or rejection is saved as carbon_verification history."]
         ].map(([title, description]) => (
           <div className="surface-card-muted p-5" key={title}>
-            <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">{title}</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-red-100">{title}</p>
             <p className="mt-3 text-sm leading-6 text-slate-300">{description}</p>
           </div>
         ))}
@@ -242,48 +242,48 @@ function VerificationDetails() {
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <div className="surface-card p-5">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Baseline Carbon
+                  Baseline Carbon (kg/ha)
                 </p>
                 <p className="mt-2 text-3xl font-bold text-white">
-                  {detail.baseline_carbon.toFixed(2)}
+                  {detail.baseline_carbon.toFixed(2)} kg/ha
                 </p>
               </div>
-              <div className="rounded-[1.5rem] border border-accent-green/20 bg-accent-green/[0.1] p-5 shadow-[0_14px_32px_rgba(101,184,143,0.08)]">
+              <div className="rounded-[1.5rem] border border-accent-green/20 bg-accent-green/[0.1] p-5 shadow-[0_14px_32px_rgba(226,54,40,0.08)]">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Current Carbon
+                  Current Carbon (kg/ha)
                 </p>
-                <p className="mt-2 text-3xl font-bold text-accent-green">
-                  {detail.current_carbon.toFixed(2)}
+                <p className="mt-2 text-3xl font-bold text-red-100">
+                  {detail.current_carbon.toFixed(2)} kg/ha
                 </p>
               </div>
-              <div className="rounded-[1.5rem] border border-blue-200/20 bg-blue-300/[0.1] p-5 shadow-[0_14px_32px_rgba(127,167,217,0.08)]">
+              <div className="rounded-[1.5rem] border border-red-200/20 bg-red-300/[0.1] p-5 shadow-[0_14px_32px_rgba(226,54,40,0.08)]">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Net Increase
+                  Net Increase (kg/ha)
                 </p>
-                <p className="mt-2 text-3xl font-bold text-blue-300">
-                  {detail.net_carbon_increase.toFixed(2)}
+                <p className="mt-2 text-3xl font-bold text-red-200">
+                  {detail.net_carbon_increase.toFixed(2)} kg/ha
                 </p>
               </div>
-              <div className="rounded-[1.5rem] border border-accent-purple/20 bg-accent-purple/[0.12] p-5 shadow-[0_18px_40px_rgba(157,142,209,0.1)]">
+              <div className="rounded-[1.5rem] border border-accent-purple/20 bg-accent-purple/[0.12] p-5 shadow-[0_18px_40px_rgba(126,23,32,0.12)]">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Estimated Credit
+                  Estimated Credit (tCO2e)
                 </p>
-                <p className="mt-2 text-3xl font-bold text-accent-purple">
+                <p className="mt-2 text-3xl font-bold text-red-50">
                   {detail.estimated_carbon_credit.toFixed(2)} tCO2e
                 </p>
               </div>
             </div>
 
-            <div className="mt-6 rounded-[1.5rem] border border-blue-200/20 bg-blue-300/[0.1] p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-100">
+            <div className="mt-6 rounded-[1.5rem] border border-red-200/20 bg-red-300/[0.1] p-5">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-red-100">
                 Calculation formula
               </p>
               <p className="mt-3 text-sm leading-7 text-slate-200">
-                Estimated credit = (net carbon increase x farm area x 3.67) / 1000
+                Estimated credit (tCO2e) = (net carbon increase in kg/ha x farm area in ha x 3.67) / 1000
               </p>
               <p className="mt-2 text-sm leading-7 text-slate-200/85">
-                ({detail.net_carbon_increase.toFixed(2)} x{" "}
-                {detail.area_hectares.toFixed(2)} x 3.67) / 1000 ={" "}
+                ({detail.net_carbon_increase.toFixed(2)} kg/ha x{" "}
+                {detail.area_hectares.toFixed(2)} ha x 3.67) / 1000 ={" "}
                 {detail.estimated_carbon_credit.toFixed(2)} tCO2e
               </p>
             </div>
@@ -314,7 +314,7 @@ function VerificationDetails() {
                   className="mb-2 block text-sm font-medium text-slate-300"
                   htmlFor="approved_carbon_credit"
                 >
-                  Approved Carbon Credit
+                  Approved Carbon Credit (tCO2e)
                 </label>
                 <input
                   className="w-full rounded-[1.5rem] border border-white/10 bg-white/10 px-4 py-3 text-white outline-none transition focus:border-white/25 focus:bg-white/[0.12]"
@@ -354,7 +354,7 @@ function VerificationDetails() {
 
           <section className="surface-panel p-6">
             <div className="flex items-center gap-3">
-              <div className="rounded-2xl bg-white/10 p-3 text-accent-green">
+              <div className="rounded-2xl bg-white/10 p-3 text-red-100">
                 <FlaskConical size={18} />
               </div>
               <div>

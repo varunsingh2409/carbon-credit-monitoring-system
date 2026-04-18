@@ -21,7 +21,7 @@
     @apply min-h-screen bg-primary font-body text-slate-100 antialiased;
     isolation: isolate;
     position: relative;
-    background: #101923;
+    background: #13090b;
   }
 
   h1,
@@ -38,7 +38,7 @@
   }
 
   ::selection {
-    background: rgba(115, 184, 143, 0.32);
+    background: rgba(226, 54, 40, 0.34);
     color: #f8fafc;
   }
 
@@ -67,18 +67,18 @@
 
 @layer components {
   .surface-panel {
-    @apply rounded-[1.35rem] border border-white/10 shadow-none;
-    background: rgba(19, 30, 42, 0.96);
+    @apply rounded-[1.35rem] border border-red-100/10 shadow-none;
+    background: rgba(31, 15, 18, 0.96);
   }
 
   .surface-panel-strong {
-    @apply rounded-[1.35rem] border border-white/10 shadow-none;
-    background: rgba(16, 27, 38, 0.98);
+    @apply rounded-[1.35rem] border border-red-100/10 shadow-none;
+    background: rgba(24, 10, 13, 0.98);
   }
 
   .surface-card {
-    @apply rounded-[1.1rem] border border-white/10;
-    background: rgba(24, 36, 48, 0.95);
+    @apply rounded-[1.1rem] border border-red-100/10;
+    background: rgba(38, 18, 22, 0.95);
   }
 
   .surface-card-muted {
@@ -87,12 +87,12 @@
   }
 
   .button-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 text-sm font-semibold text-white transition duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent-green text-sm font-semibold text-white transition duration-200;
     box-shadow: none;
   }
 
   .button-primary:hover {
-    @apply bg-emerald-500;
+    @apply bg-accent-emerald;
     transform: none;
   }
 
@@ -107,11 +107,11 @@
   }
 
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-emerald-100/90;
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-red-100/90;
   }
 
   .metric-value {
-    @apply bg-gradient-to-r from-emerald-100 via-slate-50 to-sky-100 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-red-100 via-slate-50 to-orange-100 bg-clip-text text-transparent;
   }
 }
 
@@ -121,7 +121,7 @@
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-emerald-100 via-sky-100 to-blue-200 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-red-100 via-orange-100 to-accent-blue bg-clip-text text-transparent;
   }
 
   .card-hover {

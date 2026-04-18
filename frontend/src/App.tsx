@@ -116,11 +116,11 @@ function AppShell() {
         position="top-right"
         toastOptions={{
           style: {
-            background: "rgba(36, 49, 63, 0.9)",
+            background: "rgba(49, 20, 25, 0.92)",
             color: "#f8fafc",
             border: "1px solid rgba(255,255,255,0.14)",
             backdropFilter: "blur(20px)",
-            boxShadow: "0 22px 56px rgba(26, 36, 49, 0.24)"
+            boxShadow: "0 22px 56px rgba(41, 10, 15, 0.28)"
           }
         }}
       />

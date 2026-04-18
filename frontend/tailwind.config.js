@@ -4,22 +4,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#18232d",
-        secondary: "#23313d",
-        tertiary: "#324453",
+        primary: "#170b0d",
+        secondary: "#241114",
+        tertiary: "#3a191d",
         surface: {
-          base: "#22303b",
-          elevated: "#2b3a46",
-          muted: "#3a4a58"
+          base: "#231316",
+          elevated: "#32191d",
+          muted: "#4b252b"
         },
         accent: {
-          green: "#73b88f",
-          emerald: "#65b8a5",
-          blue: "#7fa7d9",
-          cyan: "#84c8d0",
-          purple: "#9d8ed1",
-          amber: "#d4b071",
-          rose: "#d98799"
+          green: "#e23628",
+          emerald: "#b51e25",
+          blue: "#f2c9bf",
+          cyan: "#f7e4dc",
+          purple: "#7e1720",
+          amber: "#d6a15f",
+          rose: "#ef5548"
         }
       },
       fontFamily: {
@@ -28,15 +28,15 @@ export default {
         mono: ["IBM Plex Mono", "ui-monospace", "monospace"]
       },
       boxShadow: {
-        glass: "0 22px 50px rgba(31, 43, 57, 0.18)",
-        depth: "0 28px 72px rgba(26, 36, 49, 0.2)",
-        accent: "0 18px 44px rgba(115, 184, 143, 0.18)"
+        glass: "0 22px 50px rgba(55, 15, 20, 0.2)",
+        depth: "0 28px 72px rgba(41, 10, 15, 0.26)",
+        accent: "0 18px 44px rgba(226, 54, 40, 0.18)"
       },
       backgroundImage: {
         "hero-grid":
-          "radial-gradient(circle at 14% 16%, rgba(115,184,143,0.15), transparent 25%), radial-gradient(circle at 86% 12%, rgba(127,167,217,0.16), transparent 30%), radial-gradient(circle at 48% 100%, rgba(212,176,113,0.08), transparent 34%)",
+          "radial-gradient(circle at 14% 16%, rgba(226,54,40,0.17), transparent 25%), radial-gradient(circle at 86% 12%, rgba(126,23,32,0.2), transparent 30%), radial-gradient(circle at 48% 100%, rgba(214,161,95,0.1), transparent 34%)",
         "surface-mesh":
-          "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04)), radial-gradient(circle at top right, rgba(127,167,217,0.14), transparent 32%), radial-gradient(circle at left, rgba(115,184,143,0.14), transparent 28%)"
+          "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04)), radial-gradient(circle at top right, rgba(226,54,40,0.16), transparent 32%), radial-gradient(circle at left, rgba(126,23,32,0.18), transparent 28%)"
       },
       keyframes: {
         float: {
