@@ -83,7 +83,7 @@ const initialUsers: AdminUser[] = [
   {
     user_id: 3,
     username: "farmer1",
-    name: "Green Valley Farmer",
+    name: "Ramesh Kumar",
     role: "farmer",
     email: "farmer1@carbon-demo.local",
     status: "active",
@@ -93,7 +93,7 @@ const initialUsers: AdminUser[] = [
 
 const initialFarm: FarmerFarmDashboard = {
   farm_id: 101,
-  farm_name: "Green Valley Farm",
+  farm_name: "Punjab Mitti Farm",
   location: "Ludhiana, Punjab",
   total_area_hectares: 24.5,
   soil_type: "Loamy",
@@ -149,7 +149,7 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       depth_cm: 20,
       latitude: 30.901,
       longitude: 75.853,
-      sensor_id: "TS-GREEN-01",
+      sensor_id: "TS-PUNJAB-01",
       nutrients: [
         { nutrient_name: "Nitrogen", measured_value: 189, unit: "kg/ha" },
         { nutrient_name: "Moisture", measured_value: 26.1, unit: "%" },
@@ -162,7 +162,7 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       depth_cm: 20,
       latitude: 30.901,
       longitude: 75.853,
-      sensor_id: "TS-GREEN-01",
+      sensor_id: "TS-PUNJAB-01",
       nutrients: [
         { nutrient_name: "Nitrogen", measured_value: 193, unit: "kg/ha" },
         { nutrient_name: "Moisture", measured_value: 27.5, unit: "%" },
@@ -177,7 +177,7 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       depth_cm: 20,
       latitude: 30.901,
       longitude: 75.853,
-      sensor_id: "TS-GREEN-01",
+      sensor_id: "TS-PUNJAB-01",
       nutrients: [
         { nutrient_name: "Nitrogen", measured_value: 211, unit: "kg/ha" },
         { nutrient_name: "Phosphorus", measured_value: 118, unit: "kg/ha" },
@@ -192,7 +192,7 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       depth_cm: 20,
       latitude: 30.901,
       longitude: 75.853,
-      sensor_id: "TS-GREEN-01",
+      sensor_id: "TS-PUNJAB-01",
       nutrients: [
         { nutrient_name: "Nitrogen", measured_value: 214, unit: "kg/ha" },
         { nutrient_name: "Phosphorus", measured_value: 121, unit: "kg/ha" },
@@ -207,7 +207,7 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       depth_cm: 20,
       latitude: 30.901,
       longitude: 75.853,
-      sensor_id: "TS-GREEN-01",
+      sensor_id: "TS-PUNJAB-01",
       nutrients: [
         { nutrient_name: "Nitrogen", measured_value: 218, unit: "kg/ha" },
         { nutrient_name: "Phosphorus", measured_value: 125, unit: "kg/ha" },
@@ -222,7 +222,7 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       depth_cm: 20,
       latitude: 30.901,
       longitude: 75.853,
-      sensor_id: "TS-GREEN-01",
+      sensor_id: "TS-PUNJAB-01",
       nutrients: [
         { nutrient_name: "Nitrogen", measured_value: 221, unit: "kg/ha" },
         { nutrient_name: "Phosphorus", measured_value: 128, unit: "kg/ha" },
@@ -237,7 +237,7 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       depth_cm: 20,
       latitude: 30.901,
       longitude: 75.853,
-      sensor_id: "TS-GREEN-01",
+      sensor_id: "TS-PUNJAB-01",
       nutrients: [
         { nutrient_name: "Nitrogen", measured_value: 226, unit: "kg/ha" },
         { nutrient_name: "Phosphorus", measured_value: 131, unit: "kg/ha" },
@@ -255,8 +255,8 @@ const initialRecords: DemoRecord[] = [
     sequestration_id: 9001,
     farm_id: 101,
     season_id: 302,
-    farm_name: "Green Valley Farm",
-    farmer_name: "Green Valley Farmer",
+    farm_name: "Punjab Mitti Farm",
+    farmer_name: "Ramesh Kumar",
     season_name: "Monsoon 2026 Demo",
     location: "Ludhiana, Punjab",
     area_hectares: 24.5,
@@ -272,8 +272,8 @@ const initialRecords: DemoRecord[] = [
     sequestration_id: 9002,
     farm_id: 101,
     season_id: 301,
-    farm_name: "Green Valley Farm",
-    farmer_name: "Green Valley Farmer",
+    farm_name: "Punjab Mitti Farm",
+    farmer_name: "Ramesh Kumar",
     season_name: "Rabi 2025 Baseline",
     location: "Ludhiana, Punjab",
     area_hectares: 24.5,
@@ -488,7 +488,7 @@ const createSyncedMeasurements = (): VerificationMeasurementDetail[] => [
     depth_cm: 22,
     latitude: 30.901,
     longitude: 75.853,
-    sensor_id: "TS-GREEN-01",
+    sensor_id: "TS-PUNJAB-01",
     nutrients: [
       { nutrient_name: "Nitrogen", measured_value: 172, unit: "kg/ha" },
       { nutrient_name: "Phosphorus", measured_value: 98, unit: "kg/ha" },
@@ -503,7 +503,7 @@ const createSyncedMeasurements = (): VerificationMeasurementDetail[] => [
     depth_cm: 22,
     latitude: 30.901,
     longitude: 75.853,
-    sensor_id: "TS-GREEN-01",
+    sensor_id: "TS-PUNJAB-01",
     nutrients: [
       { nutrient_name: "Nitrogen", measured_value: 176, unit: "kg/ha" },
       { nutrient_name: "Phosphorus", measured_value: 101, unit: "kg/ha" },
@@ -518,7 +518,7 @@ const createSyncedMeasurements = (): VerificationMeasurementDetail[] => [
     depth_cm: 22,
     latitude: 30.901,
     longitude: 75.853,
-    sensor_id: "TS-GREEN-01",
+    sensor_id: "TS-PUNJAB-01",
     nutrients: [
       { nutrient_name: "Nitrogen", measured_value: 181, unit: "kg/ha" },
       { nutrient_name: "Phosphorus", measured_value: 105, unit: "kg/ha" },
@@ -533,7 +533,7 @@ const createSyncedMeasurements = (): VerificationMeasurementDetail[] => [
     depth_cm: 22,
     latitude: 30.901,
     longitude: 75.853,
-    sensor_id: "TS-GREEN-01",
+    sensor_id: "TS-PUNJAB-01",
     nutrients: [
       { nutrient_name: "Nitrogen", measured_value: 185, unit: "kg/ha" },
       { nutrient_name: "Phosphorus", measured_value: 108, unit: "kg/ha" },
@@ -548,7 +548,7 @@ const createSyncedMeasurements = (): VerificationMeasurementDetail[] => [
     depth_cm: 22,
     latitude: 30.901,
     longitude: 75.853,
-    sensor_id: "TS-GREEN-01",
+    sensor_id: "TS-PUNJAB-01",
     nutrients: [
       { nutrient_name: "Nitrogen", measured_value: 189, unit: "kg/ha" },
       { nutrient_name: "Phosphorus", measured_value: 111, unit: "kg/ha" },
@@ -869,7 +869,7 @@ export const demoBackend = {
       farm_id: state.farm.farm_id,
       season_id: season.season_id,
       farm_name: state.farm.farm_name,
-      farmer_name: "Green Valley Farmer",
+      farmer_name: "Ramesh Kumar",
       season_name: season.season_name,
       location: state.farm.location,
       area_hectares: state.farm.total_area_hectares,

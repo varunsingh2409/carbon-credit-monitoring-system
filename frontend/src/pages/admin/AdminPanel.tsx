@@ -1,33 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
 import {
-  Activity,
-  BarChart3,
+  CheckCircle2,
   PlayCircle,
-  Radio,
-  Users,
-  X
+  Radio
 } from "lucide-react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} from "recharts";
 import toast from "react-hot-toast";
 
 import { adminApi } from "@/api/adminApi";
 import ImplementationEvidencePanel from "@/components/ImplementationEvidencePanel";
 import LoadingState from "@/components/LoadingState";
-import ProjectAlignmentPanel from "@/components/ProjectAlignmentPanel";
 import StatCard from "@/components/StatCard";
 import type {
   AdminImplementationSummary,
   AdminStatistics,
-  AdminUser,
-  MonthlyCredit,
   SeasonOption,
   ThingSpeakSyncResponse
 } from "@/types";
@@ -72,33 +57,35 @@ const nutrientFieldCount = thingSpeakFieldMappings.filter(
   (mapping) => mapping.field !== "field6"
 ).length;
 
+const evaluationWorkflow = [
+  "Run the ThingSpeak batch sender from the backend terminal.",
+  "Import the latest channel entries into the selected season.",
+  "Verify inserted soil_measurement and measurement_result rows in DBMS evidence.",
+  "Trigger the carbon calculation to create a verifier-ready claim.",
+  "Open verifier workflow and approve or reject the stored claim."
+];
+
 function AdminPanel() {
   const [statistics, setStatistics] = useState<AdminStatistics | null>(null);
   const [implementationSummary, setImplementationSummary] =
     useState<AdminImplementationSummary | null>(null);
-  const [monthlyCredits, setMonthlyCredits] = useState<MonthlyCredit[]>([]);
   const [seasonOptions, setSeasonOptions] = useState<SeasonOption[]>([]);
   const [selectedSeasonId, setSelectedSeasonId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isCalculating, setIsCalculating] = useState(false);
   const [isSyncingThingSpeak, setIsSyncingThingSpeak] = useState(false);
-  const [showUsersModal, setShowUsersModal] = useState(false);
-  const [users, setUsers] = useState<AdminUser[]>([]);
-  const [usersLoading, setUsersLoading] = useState(false);
   const [thingSpeakResult, setThingSpeakResult] = useState<ThingSpeakSyncResponse | null>(null);
 
   const loadPanelData = useCallback(async () => {
-    const [statisticsResponse, implementationResponse, monthlyResponse, seasonsResponse] =
+    const [statisticsResponse, implementationResponse, seasonsResponse] =
       await Promise.all([
-      adminApi.getStatistics(),
-      adminApi.getImplementationSummary(),
-      adminApi.getMonthlyCredits(),
-      adminApi.getSeasonOptions()
+        adminApi.getStatistics(),
+        adminApi.getImplementationSummary(),
+        adminApi.getSeasonOptions()
       ]);
 
     setStatistics(statisticsResponse);
     setImplementationSummary(implementationResponse);
-    setMonthlyCredits(monthlyResponse);
     setSeasonOptions(seasonsResponse);
 
     if (seasonsResponse.length > 0) {
@@ -131,24 +118,6 @@ function AdminPanel() {
       isMounted = false;
     };
   }, [loadPanelData]);
-
-  const openUsersModal = async () => {
-    setShowUsersModal(true);
-
-    if (users.length > 0 || usersLoading) {
-      return;
-    }
-
-    try {
-      setUsersLoading(true);
-      const response = await adminApi.getUsers();
-      setUsers(response);
-    } catch (error) {
-      toast.error(getErrorMessage(error, "Unable to load user list"));
-    } finally {
-      setUsersLoading(false);
-    }
-  };
 
   const handleCalculation = async () => {
     if (!selectedSeasonId) {
@@ -210,18 +179,18 @@ function AdminPanel() {
   );
 
   return (
-    <>
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <section className="surface-panel-strong mb-8 p-8">
           <p className="eyebrow">
             Admin Panel
           </p>
           <h1 className="mt-3 text-4xl font-extrabold text-white">
-            Monitor platform performance and operational controls
+            DBMS and CNDC demonstration control
           </h1>
           <p className="mt-4 max-w-3xl text-slate-300">
-            Oversee the carbon-credit platform with live issuance trends,
-            verification pressure, season triggers, and user-level visibility.
+            Use this page during presentation to show data sent to ThingSpeak,
+            data received into PostgreSQL, and the carbon claim created for
+            verifier review.
           </p>
         </section>
 
@@ -264,73 +233,45 @@ function AdminPanel() {
           />
         </section>
 
-        {implementationSummary ? (
-          <section className="mt-10 space-y-10">
-            <ImplementationEvidencePanel
-              description="The admin surface presents the same technical evidence as the landing page, so CNDC and DBMS proof remains available during live workflow demonstrations."
-              eyebrow="Implementation Control Room"
-              summary={implementationSummary}
-              title="Inspect the exact CNDC and DBMS evidence behind the workflow"
-            />
-            <ProjectAlignmentPanel
-              description="This is a supporting panel for the broader project brief. For your actual semester evaluation, the main explanation should still stay on the CNDC and DBMS evidence above."
-              eyebrow="Supporting Panel"
-              showImplementationArtifacts
-              summary={implementationSummary}
-              title="Optional analytics and submission support"
-            />
-          </section>
-        ) : null}
-
         <section className="mt-10 grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
           <div className="surface-panel p-6">
             <div className="flex items-center gap-3">
-              <div className="rounded-2xl bg-white/10 p-3 text-accent-green">
-                <BarChart3 size={18} />
+              <div className="rounded-2xl bg-white/10 p-3 text-emerald-200">
+                <CheckCircle2 size={18} />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-white">
-                  Monthly Carbon Credits
+                  Presentation Workflow
                 </h2>
                 <p className="text-sm text-slate-400">
-                  Last 6 months of issued carbon credits
+                  Follow these five steps to prove data movement and database population.
                 </p>
               </div>
             </div>
 
-            <div className="mt-6 h-[360px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={monthlyCredits} margin={{ left: -16, right: 12, top: 10 }}>
-                  <defs>
-                    <linearGradient id="adminBarGradient" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0%" stopColor="#22c55e" />
-                      <stop offset="100%" stopColor="#3b82f6" />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    stroke="#94a3b8"
-                    tickLine={false}
-                    axisLine={false}
-                  />
-                  <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
-                  <Tooltip
-                    contentStyle={{
-                      background: "rgba(36, 49, 63, 0.92)",
-                      border: "1px solid rgba(255,255,255,0.14)",
-                      borderRadius: "18px",
-                      boxShadow: "0 18px 48px rgba(26, 36, 49, 0.22)"
-                    }}
-                    formatter={(value: number) => [`${Number(value).toFixed(2)} tCO2e`, "Credits"]}
-                  />
-                  <Bar
-                    dataKey="credits"
-                    fill="url(#adminBarGradient)"
-                    radius={[16, 16, 6, 6]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+            <ol className="mt-6 space-y-3">
+              {evaluationWorkflow.map((step, index) => (
+                <li
+                  className="flex gap-4 rounded-[1.25rem] border border-white/10 bg-white/[0.04] p-4"
+                  key={step}
+                >
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-emerald-100/20 bg-emerald-200/10 text-sm font-bold text-emerald-100">
+                    {index + 1}
+                  </span>
+                  <p className="text-sm leading-6 text-slate-200">{step}</p>
+                </li>
+              ))}
+            </ol>
+
+            <div className="mt-6 rounded-[1.25rem] border border-blue-100/15 bg-blue-300/[0.06] p-4">
+              <p className="text-xs uppercase tracking-[0.18em] text-blue-100">
+                What faculty should see
+              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                The system is not explaining design progress here. It is exposing
+                the final data path: external channel entry, backend import,
+                normalized relational storage, calculation, and verifier decision.
+              </p>
             </div>
           </div>
 
@@ -529,104 +470,20 @@ function AdminPanel() {
                 {isCalculating ? "Calculating..." : "Calculate Credits"}
               </button>
             </section>
-
-            <section className="surface-panel p-6">
-              <div className="flex items-center gap-3">
-                <div className="rounded-2xl bg-white/10 p-3 text-accent-green">
-                  <Users size={18} />
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-white">User Management</h2>
-                  <p className="text-sm text-slate-400">
-                    Inspect platform accounts and roles
-                  </p>
-                </div>
-              </div>
-
-              <button
-                className="button-secondary mt-5 w-full rounded-[1.25rem] px-5 py-3"
-                onClick={() => void openUsersModal()}
-                type="button"
-              >
-                Manage Users
-              </button>
-            </section>
-
-            <section className="rounded-[2rem] border border-accent-green/20 bg-gradient-to-br from-accent-green/[0.12] to-accent-blue/[0.12] p-6 shadow-[0_18px_50px_rgba(101,184,165,0.1)]">
-              <div className="flex items-start gap-3">
-                <div className="rounded-2xl bg-accent-green/20 p-3 text-accent-green">
-                  <Activity size={18} />
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-white">System Status</h2>
-                  <p className="mt-2 text-sm leading-7 text-slate-300">
-                    All systems operational | 99.9% uptime
-                  </p>
-                  <p className="mt-1 text-sm text-slate-400">
-                    Core APIs, measurement ingestion, and dashboard services are healthy.
-                  </p>
-                </div>
-              </div>
-            </section>
           </div>
         </section>
+
+        {implementationSummary ? (
+          <section className="mt-10">
+            <ImplementationEvidencePanel
+              description="Use this evidence panel after the live import to show exact tables, row counts, constraints, indexes, CNDC flow, and downloadable SQL artifacts."
+              eyebrow="Database and Network Evidence"
+              summary={implementationSummary}
+              title="Final implementation proof"
+            />
+          </section>
+        ) : null}
       </main>
-
-      {showUsersModal ? (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[rgba(20,29,39,0.48)] px-4 py-8 backdrop-blur-md">
-          <div className="surface-panel-strong relative max-h-[85vh] w-full max-w-4xl overflow-y-auto p-6">
-            <button
-              className="button-secondary absolute right-5 top-5 h-10 w-10 rounded-full p-0 text-slate-300"
-              onClick={() => setShowUsersModal(false)}
-              type="button"
-            >
-              <X size={18} />
-            </button>
-
-            <h2 className="text-3xl font-extrabold text-white">Platform users</h2>
-            <p className="mt-3 text-sm text-slate-400">
-              Current user accounts available in the system
-            </p>
-
-            {usersLoading ? (
-              <div className="mt-8 text-sm text-slate-400">Loading users...</div>
-            ) : (
-              <div className="mt-6 overflow-x-auto">
-                <table className="min-w-full text-left">
-                  <thead className="bg-white/[0.03] text-xs uppercase tracking-[0.18em] text-slate-400">
-                    <tr>
-                      <th className="px-4 py-3 font-medium">Username</th>
-                      <th className="px-4 py-3 font-medium">Email</th>
-                      <th className="px-4 py-3 font-medium">Role</th>
-                      <th className="px-4 py-3 font-medium">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {users.map((user) => (
-                      <tr
-                        className="border-t border-white/10"
-                        key={user.user_id}
-                      >
-                        <td className="px-4 py-3 text-sm font-semibold text-white">
-                          {user.username}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-slate-300">{user.email}</td>
-                        <td className="px-4 py-3 text-sm capitalize text-slate-300">
-                          {user.role}
-                        </td>
-                        <td className="px-4 py-3 text-sm capitalize text-slate-300">
-                          {user.status}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        </div>
-      ) : null}
-    </>
   );
 }
 

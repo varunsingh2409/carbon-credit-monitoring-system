@@ -45,7 +45,7 @@ Important endpoints:
 - `GET /health`
 - `GET /docs`
 
-The app also displays CNDC evidence in the implementation control room: source, destination, protocol, method, endpoint, payload, response payload, stored tables, security, and outcome.
+The app also displays CNDC evidence in the final implementation evidence panel: source, destination, protocol, method, endpoint, payload, response payload, stored tables, security, and outcome.
 
 ## 4. Presentation Layer Details
 

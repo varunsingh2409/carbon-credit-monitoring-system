@@ -8,7 +8,7 @@ Use this guide if you want to:
 2. start the project locally
 3. demonstrate the whole workflow in the correct order
 4. explain the project specifically for CNDC and DBMS evaluation
-5. mention the optional supporting analytics layer only if asked
+5. mention supporting artifacts only if asked
 6. answer common questions confidently
 
 Important:
@@ -34,7 +34,7 @@ If you are in a hurry:
 2. keep `DBMS_EVALUATION_RUBRIC_README.md` open if the DBMS faculty follows the rubric
 3. read section 24 for CNDC talking points
 4. read section 25 for DBMS talking points
-5. keep the optional supporting analytics panel as backup material only
+5. keep the artifact links and report files as backup material only
 6. keep section 33 open for emergency fixes
 
 ## 2. Project In One Minute
@@ -58,7 +58,7 @@ In simple words:
 
 ### Two-line summary for evaluation
 
-> The project demonstrates CNDC through HTTP communication, REST APIs, JSON-based client-server interaction, and ThingSpeak integration. It demonstrates DBMS through PostgreSQL tables, relationships, stored workflow records, and persistent verification history. Supporting analytics is available in the app, but it should remain secondary to the CNDC and DBMS explanation.
+> The project demonstrates CNDC through HTTP communication, REST APIs, JSON-based client-server interaction, and ThingSpeak integration. It demonstrates DBMS through PostgreSQL tables, relationships, stored workflow records, and persistent verification history.
 
 ## 3. What Is Fully Working Locally
 
@@ -80,8 +80,8 @@ These features are ready and safe to demonstrate:
 14. PostgreSQL persistence
 15. CNDC trace explorer inside the app
 16. DBMS query lab inside the app
-17. optional supporting analytics and submission panel inside the app
-18. implementation artifact links for the live bootstrap, seed SQL, and faculty files
+17. final implementation evidence panel inside the app
+18. implementation artifact links for the live bootstrap, seed SQL, formal constraints SQL, and faculty files
 
 ## 4. What Exists But Should Not Be Presented As Fully Finished
 
@@ -127,8 +127,8 @@ What the admin does:
 1. monitors platform statistics
 2. imports ThingSpeak data
 3. triggers carbon calculation
-4. views users and system activity
-5. explains CNDC and DBMS implementation through the implementation control room
+4. verifies imported database rows
+5. explains CNDC and DBMS implementation through the final evidence panel
 
 Why this role matters:
 
@@ -456,7 +456,7 @@ Use this order exactly:
 3. farmer dashboard
 4. verifier dashboard
 5. admin panel
-6. implementation control room
+6. final implementation evidence panel
 7. ThingSpeak sender
 8. ThingSpeak import
 9. farmer refresh
@@ -589,21 +589,19 @@ Log in with:
 Show:
 
 1. statistics cards
-2. monthly credits chart
+2. Presentation Workflow checklist
 3. ThingSpeak sync section
 4. sent-to-ThingSpeak and received-by-backend proof cards
 5. database population verification after import
 6. Trigger Carbon Calculation section
-7. implementation control room
+7. final implementation evidence panel
 8. CNDC trace
 9. DBMS query lab
-10. User Management modal
-11. implementation artifact links for bootstrap, seed SQL, and deliverables
-12. System Status
+10. implementation artifact links for bootstrap, seed SQL, formal constraints SQL, and deliverables
 
 What to say:
 
-> The admin panel is the operational control center. It shows platform health, triggers workflows, includes the same technical evidence explorer as the landing page, and opens the real bootstrap, seed, and deliverable files directly when faculty asks for implementation artifacts.
+> The admin panel is the presentation control center. It shows the live ThingSpeak import, database population result, carbon calculation trigger, and the same technical evidence explorer as the landing page.
 
 CNDC relevance:
 
@@ -696,7 +694,7 @@ DBMS relevance:
 
 In the admin panel:
 
-1. choose `Green Valley Farm | Monsoon 2026 Demo`
+1. choose `Punjab Mitti Farm | Monsoon 2026 Demo`
 2. click `Import ThingSpeak Data`
 
 Expected result:
@@ -890,7 +888,7 @@ This is your strongest end-to-end proof.
 If time is short:
 
 1. open admin panel
-2. point to the implementation control room
+2. point to the final implementation evidence panel
 3. import ThingSpeak data
 4. calculate carbon credits
 5. approve as verifier

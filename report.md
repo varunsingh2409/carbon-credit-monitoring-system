@@ -53,7 +53,7 @@ Important backend capabilities completed:
 
 - Login and current-user APIs.
 - JWT-protected role-based routes.
-- Admin statistics and user visibility.
+- Admin statistics and workflow controls.
 - ThingSpeak import endpoint.
 - Carbon calculation endpoint.
 - Verifier approval and rejection endpoints.

@@ -20,6 +20,12 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
 const formatDate = (value: string) => dateFormatter.format(new Date(value));
 
+const verificationWorkflow = [
+  ["Source", "ThingSpeak measurements already imported into PostgreSQL"],
+  ["Claim", "carbon_sequestration row calculated for one farm season"],
+  ["Decision", "Verifier writes approval or rejection into carbon_verification"]
+];
+
 const normalizeStatus = (status: string): StatusBadgeValue => {
   switch (status.toLowerCase()) {
     case "approved":
@@ -94,19 +100,29 @@ function VerifierDashboard() {
           Verifier Dashboard
         </p>
         <h1 className="mt-3 text-4xl font-extrabold text-white">
-          Review pending carbon-credit claims with confidence
+          Verify carbon claims created from database evidence
         </h1>
         <p className="mt-4 max-w-3xl text-slate-300">
-          Work through the live approval queue, inspect sequestration evidence,
-          and keep an eye on completed verification outcomes.
+          This page receives calculated claims from the same database populated
+          by ThingSpeak import. Open a claim to inspect measurements, formula,
+          and then store an approval or rejection.
         </p>
+      </section>
+
+      <section className="mb-8 grid gap-4 lg:grid-cols-3">
+        {verificationWorkflow.map(([title, description]) => (
+          <div className="surface-card-muted p-5" key={title}>
+            <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">{title}</p>
+            <p className="mt-3 text-sm leading-6 text-slate-300">{description}</p>
+          </div>
+        ))}
       </section>
 
       <section className="mb-8 flex flex-wrap gap-3 rounded-full border border-white/10 bg-white/10 p-2">
         <button
           className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
             activeTab === "pending"
-              ? "bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-950 shadow-[0_14px_34px_rgba(245,158,11,0.2)]"
+              ? "bg-white/15 text-white"
               : "text-slate-100 hover:bg-white/10"
           }`}
           onClick={() => setActiveTab("pending")}
@@ -117,7 +133,7 @@ function VerifierDashboard() {
         <button
           className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
             activeTab === "history"
-              ? "bg-gradient-to-r from-accent-green to-accent-blue text-white shadow-accent"
+              ? "bg-white/15 text-white"
               : "text-slate-100 hover:bg-white/10"
           }`}
           onClick={() => setActiveTab("history")}
@@ -145,6 +161,7 @@ function VerifierDashboard() {
                     <div className="mt-4 grid gap-3 text-sm text-slate-300 sm:grid-cols-2">
                       <p>Farmer: {item.farmer_name}</p>
                       <p>Season: {item.season_name}</p>
+                      <p>Measurement rows: {item.measurement_count}</p>
                       <p className="inline-flex items-center gap-2">
                         <MapPinned size={15} className="text-accent-green" />
                         {item.location}
@@ -168,7 +185,7 @@ function VerifierDashboard() {
                   </button>
                 </div>
 
-                <div className="mt-6 grid gap-4 md:grid-cols-4">
+                <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
                   <div className="surface-card-muted p-4">
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                       Net Carbon Increase
@@ -183,6 +200,14 @@ function VerifierDashboard() {
                     </p>
                     <p className="mt-2 text-xl font-bold text-accent-purple">
                       {item.estimated_carbon_credit.toFixed(2)} tCO2e
+                    </p>
+                  </div>
+                  <div className="surface-card-muted p-4">
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                      Measurements
+                    </p>
+                    <p className="mt-2 text-xl font-bold text-white">
+                      {item.measurement_count}
                     </p>
                   </div>
                   <div className="surface-card-muted p-4">

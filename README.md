@@ -11,7 +11,7 @@ The local version is the real implementation and includes:
 - JWT authentication with farmer, verifier, admin, and sensor roles
 - real carbon calculation and verifier approval workflow
 - visible CNDC trace and DBMS query lab inside the website
-- optional supporting analytics and submission material inside the website
+- downloadable supporting artifacts inside the website
 
 ## 1. What To Use For Presentation
 
@@ -95,16 +95,15 @@ Main tables:
 ## 5. Main Features
 
 - role-based login for farmer, verifier, admin, and sensor users
-- farmer dashboard with farms, seasons, measurements, and carbon outcomes
-- verifier dashboard with pending review workflow and evidence details
-- admin panel with statistics, ThingSpeak sync, carbon calculation, and user visibility
-- admin support panel with direct links to the live database bootstrap, demo seed SQL, and faculty artifacts
-- landing page with embedded technical proof
+- farmer dashboard with farms, seasons, measurements, and verification status
+- verifier dashboard with pending review workflow, measurement count, and evidence details
+- admin panel focused on ThingSpeak send/receive proof, database population, and carbon calculation
+- admin evidence panel with direct links to the live database bootstrap, demo seed SQL, formal constraints SQL, and faculty artifacts
+- simpler landing page with embedded technical proof
 - CNDC trace explorer showing real communication flow
 - DBMS query lab showing table rows, constraints, indexes, and schema details
-- admin implementation control room using the same evidence surface
-- optional supporting analytics panel for broader project questions
-- optional faculty-deliverable support panel and submission files
+- admin implementation evidence using the same CNDC and DBMS proof surface
+- faculty-deliverable support files for viva questions
 
 ## 6. Demo Accounts
 
@@ -112,6 +111,13 @@ Main tables:
 - Verifier: `verifier1` / `VerifierDemo123!`
 - Admin: `admin` / `AdminDemo123!`
 - Sensor API user: `sensor_api` / `SensorDemo123!`
+
+Seeded presentation identity:
+
+- Farmer: `Ramesh Kumar`
+- Primary farm: `Punjab Mitti Farm`, Ludhiana, Punjab
+- Secondary farm: `Haryana Krishi Acres`, Karnal, Haryana
+- Demo sensor label: `TS-PUNJAB-01`
 
 ThingSpeak mapping used by the app:
 
@@ -154,7 +160,6 @@ Verifier:
 Admin:
 
 - `GET /api/admin/statistics`
-- `GET /api/admin/monthly-credits`
 - `GET /api/admin/implementation-summary`
 - `POST /api/admin/sync-thingspeak`
 - `POST /api/admin/trigger-carbon-calculation`

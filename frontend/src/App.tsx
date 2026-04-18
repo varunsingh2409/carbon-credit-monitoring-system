@@ -68,13 +68,7 @@ function AppShell() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-hero-grid">
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-[-8%] top-[10%] h-72 w-72 rounded-full bg-accent-green/10 blur-3xl" />
-        <div className="absolute right-[-6%] top-[14%] h-[24rem] w-[24rem] rounded-full bg-accent-blue/10 blur-3xl" />
-        <div className="absolute bottom-[-10%] left-[20%] h-[26rem] w-[26rem] rounded-full bg-accent-amber/10 blur-3xl" />
-      </div>
-
+    <div className="relative min-h-screen overflow-x-hidden">
       {showNavbar ? (
         <Navbar currentUser={currentUser} onLogout={handleLogout} />
       ) : null}

@@ -126,15 +126,8 @@ function LoginPage() {
 
   return (
     <main className="relative flex min-h-[calc(100vh-88px)] items-center justify-center overflow-hidden px-4 py-16 sm:px-6">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-[10%] top-[10%] h-56 w-56 rounded-full bg-accent-green/10 blur-3xl" />
-        <div className="absolute right-[8%] top-[18%] h-64 w-64 rounded-full bg-accent-blue/10 blur-3xl" />
-      </div>
-
       <section className="surface-panel-strong relative w-full max-w-md overflow-hidden p-8">
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-r from-emerald-200/10 via-blue-200/10 to-transparent blur-2xl" />
-
-        <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-accent-green via-accent-emerald to-accent-blue text-white shadow-accent">
+        <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-[1.25rem] border border-white/10 bg-white/[0.06] text-emerald-100">
           <Leaf size={28} />
         </div>
 
@@ -237,7 +230,7 @@ function LoginPage() {
                   <button
                     className={`rounded-full px-3 py-2 text-sm font-semibold capitalize transition ${
                       isActive
-                        ? "bg-gradient-to-r from-accent-green via-accent-emerald to-accent-blue text-white shadow-accent"
+                        ? "bg-emerald-600 text-white"
                         : "border border-white/10 bg-white/10 text-slate-200 hover:bg-white/10"
                     }`}
                     key={role}
@@ -266,14 +259,7 @@ function LoginPage() {
             : "Demo-ready access for farmer, verifier, and admin workspaces"}
         </div>
 
-        <div className="mt-5 flex items-center justify-between text-sm">
-          <button
-            className="text-slate-300/80 transition hover:text-white"
-            onClick={() => toast("Password reset will be connected in a later step.")}
-            type="button"
-          >
-            Forgot password?
-          </button>
+        <div className="mt-5 text-center text-sm">
           <Link className="font-medium text-accent-blue transition hover:text-blue-300" to="/">
             Back to home
           </Link>

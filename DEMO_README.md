@@ -12,7 +12,7 @@ Use the local app when you need to prove:
 - real carbon calculation
 - real verifier approval workflow
 - visible CNDC and DBMS proof inside the website
-- optional supporting analytics and submission material if broader questions are asked
+- downloadable SQL and faculty artifacts if broader questions are asked
 
 The public GitHub Pages site is only a limited visual demo and should be treated as secondary.
 
@@ -85,9 +85,7 @@ Show:
 - sent-to-ThingSpeak and received-by-backend proof cards
 - database population verification after sync
 - carbon calculation
-- implementation control room
-- implementation artifact links for the live bootstrap, seed SQL, and faculty files
-- optional supporting analytics panel if needed
+- final implementation evidence panel with CNDC trace, DBMS Query Lab, constraints, indexes, and artifact links
 
 Say:
 

@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 
 import { implementationApi } from "@/api/implementationApi";
 import ImplementationEvidencePanel from "@/components/ImplementationEvidencePanel";
-import ProjectAlignmentPanel from "@/components/ProjectAlignmentPanel";
 import type { AdminImplementationSummary } from "@/types";
 
 const roleSurfaces = [
@@ -127,13 +126,7 @@ function LandingPage() {
 
   return (
     <main className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-[-10%] top-[-6%] h-80 w-80 rounded-full bg-accent-green/10 blur-3xl" />
-        <div className="absolute right-[-8%] top-[8%] h-[26rem] w-[26rem] rounded-full bg-accent-blue/12 blur-3xl" />
-        <div className="absolute bottom-[12%] left-[18%] h-[24rem] w-[24rem] rounded-full bg-accent-amber/10 blur-3xl" />
-      </div>
-
-      <section className="relative min-h-screen">
+      <section className="relative">
         <header className="absolute inset-x-0 top-0 z-20">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
             <Link className="flex items-center gap-3" to="/">
@@ -152,7 +145,7 @@ function LandingPage() {
 
             <nav className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] p-1.5 md:flex">
               {[
-                ["Story", "story"],
+                ["Workflow", "story"],
                 ["Proof", "implementation-proof"],
                 ["Roles", "roles"]
               ].map(([label, sectionId]) => (
@@ -173,21 +166,20 @@ function LandingPage() {
           </div>
         </header>
 
-        <div className="mx-auto grid min-h-screen max-w-7xl gap-12 px-4 pb-20 pt-36 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pt-32">
+        <div className="mx-auto grid min-h-[720px] max-w-7xl gap-12 px-4 pb-16 pt-32 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
           <div className="flex flex-col justify-center">
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-100/90">
               Carbon credit verification platform
             </p>
 
-            <h1 className="mt-6 max-w-5xl text-5xl font-extrabold leading-[0.94] text-white sm:text-6xl lg:text-[5.4rem]">
-              Carbon-credit verification with visible network trace and database truth.
+            <h1 className="mt-6 max-w-5xl text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
+              Carbon-credit verification with clear network and database proof.
             </h1>
 
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-              The platform centers carbon-credit verification and presents CNDC
-              and DBMS evidence inside the product. Visitors can inspect
-              communication flow, query surfaces, table rows,
-              constraints, and approval evidence without leaving the website.
+              The demo shows one complete workflow: ThingSpeak transmission,
+              backend import, PostgreSQL population, carbon calculation, and
+              verifier approval.
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -224,9 +216,9 @@ function LandingPage() {
               <div className="absolute inset-0 bg-surface-mesh opacity-70" />
               <div className="relative space-y-5">
                 <div className="flex items-center justify-between rounded-[1.4rem] border border-white/10 bg-white/[0.06] px-4 py-3 text-xs uppercase tracking-[0.24em] text-slate-300">
-                  <span>Implementation Surface</span>
+                  <span>Evidence Preview</span>
                   <span className="rounded-full border border-emerald-100/20 bg-emerald-200/10 px-3 py-1 text-emerald-100">
-                    Proof Mode
+                    Final App
                   </span>
                 </div>
 
@@ -356,18 +348,6 @@ function LandingPage() {
           </div>
         )}
       </section>
-
-      {implementationSummary ? (
-        <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <ProjectAlignmentPanel
-            anchorId="analytics-report"
-            description="This lower section is only supporting material for the wider project brief. The main presentation and evaluation focus should still stay on the CNDC and DBMS proof shown above."
-            eyebrow="Supporting Material"
-            summary={implementationSummary}
-            title="Optional analytics and submission support"
-          />
-        </section>
-      ) : null}
 
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8" id="roles">
         <div className="rounded-[2.1rem] border border-white/10 bg-white/[0.05] p-8 sm:p-10">

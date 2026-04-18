@@ -182,12 +182,26 @@ function VerificationDetails() {
               {detail.farm_name} | {detail.season_name}
             </h1>
             <p className="mt-3 text-slate-300">
-              Review the sequestration calculation, inspect its underlying
-              measurements, and record your verification decision.
+              This is the exact database claim awaiting a verifier decision:
+              farm and season identity, imported measurements, formula output,
+              and approval form.
             </p>
           </div>
           <StatusBadge status={normalizeStatus(detail.status)} />
         </div>
+      </section>
+
+      <section className="mb-8 grid gap-4 lg:grid-cols-3">
+        {[
+          ["1. Imported Rows", `${detail.measurement_count} soil measurement event(s) linked to this season.`],
+          ["2. Calculated Claim", `${detail.estimated_carbon_credit.toFixed(2)} tCO2e estimated from stored carbon values.`],
+          ["3. Stored Decision", "Approval or rejection is saved as carbon_verification history."]
+        ].map(([title, description]) => (
+          <div className="surface-card-muted p-5" key={title}>
+            <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">{title}</p>
+            <p className="mt-3 text-sm leading-6 text-slate-300">{description}</p>
+          </div>
+        ))}
       </section>
 
       {detail.verification ? (
@@ -199,7 +213,7 @@ function VerificationDetails() {
 
       <section className="grid gap-8 xl:grid-cols-[0.82fr_1.18fr]">
         <aside className="surface-panel h-fit p-6 xl:sticky xl:top-28">
-          <h2 className="text-2xl font-bold text-white">Farm information</h2>
+          <h2 className="text-2xl font-bold text-white">Database record</h2>
           <div className="mt-6 space-y-4 text-sm">
             {[
               ["Farm", detail.farm_name],
@@ -224,7 +238,7 @@ function VerificationDetails() {
 
         <div className="space-y-8">
           <section className="surface-panel p-6">
-            <h2 className="text-2xl font-bold text-white">Carbon analysis</h2>
+            <h2 className="text-2xl font-bold text-white">Calculation to verify</h2>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <div className="surface-card p-5">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
@@ -345,10 +359,10 @@ function VerificationDetails() {
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-white">
-                  Measurement evidence
+                  Imported measurement evidence
                 </h2>
                 <p className="text-sm text-slate-400">
-                  All measurements captured for this season
+                  Nutrient rows linked through soil_measurement and measurement_result
                 </p>
               </div>
             </div>

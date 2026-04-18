@@ -90,7 +90,7 @@ Then open:
 5. admin panel
 6. CNDC trace
 7. DBMS query lab
-8. optional supporting analytics panel only if needed
+8. final implementation evidence panel
 9. ThingSpeak sender
 10. import data
 11. show sent-to-ThingSpeak and received-by-backend proof
@@ -131,7 +131,7 @@ The verifier reviews evidence before a carbon claim is accepted.
 
 ### Admin
 
-The admin imports data, shows ThingSpeak sent/received proof, verifies database population, triggers calculation, monitors the platform, and uses the implementation control room plus the artifact links for bootstrap SQL support and faculty files.
+The admin imports data, shows ThingSpeak sent/received proof, verifies database population, triggers calculation, and uses the final evidence panel plus artifact links for bootstrap SQL support and faculty files.
 
 ### CNDC
 
@@ -140,10 +140,6 @@ CNDC is shown through ThingSpeak communication, FastAPI REST APIs, JSON exchange
 ### DBMS
 
 DBMS is shown through PostgreSQL tables, relationships, stored measurements, carbon records, verification history, and the queryable table explorer with formal constraints and indexes.
-
-### Optional Supporting Analytics
-
-This optional panel shows correlation, regression, hypothesis test, confidence interval, and report-readiness material only if broader project questions come up.
 
 ### ThingSpeak import
 

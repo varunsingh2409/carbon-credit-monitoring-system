@@ -525,7 +525,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         { name: "idx_farm_location", columns: ["location"], unique: false }
       ],
       preview_rows: [
-        { farm_id: 101, farmer_id: 1, farm_name: "Green Valley Farm", location: "Ludhiana, Punjab", total_area_hectares: 24.5, baseline_carbon: 142.4 }
+        { farm_id: 101, farmer_id: 1, farm_name: "Punjab Mitti Farm", location: "Ludhiana, Punjab", total_area_hectares: 24.5, baseline_carbon: 142.4 }
       ]
     },
     {
@@ -627,11 +627,11 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         { name: "idx_soil_measurement_season_date", columns: ["season_id", "measurement_date"], unique: false }
       ],
       preview_rows: [
-        { measurement_id: 30203, farm_id: 101, season_id: 302, measurement_date: "2026-04-02T09:00:00.000Z", depth_cm: 20, sensor_id: "TS-GREEN-01" },
-        { measurement_id: 30202, farm_id: 101, season_id: 302, measurement_date: "2026-03-28T08:45:00.000Z", depth_cm: 20, sensor_id: "TS-GREEN-01" },
-        { measurement_id: 30201, farm_id: 101, season_id: 302, measurement_date: "2026-03-24T08:35:00.000Z", depth_cm: 20, sensor_id: "TS-GREEN-01" },
-        { measurement_id: 30102, farm_id: 101, season_id: 301, measurement_date: "2026-01-06T09:10:00.000Z", depth_cm: 20, sensor_id: "TS-GREEN-01" },
-        { measurement_id: 30101, farm_id: 101, season_id: 301, measurement_date: "2025-12-18T08:40:00.000Z", depth_cm: 20, sensor_id: "TS-GREEN-01" }
+        { measurement_id: 30203, farm_id: 101, season_id: 302, measurement_date: "2026-04-02T09:00:00.000Z", depth_cm: 20, sensor_id: "TS-PUNJAB-01" },
+        { measurement_id: 30202, farm_id: 101, season_id: 302, measurement_date: "2026-03-28T08:45:00.000Z", depth_cm: 20, sensor_id: "TS-PUNJAB-01" },
+        { measurement_id: 30201, farm_id: 101, season_id: 302, measurement_date: "2026-03-24T08:35:00.000Z", depth_cm: 20, sensor_id: "TS-PUNJAB-01" },
+        { measurement_id: 30102, farm_id: 101, season_id: 301, measurement_date: "2026-01-06T09:10:00.000Z", depth_cm: 20, sensor_id: "TS-PUNJAB-01" },
+        { measurement_id: 30101, farm_id: 101, season_id: 301, measurement_date: "2025-12-18T08:40:00.000Z", depth_cm: 20, sensor_id: "TS-PUNJAB-01" }
       ]
     },
     {

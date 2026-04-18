@@ -1,15 +1,5 @@
 import { startTransition, useEffect, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Line,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} from "recharts";
 import toast from "react-hot-toast";
 
 import { farmerApi } from "@/api/farmerApi";
@@ -121,32 +111,11 @@ function FarmerDashboard() {
     );
   }
 
-  const chartData = dashboard.farms
-    .flatMap((farm) =>
-      farm.seasons
-        .filter((season) => season.carbon_data)
-        .map((season) => ({
-          seasonId: season.season_id,
-          label: season.season_name,
-          fullLabel: `${farm.farm_name} - ${season.season_name}`,
-          baseline: season.carbon_data?.baseline_carbon ?? 0,
-          current: season.carbon_data?.current_carbon ?? 0,
-          increase: season.carbon_data?.net_increase ?? 0,
-          estimatedCredit: season.carbon_data?.estimated_credit ?? 0,
-          sortDate: new Date(season.start_date).getTime()
-        }))
-    )
-    .sort((left, right) => left.sortDate - right.sortDate);
-
-  const baselineAverage =
-    chartData.length > 0
-      ? chartData.reduce((sum, item) => sum + item.baseline, 0) / chartData.length
-      : 0;
-  const currentAverage =
-    chartData.length > 0
-      ? chartData.reduce((sum, item) => sum + item.current, 0) / chartData.length
-      : 0;
-  const totalIncrease = chartData.reduce((sum, item) => sum + item.increase, 0);
+  const calculatedSeasonCount = dashboard.farms.reduce(
+    (sum, farm) => sum + farm.seasons.filter((season) => season.carbon_data).length,
+    0
+  );
+  const latestMeasurement = dashboard.recentMeasurements[0];
 
   const toggleFarm = (farmId: number) => {
     setExpandedFarmIds((current) =>
@@ -165,12 +134,12 @@ function FarmerDashboard() {
               Farmer Dashboard
             </p>
             <h1 className="mt-3 text-4xl font-extrabold">
-              Track soil carbon performance across every season
+              Farmer view of imported soil data
             </h1>
             <p className="mt-4 max-w-3xl text-slate-300">
-              Farmer profile #{dashboard.farmer_id} with season-level carbon
-              performance, live field measurements, and verification progress in
-              one operational dashboard.
+              This page shows what the farmer receives after ThingSpeak data is
+              imported into PostgreSQL: registered farms, season calculations,
+              recent measurements, and verifier status.
             </p>
           </div>
 
@@ -223,9 +192,22 @@ function FarmerDashboard() {
           color="purple"
           icon="award"
           label="Total Carbon Credits"
-          trend={`${chartData.length} calculated season records`}
+          trend={`${calculatedSeasonCount} calculated season records`}
           value={`${dashboard.stats.totalCredits.toFixed(2)} tCO2e`}
         />
+      </section>
+
+      <section className="mt-10 grid gap-4 lg:grid-cols-[1fr_1fr_1fr]">
+        {[
+          ["1. Data Source", "ThingSpeak entries are imported by the admin into normalized tables."],
+          ["2. Farmer Record", "The farmer sees farm, season, measurement, and credit status from the database."],
+          ["3. Verification", "The verifier approves or rejects the same calculated claim shown here."]
+        ].map(([title, description]) => (
+          <div className="surface-card-muted p-5" key={title}>
+            <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">{title}</p>
+            <p className="mt-3 text-sm leading-6 text-slate-300">{description}</p>
+          </div>
+        ))}
       </section>
 
       <section className="mt-10 grid gap-8 xl:grid-cols-[1.2fr_0.8fr]">
@@ -235,7 +217,6 @@ function FarmerDashboard() {
 
             return (
               <article className="surface-panel relative overflow-hidden p-6" key={farm.farm_id}>
-                <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-r from-accent-green/10 via-blue-400/10 to-transparent blur-2xl" />
                 <div className="flex flex-col gap-4 border-b border-white/10 pb-5 md:flex-row md:items-start md:justify-between">
                   <div>
                     <h2 className="text-2xl font-bold text-white">{farm.farm_name}</h2>
@@ -356,104 +337,46 @@ function FarmerDashboard() {
         <aside className="surface-panel p-6">
           <div className="flex flex-col gap-2">
             <p className="eyebrow">
-              Carbon Trend
+              Farmer Evidence
             </p>
             <h2 className="text-2xl font-bold text-white">
-              Sequestration over time
+              What this page proves
             </h2>
             <p className="text-sm leading-7 text-slate-400">
-              Compare baseline and current carbon values across measured seasons.
+              The farmer page is intentionally read-only. It proves that imported
+              field measurements and calculated verification state are available
+              outside the admin panel.
             </p>
           </div>
 
-          <div className="mt-6 h-[320px]">
-            {chartData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData} margin={{ left: -16, right: 10, top: 12, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="carbonTrendGradient" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0%" stopColor="#34d399" stopOpacity={0.42} />
-                      <stop offset="100%" stopColor="#22c55e" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-                  <XAxis
-                    dataKey="label"
-                    stroke="#94a3b8"
-                    tickLine={false}
-                    axisLine={false}
-                    interval={0}
-                    tick={{ fontSize: 11 }}
-                  />
-                  <YAxis
-                    stroke="#94a3b8"
-                    tickLine={false}
-                    axisLine={false}
-                    tick={{ fontSize: 11 }}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      background: "rgba(36, 49, 63, 0.92)",
-                      border: "1px solid rgba(255,255,255,0.14)",
-                      borderRadius: "18px",
-                      boxShadow: "0 18px 48px rgba(26, 36, 49, 0.22)"
-                    }}
-                    formatter={(value: number, name: string) => [
-                      `${Number(value).toFixed(2)} kg/ha`,
-                      name === "current" ? "Current carbon" : "Baseline carbon"
-                    ]}
-                    labelFormatter={(value) =>
-                      chartData.find((item) => item.label === value)?.fullLabel ?? String(value)
-                    }
-                  />
-                  <Area
-                    dataKey="current"
-                    fill="url(#carbonTrendGradient)"
-                    stroke="#22c55e"
-                    strokeWidth={3}
-                    type="monotone"
-                  />
-                  <Line
-                    dataKey="baseline"
-                    dot={{ fill: "#3b82f6", r: 4, strokeWidth: 0 }}
-                    stroke="#60a5fa"
-                    strokeDasharray="6 6"
-                    strokeWidth={2}
-                    type="monotone"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            ) : (
-              <div className="flex h-full items-center justify-center rounded-[1.6rem] border border-dashed border-white/10 bg-white/10 p-6 text-center text-sm leading-7 text-slate-300/80">
-                Carbon trend data will populate here after completed seasons have
-                carbon sequestration records.
-              </div>
-            )}
-          </div>
-
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+          <div className="mt-6 space-y-3">
             <div className="surface-card-muted p-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Baseline Avg
+                Latest Measurement
               </p>
               <p className="mt-2 text-xl font-bold text-white">
-                {baselineAverage.toFixed(2)}
+                {latestMeasurement ? formatDateTime(latestMeasurement.date) : "No rows yet"}
+              </p>
+              {latestMeasurement ? (
+                <p className="mt-2 text-sm text-slate-400">
+                  {latestMeasurement.farm}, depth {latestMeasurement.depth.toFixed(2)} cm
+                </p>
+              ) : null}
+            </div>
+            <div className="surface-card-muted p-4">
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                Organic Carbon
+              </p>
+              <p className="mt-2 text-xl font-bold text-white">
+                {latestMeasurement?.organicCarbon?.toFixed(2) ?? "N/A"}
               </p>
             </div>
-            <div className="rounded-2xl border border-accent-green/20 bg-accent-green/[0.06] p-4">
+            <div className="surface-card-muted p-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Current Avg
+                Nitrogen
               </p>
-              <p className="mt-2 text-xl font-bold text-accent-green">
-                {currentAverage.toFixed(2)}
-              </p>
-            </div>
-            <div className="rounded-2xl border border-blue-400/20 bg-blue-500/[0.06] p-4">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Total Increase
-              </p>
-              <p className="mt-2 text-xl font-bold text-blue-300">
-                {totalIncrease.toFixed(2)}
+              <p className="mt-2 text-xl font-bold text-white">
+                {latestMeasurement?.nitrogen?.toFixed(2) ?? "N/A"}
               </p>
             </div>
           </div>

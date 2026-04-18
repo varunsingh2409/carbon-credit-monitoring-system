@@ -70,8 +70,8 @@ BEGIN
     INSERT INTO farmer (user_id, first_name, last_name, phone, address, registration_date)
     VALUES (
         demo_farmer_user_id,
-        'John',
-        'Doe',
+        'Ramesh',
+        'Kumar',
         '+91-9876543210',
         'Demo Farm Cluster, Punjab, India',
         CURRENT_DATE
@@ -87,8 +87,10 @@ BEGIN
     SELECT farm_id INTO green_valley_farm_id
     FROM farm
     WHERE farmer_id = demo_farmer_id
-      AND farm_name = 'Green Valley Farm'
-    ORDER BY farm_id
+      AND farm_name IN ('Punjab Mitti Farm', 'Green Valley Farm')
+    ORDER BY
+        CASE WHEN farm_name = 'Punjab Mitti Farm' THEN 0 ELSE 1 END,
+        farm_id
     LIMIT 1;
 
     IF green_valley_farm_id IS NULL THEN
@@ -102,8 +104,8 @@ BEGIN
         )
         VALUES (
             demo_farmer_id,
-            'Green Valley Farm',
-            'Punjab, India',
+            'Punjab Mitti Farm',
+            'Ludhiana, Punjab',
             50.00,
             'Loam',
             1000.00
@@ -112,7 +114,8 @@ BEGIN
     ELSE
         UPDATE farm
         SET
-            location = 'Punjab, India',
+            farm_name = 'Punjab Mitti Farm',
+            location = 'Ludhiana, Punjab',
             total_area_hectares = 50.00,
             soil_type = 'Loam',
             baseline_carbon = 1000.00
@@ -122,8 +125,10 @@ BEGIN
     SELECT farm_id INTO sunrise_acres_farm_id
     FROM farm
     WHERE farmer_id = demo_farmer_id
-      AND farm_name = 'Sunrise Acres'
-    ORDER BY farm_id
+      AND farm_name IN ('Haryana Krishi Acres', 'Sunrise Acres')
+    ORDER BY
+        CASE WHEN farm_name = 'Haryana Krishi Acres' THEN 0 ELSE 1 END,
+        farm_id
     LIMIT 1;
 
     IF sunrise_acres_farm_id IS NULL THEN
@@ -137,8 +142,8 @@ BEGIN
         )
         VALUES (
             demo_farmer_id,
-            'Sunrise Acres',
-            'Haryana, India',
+            'Haryana Krishi Acres',
+            'Karnal, Haryana',
             35.00,
             'Sandy Loam',
             950.00
@@ -147,7 +152,8 @@ BEGIN
     ELSE
         UPDATE farm
         SET
-            location = 'Haryana, India',
+            farm_name = 'Haryana Krishi Acres',
+            location = 'Karnal, Haryana',
             total_area_hectares = 35.00,
             soil_type = 'Sandy Loam',
             baseline_carbon = 950.00
