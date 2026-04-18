@@ -88,10 +88,12 @@ Then open:
 8. optional supporting analytics panel only if needed
 9. ThingSpeak sender
 10. import data
-11. refresh farmer dashboard
-12. calculate carbon credits
-13. approve as verifier
-14. refresh all dashboards
+11. show sent-to-ThingSpeak and received-by-backend proof
+12. show database population verification and stored measurement IDs
+13. refresh farmer dashboard
+14. calculate carbon credits
+15. approve as verifier
+16. refresh all dashboards
 
 ## 9. ThingSpeak Sender
 
@@ -124,7 +126,7 @@ The verifier reviews evidence before a carbon claim is accepted.
 
 ### Admin
 
-The admin imports data, triggers calculation, monitors the platform, and uses the implementation control room plus the artifact links for bootstrap SQL support and faculty files.
+The admin imports data, shows ThingSpeak sent/received proof, verifies database population, triggers calculation, monitors the platform, and uses the implementation control room plus the artifact links for bootstrap SQL support and faculty files.
 
 ### CNDC
 
@@ -140,7 +142,7 @@ This optional panel shows correlation, regression, hypothesis test, confidence i
 
 ### ThingSpeak import
 
-The admin is importing live external data into FastAPI and PostgreSQL.
+The admin is importing live external data into FastAPI and PostgreSQL. The website shows what was sent to ThingSpeak, what the backend received, how many rows were imported or skipped, and which measurement IDs were stored.
 
 ### Carbon calculation
 
@@ -172,6 +174,7 @@ All dashboards reflect the completed workflow end to end.
 5. admin counts come from live database queries
 6. the Normalization Atlas explains the measurement decomposition
 7. the website shows queries, row samples, constraints, and indexes
+8. database population is verified through ThingSpeak imported counts and DBMS table row counts
 
 Rubric order:
 
@@ -222,6 +225,10 @@ Because the project demonstrates external communication, REST APIs, JSON exchang
 ### Why DBMS?
 
 Because the project demonstrates normalized PostgreSQL tables, relationships, persistent records, workflow history, and a queryable DBMS explorer with constraints and rows.
+
+### How do we prove data population?
+
+Use the admin ThingSpeak Sync result and DBMS Query Lab. A fresh 5-row ThingSpeak batch can create 5 `soil_measurement` rows and 25 `measurement_result` rows because each measurement stores 5 nutrient values separately.
 
 ### What is the core workflow?
 

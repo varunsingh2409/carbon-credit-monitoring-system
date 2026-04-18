@@ -51,6 +51,27 @@ const getErrorMessage = (error: unknown, fallback: string) => {
   return fallback;
 };
 
+const thingSpeakFieldMappings = [
+  { field: "field1", label: "Nitrogen", sample: "31.8-36.9 ppm" },
+  { field: "field2", label: "Phosphorus", sample: "18.4-22.4 ppm" },
+  { field: "field3", label: "Potassium", sample: "142.6-153.1 ppm" },
+  { field: "field4", label: "Moisture", sample: "24.3-27.8 %" },
+  { field: "field5", label: "Organic_Carbon", sample: "1098-1149 kg/ha" },
+  { field: "field6", label: "depth_cm", sample: "10 cm" }
+];
+
+const sentThingSpeakRows = [
+  { row: 1, organicCarbon: 1098, depth: 10 },
+  { row: 2, organicCarbon: 1110, depth: 10 },
+  { row: 3, organicCarbon: 1124, depth: 10 },
+  { row: 4, organicCarbon: 1136, depth: 10 },
+  { row: 5, organicCarbon: 1149, depth: 10 }
+];
+
+const nutrientFieldCount = thingSpeakFieldMappings.filter(
+  (mapping) => mapping.field !== "field6"
+).length;
+
 function AdminPanel() {
   const [statistics, setStatistics] = useState<AdminStatistics | null>(null);
   const [implementationSummary, setImplementationSummary] =
@@ -331,10 +352,58 @@ function AdminPanel() {
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Default Mapping
                 </p>
-                <p className="mt-3 text-sm leading-7 text-slate-300">
-                  Field 1: Nitrogen, Field 2: Phosphorus, Field 3: Potassium,
-                  Field 4: Moisture, Field 5: Organic Carbon, Field 6: Depth.
-                </p>
+                <div className="mt-3 grid gap-2">
+                  {thingSpeakFieldMappings.map((mapping) => (
+                    <div
+                      className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 sm:flex-row sm:items-center sm:justify-between"
+                      key={mapping.field}
+                    >
+                      <span className="font-mono text-xs text-emerald-100">
+                        {mapping.field} -&gt; {mapping.label}
+                      </span>
+                      <span className="text-xs text-slate-400">{mapping.sample}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-4 grid gap-3 lg:grid-cols-2">
+                <div className="rounded-[1.25rem] border border-emerald-100/15 bg-emerald-200/[0.07] px-4 py-4">
+                  <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">
+                    Sent To ThingSpeak
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">
+                    The demo sender posts 5 channel entries, one every 16 seconds,
+                    with Organic Carbon and depth visible in the terminal.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {sentThingSpeakRows.map((row) => (
+                      <span
+                        className="rounded-full border border-white/10 bg-white/[0.08] px-3 py-1.5 font-mono text-[11px] text-slate-100"
+                        key={row.row}
+                      >
+                        row {row.row}: OC {row.organicCarbon}, depth {row.depth}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-[1.25rem] border border-blue-100/15 bg-blue-300/[0.07] px-4 py-4">
+                  <p className="text-xs uppercase tracking-[0.18em] text-blue-100">
+                    Received By Backend
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">
+                    Import reads the latest 5 ThingSpeak entries, maps fields to
+                    nutrients, and stores normalized PostgreSQL rows.
+                  </p>
+                  <div className="mt-3 grid gap-2 text-xs text-slate-300">
+                    <span>Expected new `soil_measurement` rows: up to 5</span>
+                    <span>
+                      Expected new `measurement_result` rows: up to {sentThingSpeakRows.length * nutrientFieldCount}
+                    </span>
+                    <span>Duplicate channel entries are shown as skipped, not hidden.</span>
+                  </div>
+                </div>
               </div>
 
               <button
@@ -376,6 +445,23 @@ function AdminPanel() {
                   <p className="mt-4 text-sm text-slate-300">
                     {thingSpeakResult.message}
                   </p>
+
+                  <div className="mt-4 rounded-2xl border border-emerald-100/15 bg-emerald-200/[0.06] px-4 py-3">
+                    <p className="text-xs uppercase tracking-[0.18em] text-emerald-100">
+                      Database Population Verification
+                    </p>
+                    <p className="mt-2 text-sm leading-6 text-slate-300">
+                      This sync can add {thingSpeakResult.imported_count} `soil_measurement`
+                      row(s) and up to {thingSpeakResult.imported_count * nutrientFieldCount}
+                      `measurement_result` row(s). Open the DBMS Query Lab and compare
+                      those table counts after import.
+                    </p>
+                    {thingSpeakResult.imported_measurement_ids.length > 0 ? (
+                      <p className="mt-2 break-words font-mono text-xs text-slate-200">
+                        Stored measurement IDs: {thingSpeakResult.imported_measurement_ids.join(", ")}
+                      </p>
+                    ) : null}
+                  </div>
 
                   {thingSpeakResult.skipped_entries.length > 0 ? (
                     <div className="mt-4 space-y-2">

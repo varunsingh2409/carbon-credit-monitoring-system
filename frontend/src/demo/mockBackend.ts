@@ -180,6 +180,8 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       sensor_id: "TS-GREEN-01",
       nutrients: [
         { nutrient_name: "Nitrogen", measured_value: 211, unit: "kg/ha" },
+        { nutrient_name: "Phosphorus", measured_value: 118, unit: "kg/ha" },
+        { nutrient_name: "Potassium", measured_value: 342, unit: "kg/ha" },
         { nutrient_name: "Moisture", measured_value: 31.4, unit: "%" },
         { nutrient_name: "Organic Carbon", measured_value: 3.41, unit: "%" }
       ]
@@ -193,6 +195,8 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       sensor_id: "TS-GREEN-01",
       nutrients: [
         { nutrient_name: "Nitrogen", measured_value: 214, unit: "kg/ha" },
+        { nutrient_name: "Phosphorus", measured_value: 121, unit: "kg/ha" },
+        { nutrient_name: "Potassium", measured_value: 348, unit: "kg/ha" },
         { nutrient_name: "Moisture", measured_value: 32.2, unit: "%" },
         { nutrient_name: "Organic Carbon", measured_value: 3.46, unit: "%" }
       ]
@@ -206,8 +210,40 @@ const initialSeasonMeasurements: Record<string, VerificationMeasurementDetail[]>
       sensor_id: "TS-GREEN-01",
       nutrients: [
         { nutrient_name: "Nitrogen", measured_value: 218, unit: "kg/ha" },
+        { nutrient_name: "Phosphorus", measured_value: 125, unit: "kg/ha" },
+        { nutrient_name: "Potassium", measured_value: 352, unit: "kg/ha" },
         { nutrient_name: "Moisture", measured_value: 33.1, unit: "%" },
         { nutrient_name: "Organic Carbon", measured_value: 3.55, unit: "%" }
+      ]
+    },
+    {
+      measurement_id: 30204,
+      measurement_date: "2026-04-07T09:05:00.000Z",
+      depth_cm: 20,
+      latitude: 30.901,
+      longitude: 75.853,
+      sensor_id: "TS-GREEN-01",
+      nutrients: [
+        { nutrient_name: "Nitrogen", measured_value: 221, unit: "kg/ha" },
+        { nutrient_name: "Phosphorus", measured_value: 128, unit: "kg/ha" },
+        { nutrient_name: "Potassium", measured_value: 357, unit: "kg/ha" },
+        { nutrient_name: "Moisture", measured_value: 33.9, unit: "%" },
+        { nutrient_name: "Organic Carbon", measured_value: 3.61, unit: "%" }
+      ]
+    },
+    {
+      measurement_id: 30205,
+      measurement_date: "2026-04-10T09:15:00.000Z",
+      depth_cm: 20,
+      latitude: 30.901,
+      longitude: 75.853,
+      sensor_id: "TS-GREEN-01",
+      nutrients: [
+        { nutrient_name: "Nitrogen", measured_value: 226, unit: "kg/ha" },
+        { nutrient_name: "Phosphorus", measured_value: 131, unit: "kg/ha" },
+        { nutrient_name: "Potassium", measured_value: 363, unit: "kg/ha" },
+        { nutrient_name: "Moisture", measured_value: 34.6, unit: "%" },
+        { nutrient_name: "Organic Carbon", measured_value: 3.68, unit: "%" }
       ]
     }
   ],
@@ -270,11 +306,11 @@ const initialMonthlyCredits: MonthlyCredit[] = [
 const initialSyncResponses: Record<string, ThingSpeakSyncResponse> = {
   "302": {
     channel_id: DEMO_CHANNEL_ID,
-    imported_count: 3,
+    imported_count: 5,
     skipped_count: 0,
-    imported_measurement_ids: [30201, 30202, 30203],
+    imported_measurement_ids: [30201, 30202, 30203, 30204, 30205],
     skipped_entries: [],
-    message: "ThingSpeak demo data imported into Monsoon 2026 Demo."
+    message: "ThingSpeak demo batch received: 5 measurements and 25 nutrient-result rows for Monsoon 2026 Demo."
   }
 };
 
@@ -455,6 +491,8 @@ const createSyncedMeasurements = (): VerificationMeasurementDetail[] => [
     sensor_id: "TS-GREEN-01",
     nutrients: [
       { nutrient_name: "Nitrogen", measured_value: 172, unit: "kg/ha" },
+      { nutrient_name: "Phosphorus", measured_value: 98, unit: "kg/ha" },
+      { nutrient_name: "Potassium", measured_value: 306, unit: "kg/ha" },
       { nutrient_name: "Moisture", measured_value: 24.7, unit: "%" },
       { nutrient_name: "Organic Carbon", measured_value: 2.76, unit: "%" }
     ]
@@ -468,6 +506,8 @@ const createSyncedMeasurements = (): VerificationMeasurementDetail[] => [
     sensor_id: "TS-GREEN-01",
     nutrients: [
       { nutrient_name: "Nitrogen", measured_value: 176, unit: "kg/ha" },
+      { nutrient_name: "Phosphorus", measured_value: 101, unit: "kg/ha" },
+      { nutrient_name: "Potassium", measured_value: 312, unit: "kg/ha" },
       { nutrient_name: "Moisture", measured_value: 25.3, unit: "%" },
       { nutrient_name: "Organic Carbon", measured_value: 2.83, unit: "%" }
     ]
@@ -481,8 +521,40 @@ const createSyncedMeasurements = (): VerificationMeasurementDetail[] => [
     sensor_id: "TS-GREEN-01",
     nutrients: [
       { nutrient_name: "Nitrogen", measured_value: 181, unit: "kg/ha" },
+      { nutrient_name: "Phosphorus", measured_value: 105, unit: "kg/ha" },
+      { nutrient_name: "Potassium", measured_value: 318, unit: "kg/ha" },
       { nutrient_name: "Moisture", measured_value: 26.1, unit: "%" },
       { nutrient_name: "Organic Carbon", measured_value: 2.91, unit: "%" }
+    ]
+  },
+  {
+    measurement_id: 30304,
+    measurement_date: "2026-04-04T09:25:00.000Z",
+    depth_cm: 22,
+    latitude: 30.901,
+    longitude: 75.853,
+    sensor_id: "TS-GREEN-01",
+    nutrients: [
+      { nutrient_name: "Nitrogen", measured_value: 185, unit: "kg/ha" },
+      { nutrient_name: "Phosphorus", measured_value: 108, unit: "kg/ha" },
+      { nutrient_name: "Potassium", measured_value: 323, unit: "kg/ha" },
+      { nutrient_name: "Moisture", measured_value: 26.8, unit: "%" },
+      { nutrient_name: "Organic Carbon", measured_value: 2.98, unit: "%" }
+    ]
+  },
+  {
+    measurement_id: 30305,
+    measurement_date: "2026-04-04T09:55:00.000Z",
+    depth_cm: 22,
+    latitude: 30.901,
+    longitude: 75.853,
+    sensor_id: "TS-GREEN-01",
+    nutrients: [
+      { nutrient_name: "Nitrogen", measured_value: 189, unit: "kg/ha" },
+      { nutrient_name: "Phosphorus", measured_value: 111, unit: "kg/ha" },
+      { nutrient_name: "Potassium", measured_value: 329, unit: "kg/ha" },
+      { nutrient_name: "Moisture", measured_value: 27.4, unit: "%" },
+      { nutrient_name: "Organic Carbon", measured_value: 3.04, unit: "%" }
     ]
   }
 ];

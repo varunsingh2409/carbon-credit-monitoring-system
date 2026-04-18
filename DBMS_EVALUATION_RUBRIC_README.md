@@ -113,7 +113,8 @@ What to show:
 
 - The seed file: `scripts/seed_demo.sql`.
 - The ThingSpeak sender: `scripts/thingspeak_demo_batch.py`.
-- The admin workflow: Import ThingSpeak Data -> DBMS Query Lab -> table row counts.
+- The admin workflow: ThingSpeak Sync -> Sent To ThingSpeak -> Received By Backend -> Import ThingSpeak Data -> Database Population Verification.
+- The DBMS Query Lab table counts for `soil_measurement` and `measurement_result`.
 
 Best explanation:
 
@@ -134,6 +135,13 @@ What ThingSpeak import adds:
 - Data that can be used for carbon calculation through `Organic_Carbon`.
 - One normal demo batch sends 5 ThingSpeak entries. With 5 nutrient fields per entry, that produces up to 5 `soil_measurement` rows and 25 `measurement_result` rows when the entries are new.
 
+Website proof to point at:
+
+- `Sent To ThingSpeak` shows the 5 demo rows posted by `scripts/thingspeak_demo_batch.py`.
+- `Received By Backend` explains that the backend reads the latest 5 ThingSpeak entries and maps the fields.
+- `Last Sync Result` shows the channel id, imported count, skipped count, and stored measurement ids.
+- `Database Population Verification` shows the expected effect on `soil_measurement` and `measurement_result`.
+
 Row-count query for proof:
 
 ```sql
@@ -151,6 +159,10 @@ UNION ALL SELECT 'carbon_verification', COUNT(*) FROM carbon_verification;
 Safe viva wording:
 
 > The seed gives a stable base dataset, and the live ThingSpeak import adds the measurement and nutrient-result rows. For the rubric's 20 to 30+ row expectation, I would show the 5 imported measurement events and the 25 nutrient-result rows created from one normal ThingSpeak batch when those entries are new, because the project is normalized across related tables instead of stored as one artificial flat table.
+
+If duplicate entries are skipped:
+
+> The system is still behaving correctly. The duplicate ThingSpeak entries are not inserted again because the database has duplicate-protection on the measurement event. For a clean population proof, reset the demo database, send a fresh ThingSpeak batch, import it, and then compare the DBMS Query Lab row counts.
 
 ## 4. Query Demonstration - 2 Marks
 

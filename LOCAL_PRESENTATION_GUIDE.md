@@ -580,13 +580,15 @@ Show:
 1. statistics cards
 2. monthly credits chart
 3. ThingSpeak sync section
-4. Trigger Carbon Calculation section
-5. implementation control room
-6. CNDC trace
-7. DBMS query lab
-8. User Management modal
-9. implementation artifact links for bootstrap, seed SQL, and deliverables
-10. System Status
+4. sent-to-ThingSpeak and received-by-backend proof cards
+5. database population verification after import
+6. Trigger Carbon Calculation section
+7. implementation control room
+8. CNDC trace
+9. DBMS query lab
+10. User Management modal
+11. implementation artifact links for bootstrap, seed SQL, and deliverables
+12. System Status
 
 What to say:
 
@@ -689,10 +691,27 @@ Expected result:
 1. success toast
 2. last sync result
 3. imported count
+4. skipped count if duplicates were already imported
+5. stored measurement IDs
+6. database population verification card
 
 What to say:
 
 > The admin is importing the ThingSpeak data into the FastAPI backend. The backend validates the data, maps the fields, and stores the measurements in PostgreSQL.
+
+Point at the website proof:
+
+1. `Sent To ThingSpeak` shows the 5 demo rows sent by the terminal script.
+2. `Received By Backend` explains that FastAPI reads the latest ThingSpeak channel entries.
+3. `Last Sync Result` shows imported count, skipped count, channel id, and stored measurement IDs.
+4. `Database Population Verification` explains the expected database effect.
+
+Database population proof:
+
+1. one accepted ThingSpeak entry becomes one `soil_measurement` row
+2. one accepted ThingSpeak entry becomes up to five `measurement_result` rows
+3. a full fresh batch can add 5 measurement rows and 25 nutrient-result rows
+4. skipped entries mean duplicate protection worked, not that the import failed
 
 CNDC relevance:
 
@@ -703,6 +722,7 @@ DBMS relevance:
 
 1. imported values become stored measurement rows
 2. the workflow is database-backed
+3. normalized nutrient values are stored in `measurement_result`
 
 ### Feature 10: Farmer refresh after import
 
@@ -915,6 +935,15 @@ For the faculty rubric, use this exact order:
 5. Conceptual viva: explain the ERD flow and why one flat table would create anomalies.
 6. Implementation viva: point to `app\models`, `scripts\seed_demo.sql`, ThingSpeak service, carbon calculator, and the evidence panel.
 
+For database population verification, show:
+
+1. admin ThingSpeak Sync sent/received cards
+2. Last Sync Result imported and skipped counts
+3. stored measurement IDs after import
+4. DBMS Query Lab `soil_measurement` row count
+5. DBMS Query Lab `measurement_result` row count
+6. optional raw SQL row-count query from section 32
+
 ## 26. Feature-To-CNDC Map
 
 ### Landing page
@@ -1113,6 +1142,21 @@ Invoke-RestMethod `
 ```
 
 ## 32. Optional Database Proof Commands
+
+### Show database population counts
+
+```powershell
+$env:PGPASSWORD='Masterbeast'
+& 'C:\Program Files\PostgreSQL\16\bin\psql.exe' `
+  -h localhost `
+  -U carbon_app_user `
+  -d carbon_credit_db `
+  -c "SELECT 'users' AS table_name, COUNT(*) AS rows FROM users UNION ALL SELECT 'farmer', COUNT(*) FROM farmer UNION ALL SELECT 'farm', COUNT(*) FROM farm UNION ALL SELECT 'season', COUNT(*) FROM season UNION ALL SELECT 'nutrient', COUNT(*) FROM nutrient UNION ALL SELECT 'soil_measurement', COUNT(*) FROM soil_measurement UNION ALL SELECT 'measurement_result', COUNT(*) FROM measurement_result UNION ALL SELECT 'carbon_sequestration', COUNT(*) FROM carbon_sequestration UNION ALL SELECT 'carbon_verification', COUNT(*) FROM carbon_verification;"
+```
+
+What to say:
+
+> This verifies that the demo is populated across normalized relational tables. After a fresh ThingSpeak import, the key proof is that `soil_measurement` has measurement events and `measurement_result` has the nutrient values linked to those events.
 
 ### Show measurements
 

@@ -605,7 +605,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       purpose: "Bridge table that stores individual nutrient values for each measurement event.",
       query:
         "SELECT measurement_id, nutrient_id, measured_value FROM measurement_result ORDER BY measurement_id DESC LIMIT 8;",
-      row_count: 15,
+      row_count: 25,
       columns: [
         { name: "measurement_id", data_type: "INTEGER", nullable: false, is_primary_key: true, foreign_key: "soil_measurement.measurement_id", default_value: null },
         { name: "nutrient_id", data_type: "INTEGER", nullable: false, is_primary_key: true, foreign_key: "nutrient.nutrient_id", default_value: null },
@@ -619,13 +619,13 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       indexes: [{ name: "idx_measurement_result_nutrient_id", columns: ["nutrient_id"], unique: false }],
       preview_rows: [
         { measurement_id: 30203, nutrient_id: 1, measured_value: 218 },
+        { measurement_id: 30203, nutrient_id: 2, measured_value: 125 },
+        { measurement_id: 30203, nutrient_id: 3, measured_value: 352 },
         { measurement_id: 30203, nutrient_id: 4, measured_value: 33.1 },
         { measurement_id: 30203, nutrient_id: 5, measured_value: 3.55 },
         { measurement_id: 30202, nutrient_id: 1, measured_value: 214 },
         { measurement_id: 30202, nutrient_id: 4, measured_value: 32.2 },
-        { measurement_id: 30202, nutrient_id: 5, measured_value: 3.46 },
-        { measurement_id: 30201, nutrient_id: 1, measured_value: 211 },
-        { measurement_id: 30201, nutrient_id: 5, measured_value: 3.41 }
+        { measurement_id: 30202, nutrient_id: 5, measured_value: 3.46 }
       ]
     },
     {

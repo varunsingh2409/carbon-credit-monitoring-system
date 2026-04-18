@@ -170,10 +170,13 @@ Use this checklist before the actual presentation:
 - `DBMS_EVALUATION_RUBRIC_README.md` is open if the faculty evaluates using the DBMS rubric
 - frontend opens at `http://localhost:5173`
 - landing page shows the implementation evidence explorer and presents CNDC/DBMS as the main story
+- admin ThingSpeak Sync shows sent-to-ThingSpeak and received-by-backend proof cards
 - farmer login works
 - verifier login works
 - admin login works
 - ThingSpeak import works
+- Last Sync Result shows imported/skipped counts and stored measurement IDs
+- DBMS Query Lab shows `soil_measurement` and `measurement_result` row counts after import
 - carbon calculation works
 - verifier approval works
 

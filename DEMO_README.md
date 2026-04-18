@@ -82,6 +82,8 @@ Show:
 
 - statistics
 - ThingSpeak sync
+- sent-to-ThingSpeak and received-by-backend proof cards
+- database population verification after sync
 - carbon calculation
 - implementation control room
 - implementation artifact links for the live bootstrap, seed SQL, and faculty files
@@ -97,6 +99,8 @@ Show:
 
 - ThingSpeak sender
 - ThingSpeak import
+- Last Sync Result with imported/skipped counts and stored measurement IDs
+- DBMS Query Lab row counts for `soil_measurement` and `measurement_result`
 - fresh measurement evidence
 - carbon calculation
 - verifier approval
@@ -127,10 +131,15 @@ One-line answer:
 - constraints and indexes protect data quality and queryability
 - the DBMS query lab shows real tables, row samples, constraints, and indexes in the app
 - the Normalization Atlas shows why `soil_measurement`, `measurement_result`, and `nutrient` are split instead of stored as one wide table
+- database population is verified by comparing ThingSpeak imported counts with `soil_measurement` and `measurement_result` row counts
 
 One-line answer:
 
 > DBMS is demonstrated through a relational PostgreSQL schema, stored workflow history, constraints, indexes, and a visible queryable table explorer.
+
+Data-population proof line:
+
+> One normal ThingSpeak batch sends 5 measurement events. After import, that can create 5 `soil_measurement` rows and 25 `measurement_result` rows because each measurement stores 5 nutrient values separately.
 
 ## 6. Optional Supporting Analytics Talking Points
 
@@ -196,10 +205,13 @@ Before presenting, confirm:
 - backend `/docs` opens
 - frontend opens at `http://localhost:5173`
 - landing page shows the implementation evidence explorer
+- admin ThingSpeak Sync shows the sent/received proof cards
 - farmer login works
 - verifier login works
 - admin login works
 - ThingSpeak import works
+- Last Sync Result shows imported/skipped counts and stored measurement IDs
+- DBMS Query Lab shows populated `soil_measurement` and `measurement_result` tables
 - carbon calculation works
 - verifier approval works
 
