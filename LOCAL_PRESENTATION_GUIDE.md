@@ -199,6 +199,10 @@ Database bootstrap file:
 
 `C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\scripts\bootstrap_db.py`
 
+Formal constraints and indexes file:
+
+`C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\scripts\formal_schema_constraints.sql`
+
 ThingSpeak demo sender:
 
 `C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\scripts\thingspeak_demo_batch.py`
@@ -389,6 +393,12 @@ $env:PGPASSWORD='Masterbeast'
   -U carbon_app_user `
   -d carbon_credit_db `
   -f 'C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\scripts\seed_demo.sql'
+
+& 'C:\Program Files\PostgreSQL\16\bin\psql.exe' `
+  -h localhost `
+  -U carbon_app_user `
+  -d carbon_credit_db `
+  -f 'C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\scripts\formal_schema_constraints.sql'
 ```
 
 What this does:
@@ -397,6 +407,7 @@ What this does:
 2. resets the main demo season
 3. restores clean verification records
 4. removes old live-demo measurement noise
+5. applies formal DBMS constraints and supporting indexes on existing databases
 
 ### Start backend
 
@@ -639,10 +650,12 @@ Also point at:
 1. row counts
 2. foreign keys
 3. uniqueness and check constraints
+4. formal domain constraints for identity formats, non-empty labels, coordinates, positive values, and carbon snapshot consistency
+5. composite indexes such as role+active, farm+status, season+date, status+date, and verification status+date
 
 What to say:
 
-> This section is the strongest DBMS proof inside the app. It shows exact read-only table queries, returned rows, column structure, constraints, and indexes for the live schema.
+> This section is the strongest DBMS proof inside the app. It shows exact read-only table queries, returned rows, column structure, formal constraints, and indexes for the live schema.
 
 Best one-line DBMS explanation:
 
@@ -920,7 +933,9 @@ Use these points during evaluation:
 5. approvals and calculations are permanently stored
 6. admin counts come from live database queries
 7. the Normalization Atlas explains `soil_measurement`, `measurement_result`, and `nutrient`
-8. the system demonstrates both data storage and workflow persistence
+8. formal constraints protect identity formats, non-empty labels, coordinates, numeric domains, carbon snapshots, and verification decisions
+9. composite indexes support the query paths used by dashboards and viva demonstrations
+10. the system demonstrates both data storage and workflow persistence
 
 ### One-line DBMS answer
 
@@ -934,6 +949,10 @@ For the faculty rubric, use this exact order:
 4. Query demonstration: explain SELECT, JOIN, GROUP BY, and nested query examples from `DBMS_EVALUATION_RUBRIC_README.md`.
 5. Conceptual viva: explain the ERD flow and why one flat table would create anomalies.
 6. Implementation viva: point to `app\models`, `scripts\seed_demo.sql`, ThingSpeak service, carbon calculator, and the evidence panel.
+
+For formal constraints and indexes, say:
+
+> The schema uses primary keys and foreign keys for relationships, unique constraints for identity and one-to-one workflow records, check constraints for valid formats and numeric domains, and composite indexes for dashboard query paths such as role filtering, season status, measurement timelines, and verifier history.
 
 For database population verification, show:
 

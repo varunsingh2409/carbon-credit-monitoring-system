@@ -74,6 +74,8 @@ This project demonstrates DBMS through:
 - practical 3NF design with BCNF-style determinants where suitable
 - foreign keys across the measurement and verification workflow
 - unique constraints and check constraints
+- formal domain, format, coordinate, and workflow consistency constraints
+- composite indexes for role filters, farm-season lookups, measurement timelines, and verification history
 - stored carbon-calculation results
 - persistent verification history
 - live counts and queryable table previews in the UI
@@ -216,6 +218,7 @@ carbon_credit_backend/
 Faculty-facing submission and guide files are kept in:
 
 - `DBMS_EVALUATION_RUBRIC_README.md`
+- `scripts/formal_schema_constraints.sql`
 - `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
 - `deliverables/CNDC_OSI_MODEL_MAPPING.md`
 - `deliverables/SOIL_CARBON_ER_DIAGRAM.md`
@@ -227,7 +230,7 @@ Faculty-facing submission and guide files are kept in:
 
 These files support the local app demonstration. They are secondary to the CNDC and DBMS proof shown in the app.
 
-The admin panel now exposes direct artifact links for the real schema/bootstrap script, the real demo seed SQL, and these supporting deliverables so you can open them during viva or faculty questions without leaving the app context.
+The admin panel now exposes direct artifact links for the real schema/bootstrap script, the formal constraints/indexes SQL, the real demo seed SQL, and these supporting deliverables so you can open them during viva or faculty questions without leaving the app context.
 
 ## 12. Quick Local Start
 
@@ -256,6 +259,7 @@ Demo reset:
 ```powershell
 $env:PGPASSWORD='Masterbeast'
 & 'C:\Program Files\PostgreSQL\16\bin\psql.exe' -h localhost -U carbon_app_user -d carbon_credit_db -f '.\scripts\seed_demo.sql'
+& 'C:\Program Files\PostgreSQL\16\bin\psql.exe' -h localhost -U carbon_app_user -d carbon_credit_db -f '.\scripts\formal_schema_constraints.sql'
 ```
 
 ThingSpeak sender:

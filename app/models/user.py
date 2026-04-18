@@ -20,8 +20,21 @@ class User(Base):
             "role IN ('farmer', 'verifier', 'admin', 'sensor')",
             name="ck_users_role",
         ),
+        CheckConstraint(
+            "username ~ '^[A-Za-z0-9_.-]{3,50}$'",
+            name="ck_users_username_format",
+        ),
+        CheckConstraint(
+            "email ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$'",
+            name="ck_users_email_format",
+        ),
+        CheckConstraint(
+            "length(trim(password_hash)) >= 20",
+            name="ck_users_password_hash_non_empty",
+        ),
         Index("idx_users_username", "username"),
         Index("idx_users_role", "role"),
+        Index("idx_users_role_active", "role", "is_active"),
     )
 
     user_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

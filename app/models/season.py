@@ -17,13 +17,19 @@ if TYPE_CHECKING:
 class Season(Base):
     __tablename__ = "season"
     __table_args__ = (
+        CheckConstraint("length(trim(season_name)) > 0", name="ck_season_name_non_empty"),
         CheckConstraint("end_date > start_date", name="chk_season_dates"),
         CheckConstraint(
             "status IN ('active', 'completed', 'verified')",
             name="ck_season_status",
         ),
+        CheckConstraint(
+            "crop_type IS NULL OR length(trim(crop_type)) > 0",
+            name="ck_season_crop_type_non_empty",
+        ),
         Index("idx_season_farm_id", "farm_id"),
         Index("idx_season_status", "status"),
+        Index("idx_season_farm_status", "farm_id", "status"),
     )
 
     season_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import date
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Date, ForeignKey, String, Text, func
+from sqlalchemy import CheckConstraint, Date, ForeignKey, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -15,6 +15,20 @@ if TYPE_CHECKING:
 
 class Farmer(Base):
     __tablename__ = "farmer"
+    __table_args__ = (
+        CheckConstraint(
+            "length(trim(first_name)) > 0",
+            name="ck_farmer_first_name_non_empty",
+        ),
+        CheckConstraint(
+            "length(trim(last_name)) > 0",
+            name="ck_farmer_last_name_non_empty",
+        ),
+        CheckConstraint(
+            "phone IS NULL OR phone ~ '^[0-9+() -]{7,15}$'",
+            name="ck_farmer_phone_format",
+        ),
+    )
 
     farmer_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     user_id: Mapped[int | None] = mapped_column(

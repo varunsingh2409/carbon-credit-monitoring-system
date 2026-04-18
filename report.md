@@ -169,8 +169,9 @@ The DBMS part of the project is one of the strongest areas. It includes:
 - Normalized tables for users, farms, seasons, measurements, nutrients, carbon records, and verification records.
 - Primary keys and foreign keys across the workflow.
 - Unique constraints for usernames, emails, nutrients, duplicate measurement imports, one carbon record per season, and one verification decision per carbon record.
-- Check constraints for valid roles, valid season status, valid dates, positive depth, positive farm area, and valid carbon/verification status.
-- Indexes for common lookup paths such as username, role, season status, measurement date, farm-season measurements, sequestration status, and verifier history.
+- Formal check constraints for valid roles, username/email format, non-empty labels, valid dates, positive depth, coordinate ranges, positive farm area, nutrient value domains, carbon snapshot consistency, and valid carbon/verification status.
+- Composite indexes for common lookup paths such as role plus active status, farm plus season status, measurement timelines, sequestration queues, and verifier decision history.
+- An idempotent schema-hardening SQL file at `scripts/formal_schema_constraints.sql` for applying the formal constraints and indexes to an existing PostgreSQL database.
 - Seed data through `scripts/seed_demo.sql`.
 - Live measurement data through ThingSpeak import.
 - Query demonstration support through the DBMS Query Lab and `DBMS_EVALUATION_RUBRIC_README.md`.
@@ -271,6 +272,7 @@ Use these files during preparation and viva:
 - `LOCAL_PRESENTATION_CHEATSHEET.md`: short rehearsal guide.
 - `DBMS_EVALUATION_RUBRIC_README.md`: DBMS faculty rubric mapping.
 - `scripts/seed_demo.sql`: real demo seed file.
+- `scripts/formal_schema_constraints.sql`: formal constraints and supporting indexes for existing PostgreSQL databases.
 - `scripts/thingspeak_demo_batch.py`: ThingSpeak demo sender.
 - `scripts/bootstrap_db.py`: database bootstrap support.
 - `deliverables/DBMS_NORMALIZATION_AND_FUNCTIONAL_DEPENDENCIES.md`: DBMS normalization proof.

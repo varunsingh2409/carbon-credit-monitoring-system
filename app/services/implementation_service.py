@@ -211,6 +211,19 @@ ARTIFACT_BLUEPRINTS: tuple[ImplementationArtifactBlueprint, ...] = (
         used_in_live_app=True,
     ),
     ImplementationArtifactBlueprint(
+        artifact_id="formal-schema-constraints",
+        relative_path="scripts/formal_schema_constraints.sql",
+        title="Formal schema constraints and indexes SQL",
+        description=(
+            "Idempotent PostgreSQL script that applies the explicit domain checks, "
+            "format checks, workflow consistency checks, and supporting indexes used "
+            "for DBMS evaluation."
+        ),
+        category="DBMS Core",
+        subject_focus="DBMS",
+        used_in_live_app=True,
+    ),
+    ImplementationArtifactBlueprint(
         artifact_id="er-diagram",
         relative_path="deliverables/SOIL_CARBON_ER_DIAGRAM.md",
         title="Soil carbon ER diagram",
@@ -702,9 +715,9 @@ def build_implementation_summary(db: Session) -> AdminImplementationSummaryRespo
         ],
         dbms_highlights=[
             "The schema is normalized across users, farmers, farms, seasons, measurements, carbon records, and verification history.",
-            "Check constraints protect season status, measurement depth, farm area, and verification states.",
+            "Formal check constraints protect identity format, non-empty labels, numeric domains, coordinates, carbon snapshots, and verification states.",
             "Unique constraints prevent duplicate season-level sequestration rows and duplicate measurement imports.",
-            "Indexes support fast filtering by role, season status, measurement date, and sequestration status.",
+            "Composite indexes support role activity checks, farm status filtering, season-date measurement lookup, and verification timelines.",
             "Row previews, exact constraint definitions, and live query results are available directly inside the website.",
         ],
         database_entities=database_entities,

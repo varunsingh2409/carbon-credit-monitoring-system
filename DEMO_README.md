@@ -128,7 +128,8 @@ One-line answer:
 - PostgreSQL stores all persistent records
 - the schema is relational and normalized to a practical 3NF shape, with BCNF-style determinants where suitable
 - measurements, nutrients, seasons, sequestration, and verification are stored in connected tables
-- constraints and indexes protect data quality and queryability
+- formal constraints protect data quality, domain validity, coordinates, carbon snapshots, and verifier decisions
+- indexes protect queryability for role filters, season lookups, measurement timelines, and verification history
 - the DBMS query lab shows real tables, row samples, constraints, and indexes in the app
 - the Normalization Atlas shows why `soil_measurement`, `measurement_result`, and `nutrient` are split instead of stored as one wide table
 - database population is verified by comparing ThingSpeak imported counts with `soil_measurement` and `measurement_result` row counts
@@ -161,6 +162,7 @@ Faculty deliverable files:
 
 - `DBMS_EVALUATION_RUBRIC_README.md`
 - `scripts/bootstrap_db.py`
+- `scripts/formal_schema_constraints.sql`
 - `scripts/seed_demo.sql`
 - `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
 - `deliverables/CNDC_OSI_MODEL_MAPPING.md`
@@ -176,6 +178,7 @@ Reset demo data:
 ```powershell
 $env:PGPASSWORD='Masterbeast'
 & 'C:\Program Files\PostgreSQL\16\bin\psql.exe' -h localhost -U carbon_app_user -d carbon_credit_db -f '.\scripts\seed_demo.sql'
+& 'C:\Program Files\PostgreSQL\16\bin\psql.exe' -h localhost -U carbon_app_user -d carbon_credit_db -f '.\scripts\formal_schema_constraints.sql'
 ```
 
 Start backend:

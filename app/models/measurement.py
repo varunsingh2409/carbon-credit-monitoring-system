@@ -25,6 +25,19 @@ if TYPE_CHECKING:
 
 class Nutrient(Base):
     __tablename__ = "nutrient"
+    __table_args__ = (
+        CheckConstraint(
+            "length(trim(nutrient_name)) > 0",
+            name="ck_nutrient_name_non_empty",
+        ),
+        CheckConstraint("length(trim(unit)) > 0", name="ck_nutrient_unit_non_empty"),
+        CheckConstraint(
+            "(optimal_range_min IS NULL AND optimal_range_max IS NULL) "
+            "OR (optimal_range_min IS NOT NULL AND optimal_range_max IS NOT NULL "
+            "AND optimal_range_min <= optimal_range_max)",
+            name="ck_nutrient_optimal_range_order",
+        ),
+    )
 
     nutrient_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     nutrient_name: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
@@ -50,6 +63,18 @@ class SoilMeasurement(Base):
     __tablename__ = "soil_measurement"
     __table_args__ = (
         CheckConstraint("depth_cm > 0", name="ck_soil_measurement_depth_positive"),
+        CheckConstraint(
+            "latitude IS NULL OR (latitude BETWEEN -90 AND 90)",
+            name="ck_soil_measurement_latitude_range",
+        ),
+        CheckConstraint(
+            "longitude IS NULL OR (longitude BETWEEN -180 AND 180)",
+            name="ck_soil_measurement_longitude_range",
+        ),
+        CheckConstraint(
+            "sensor_id IS NULL OR length(trim(sensor_id)) > 0",
+            name="ck_soil_measurement_sensor_id_non_empty",
+        ),
         UniqueConstraint(
             "farm_id",
             "season_id",
@@ -59,6 +84,7 @@ class SoilMeasurement(Base):
         ),
         Index("idx_soil_measurement_farm_season", "farm_id", "season_id"),
         Index("idx_soil_measurement_date", "measurement_date"),
+        Index("idx_soil_measurement_season_date", "season_id", "measurement_date"),
     )
 
     measurement_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
@@ -111,6 +137,10 @@ class SoilMeasurement(Base):
 class MeasurementResult(Base):
     __tablename__ = "measurement_result"
     __table_args__ = (
+        CheckConstraint(
+            "measured_value >= 0",
+            name="ck_measurement_result_value_non_negative",
+        ),
         Index("idx_measurement_result_nutrient_id", "nutrient_id"),
     )
 

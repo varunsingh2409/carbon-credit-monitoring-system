@@ -5,6 +5,7 @@ import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SEED_SQL_PATH = PROJECT_ROOT / "scripts" / "seed_demo.sql"
+FORMAL_CONSTRAINTS_SQL_PATH = PROJECT_ROOT / "scripts" / "formal_schema_constraints.sql"
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -23,6 +24,10 @@ def _load_seed_sql() -> str:
     return "\n".join(lines).strip()
 
 
+def _load_formal_constraints_sql() -> str:
+    return FORMAL_CONSTRAINTS_SQL_PATH.read_text(encoding="utf-8").strip()
+
+
 def main() -> None:
     # The repository currently has models and Alembic config, but no checked-in
     # migration files. Create the schema first, then seed demo data idempotently.
@@ -35,6 +40,7 @@ def main() -> None:
         raw_connection.autocommit = True
         with raw_connection.cursor() as cursor:
             cursor.execute(seed_sql)
+            cursor.execute(_load_formal_constraints_sql())
     finally:
         raw_connection.close()
 

@@ -138,8 +138,10 @@ The project also supports DBMS quality through:
 - primary keys on all major tables
 - foreign keys between users, farmers, farms, seasons, measurements, carbon records, and verification records
 - unique constraints for user identity, nutrients, duplicate measurement imports, one sequestration per season, and one verification per sequestration
-- check constraints for valid user roles, season status, measurement depth, farm area, carbon status, and verification status
-- indexes for common lookup fields such as user role, username, season status, farm-season measurements, measurement date, carbon status, and verifier id
+- formal check constraints for valid user roles, username and email format, non-empty names and labels, season dates and status, measurement depth, coordinate ranges, nutrient values, farm area, carbon snapshot consistency, and verification status-credit consistency
+- indexes for common lookup fields such as username, role, active role filters, season status, farm-season status, farm-season measurements, season-date measurements, carbon status queues, and verifier decision history
+
+The project also includes `scripts/formal_schema_constraints.sql`, an idempotent PostgreSQL script that applies these formal constraints and supporting indexes to an existing local database.
 
 ## 9. Viva-Ready Summary
 

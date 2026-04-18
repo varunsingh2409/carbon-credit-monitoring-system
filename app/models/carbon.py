@@ -22,8 +22,25 @@ class CarbonSequestration(Base):
             "status IN ('pending', 'verified', 'rejected')",
             name="ck_carbon_sequestration_status",
         ),
+        CheckConstraint(
+            "baseline_carbon >= 0",
+            name="ck_carbon_sequestration_baseline_non_negative",
+        ),
+        CheckConstraint(
+            "current_carbon >= 0",
+            name="ck_carbon_sequestration_current_non_negative",
+        ),
+        CheckConstraint(
+            "estimated_carbon_credit >= 0",
+            name="ck_carbon_sequestration_credit_non_negative",
+        ),
+        CheckConstraint(
+            "net_carbon_increase = current_carbon - baseline_carbon",
+            name="ck_carbon_sequestration_net_matches_snapshot",
+        ),
         Index("idx_carbon_sequestration_status", "status"),
         Index("idx_carbon_sequestration_farm_id", "farm_id"),
+        Index("idx_carbon_sequestration_status_date", "status", "calculation_date"),
     )
 
     sequestration_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
@@ -88,7 +105,27 @@ class CarbonVerification(Base):
             "verification_status IN ('approved', 'rejected')",
             name="ck_carbon_verification_status",
         ),
+        CheckConstraint(
+            "verifier_comments IS NOT NULL AND length(trim(verifier_comments)) > 0",
+            name="ck_carbon_verification_comments_non_empty",
+        ),
+        CheckConstraint(
+            "("
+            "verification_status = 'approved' "
+            "AND approved_carbon_credit IS NOT NULL "
+            "AND approved_carbon_credit >= 0"
+            ") OR ("
+            "verification_status = 'rejected' "
+            "AND approved_carbon_credit IS NULL"
+            ")",
+            name="ck_carbon_verification_credit_matches_status",
+        ),
         Index("idx_carbon_verification_verifier_id", "verifier_id"),
+        Index(
+            "idx_carbon_verification_status_date",
+            "verification_status",
+            "verification_date",
+        ),
     )
 
     verification_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
@@ -107,7 +144,7 @@ class CarbonVerification(Base):
         server_default=func.current_timestamp(),
     )
     verification_status: Mapped[str] = mapped_column(String(20), nullable=False)
-    verifier_comments: Mapped[str | None] = mapped_column(nullable=True)
+    verifier_comments: Mapped[str] = mapped_column(nullable=False)
     approved_carbon_credit: Mapped[Decimal | None] = mapped_column(Numeric(10, 2), nullable=True)
 
     sequestration: Mapped[CarbonSequestration] = relationship(

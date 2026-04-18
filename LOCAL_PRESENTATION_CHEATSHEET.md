@@ -46,6 +46,11 @@ $env:PGPASSWORD='Masterbeast'
   -U carbon_app_user `
   -d carbon_credit_db `
   -f 'C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\scripts\seed_demo.sql'
+& 'C:\Program Files\PostgreSQL\16\bin\psql.exe' `
+  -h localhost `
+  -U carbon_app_user `
+  -d carbon_credit_db `
+  -f 'C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\scripts\formal_schema_constraints.sql'
 ```
 
 ## 6. Start Backend
@@ -134,7 +139,7 @@ CNDC is shown through ThingSpeak communication, FastAPI REST APIs, JSON exchange
 
 ### DBMS
 
-DBMS is shown through PostgreSQL tables, relationships, stored measurements, carbon records, verification history, and the queryable table explorer with constraints.
+DBMS is shown through PostgreSQL tables, relationships, stored measurements, carbon records, verification history, and the queryable table explorer with formal constraints and indexes.
 
 ### Optional Supporting Analytics
 
@@ -173,8 +178,9 @@ All dashboards reflect the completed workflow end to end.
 4. carbon and verification records are persisted
 5. admin counts come from live database queries
 6. the Normalization Atlas explains the measurement decomposition
-7. the website shows queries, row samples, constraints, and indexes
+7. the website shows queries, row samples, formal constraints, and indexes
 8. database population is verified through ThingSpeak imported counts and DBMS table row counts
+9. constraints cover identity format, non-empty labels, coordinates, positive values, and verification consistency
 
 Rubric order:
 
@@ -225,6 +231,10 @@ Because the project demonstrates external communication, REST APIs, JSON exchang
 ### Why DBMS?
 
 Because the project demonstrates normalized PostgreSQL tables, relationships, persistent records, workflow history, and a queryable DBMS explorer with constraints and rows.
+
+### What constraints should I mention?
+
+Mention primary keys, foreign keys, unique constraints, check constraints, and indexes. The formal checks validate roles, usernames, emails, non-empty names, positive areas/depths, coordinate ranges, nutrient values, carbon snapshot consistency, and approved/rejected verification credit rules.
 
 ### How do we prove data population?
 

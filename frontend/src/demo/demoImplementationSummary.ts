@@ -35,9 +35,9 @@ export const demoImplementationSummary: AdminImplementationSummary = {
   ],
   dbms_highlights: [
     "The schema is normalized across users, farmers, farms, seasons, measurements, carbon records, and verification history.",
-    "Check constraints protect season status, measurement depth, farm area, and verification states.",
+    "Formal check constraints protect identity format, non-empty labels, numeric domains, coordinates, carbon snapshots, and verification states.",
     "Unique constraints prevent duplicate season-level sequestration rows and duplicate measurement imports.",
-    "Indexes support fast filtering by role, season status, measurement date, and sequestration status.",
+    "Composite indexes support role activity checks, farm status filtering, season-date measurement lookup, and verification timelines.",
     "Row previews, exact constraint definitions, and live query results are available directly inside the website."
   ],
   database_entities: [
@@ -47,7 +47,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
     { label: "Seasons", table_name: "season", count: 3 },
     { label: "Nutrients", table_name: "nutrient", count: 6 },
     { label: "Soil Measurements", table_name: "soil_measurement", count: 5 },
-    { label: "Measurement Results", table_name: "measurement_result", count: 15 },
+    { label: "Measurement Results", table_name: "measurement_result", count: 25 },
     { label: "Carbon Sequestration", table_name: "carbon_sequestration", count: 2 },
     { label: "Carbon Verification", table_name: "carbon_verification", count: 1 }
   ],
@@ -303,6 +303,17 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       used_in_live_app: true
     },
     {
+      artifact_id: "formal-schema-constraints",
+      title: "Formal schema constraints and indexes SQL",
+      description:
+        "Idempotent PostgreSQL script that applies explicit domain checks, format checks, workflow consistency checks, and supporting indexes used for DBMS evaluation.",
+      category: "DBMS Core",
+      subject_focus: "DBMS",
+      file_name: "formal_schema_constraints.sql",
+      href: demoArtifactHref("formal_schema_constraints.sql"),
+      used_in_live_app: true
+    },
+    {
       artifact_id: "er-diagram",
       title: "Soil carbon ER diagram",
       description:
@@ -438,11 +449,15 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       constraints: [
         { name: "pk_users", kind: "PRIMARY KEY", definition: "PRIMARY KEY (user_id)" },
         { name: "ck_users_role", kind: "CHECK", definition: "role IN ('farmer', 'verifier', 'admin', 'sensor')" },
+        { name: "ck_users_username_format", kind: "CHECK", definition: "username matches allowed 3-50 character account format" },
+        { name: "ck_users_email_format", kind: "CHECK", definition: "email matches a basic address pattern" },
+        { name: "ck_users_password_hash_non_empty", kind: "CHECK", definition: "length(trim(password_hash)) >= 20" },
         { name: "users_username_key", kind: "UNIQUE", definition: "UNIQUE (username)" },
         { name: "users_email_key", kind: "UNIQUE", definition: "UNIQUE (email)" }
       ],
       indexes: [
         { name: "idx_users_role", columns: ["role"], unique: false },
+        { name: "idx_users_role_active", columns: ["role", "is_active"], unique: false },
         { name: "idx_users_username", columns: ["username"], unique: false }
       ],
       preview_rows: [
@@ -469,6 +484,9 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       ],
       constraints: [
         { name: "pk_farmer", kind: "PRIMARY KEY", definition: "PRIMARY KEY (farmer_id)" },
+        { name: "ck_farmer_first_name_non_empty", kind: "CHECK", definition: "length(trim(first_name)) > 0" },
+        { name: "ck_farmer_last_name_non_empty", kind: "CHECK", definition: "length(trim(last_name)) > 0" },
+        { name: "ck_farmer_phone_format", kind: "CHECK", definition: "phone is null or matches a phone-safe character pattern" },
         { name: "farmer_user_id_key", kind: "UNIQUE", definition: "UNIQUE (user_id)" },
         { name: "farmer_user_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE" }
       ],
@@ -495,10 +513,17 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       ],
       constraints: [
         { name: "pk_farm", kind: "PRIMARY KEY", definition: "PRIMARY KEY (farm_id)" },
+        { name: "ck_farm_name_non_empty", kind: "CHECK", definition: "length(trim(farm_name)) > 0" },
+        { name: "ck_farm_location_non_empty", kind: "CHECK", definition: "length(trim(location)) > 0" },
         { name: "ck_farm_total_area_hectares_positive", kind: "CHECK", definition: "total_area_hectares > 0" },
+        { name: "ck_farm_baseline_carbon_non_negative", kind: "CHECK", definition: "baseline_carbon >= 0" },
+        { name: "ck_farm_soil_type_non_empty", kind: "CHECK", definition: "soil_type IS NULL OR length(trim(soil_type)) > 0" },
         { name: "farm_farmer_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (farmer_id) REFERENCES farmer (farmer_id) ON DELETE CASCADE" }
       ],
-      indexes: [{ name: "idx_farm_farmer_id", columns: ["farmer_id"], unique: false }],
+      indexes: [
+        { name: "idx_farm_farmer_id", columns: ["farmer_id"], unique: false },
+        { name: "idx_farm_location", columns: ["location"], unique: false }
+      ],
       preview_rows: [
         { farm_id: 101, farmer_id: 1, farm_name: "Green Valley Farm", location: "Ludhiana, Punjab", total_area_hectares: 24.5, baseline_carbon: 142.4 }
       ]
@@ -521,12 +546,15 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       ],
       constraints: [
         { name: "pk_season", kind: "PRIMARY KEY", definition: "PRIMARY KEY (season_id)" },
+        { name: "ck_season_name_non_empty", kind: "CHECK", definition: "length(trim(season_name)) > 0" },
         { name: "chk_season_dates", kind: "CHECK", definition: "end_date > start_date" },
         { name: "ck_season_status", kind: "CHECK", definition: "status IN ('active', 'completed', 'verified')" },
+        { name: "ck_season_crop_type_non_empty", kind: "CHECK", definition: "crop_type IS NULL OR length(trim(crop_type)) > 0" },
         { name: "season_farm_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (farm_id) REFERENCES farm (farm_id) ON DELETE CASCADE" }
       ],
       indexes: [
         { name: "idx_season_farm_id", columns: ["farm_id"], unique: false },
+        { name: "idx_season_farm_status", columns: ["farm_id", "status"], unique: false },
         { name: "idx_season_status", columns: ["status"], unique: false }
       ],
       preview_rows: [
@@ -551,6 +579,9 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       ],
       constraints: [
         { name: "pk_nutrient", kind: "PRIMARY KEY", definition: "PRIMARY KEY (nutrient_id)" },
+        { name: "ck_nutrient_name_non_empty", kind: "CHECK", definition: "length(trim(nutrient_name)) > 0" },
+        { name: "ck_nutrient_unit_non_empty", kind: "CHECK", definition: "length(trim(unit)) > 0" },
+        { name: "ck_nutrient_optimal_range_order", kind: "CHECK", definition: "optimal range is either fully null or min <= max" },
         { name: "nutrient_nutrient_name_key", kind: "UNIQUE", definition: "UNIQUE (nutrient_name)" }
       ],
       indexes: [],
@@ -583,13 +614,17 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       constraints: [
         { name: "pk_soil_measurement", kind: "PRIMARY KEY", definition: "PRIMARY KEY (measurement_id)" },
         { name: "ck_soil_measurement_depth_positive", kind: "CHECK", definition: "depth_cm > 0" },
+        { name: "ck_soil_measurement_latitude_range", kind: "CHECK", definition: "latitude IS NULL OR latitude BETWEEN -90 AND 90" },
+        { name: "ck_soil_measurement_longitude_range", kind: "CHECK", definition: "longitude IS NULL OR longitude BETWEEN -180 AND 180" },
+        { name: "ck_soil_measurement_sensor_id_non_empty", kind: "CHECK", definition: "sensor_id IS NULL OR length(trim(sensor_id)) > 0" },
         { name: "uq_soil_measurement", kind: "UNIQUE", definition: "UNIQUE (farm_id, season_id, measurement_date, depth_cm)" },
         { name: "soil_measurement_farm_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (farm_id) REFERENCES farm (farm_id) ON DELETE CASCADE" },
         { name: "soil_measurement_season_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (season_id) REFERENCES season (season_id) ON DELETE CASCADE" }
       ],
       indexes: [
         { name: "idx_soil_measurement_date", columns: ["measurement_date"], unique: false },
-        { name: "idx_soil_measurement_farm_season", columns: ["farm_id", "season_id"], unique: false }
+        { name: "idx_soil_measurement_farm_season", columns: ["farm_id", "season_id"], unique: false },
+        { name: "idx_soil_measurement_season_date", columns: ["season_id", "measurement_date"], unique: false }
       ],
       preview_rows: [
         { measurement_id: 30203, farm_id: 101, season_id: 302, measurement_date: "2026-04-02T09:00:00.000Z", depth_cm: 20, sensor_id: "TS-GREEN-01" },
@@ -613,6 +648,7 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       ],
       constraints: [
         { name: "pk_measurement_result", kind: "PRIMARY KEY", definition: "PRIMARY KEY (measurement_id, nutrient_id)" },
+        { name: "ck_measurement_result_value_non_negative", kind: "CHECK", definition: "measured_value >= 0" },
         { name: "measurement_result_measurement_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (measurement_id) REFERENCES soil_measurement (measurement_id) ON DELETE CASCADE" },
         { name: "measurement_result_nutrient_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (nutrient_id) REFERENCES nutrient (nutrient_id) ON DELETE RESTRICT" }
       ],
@@ -649,13 +685,18 @@ export const demoImplementationSummary: AdminImplementationSummary = {
       constraints: [
         { name: "pk_carbon_sequestration", kind: "PRIMARY KEY", definition: "PRIMARY KEY (sequestration_id)" },
         { name: "ck_carbon_sequestration_status", kind: "CHECK", definition: "status IN ('pending', 'verified', 'rejected')" },
+        { name: "ck_carbon_sequestration_baseline_non_negative", kind: "CHECK", definition: "baseline_carbon >= 0" },
+        { name: "ck_carbon_sequestration_current_non_negative", kind: "CHECK", definition: "current_carbon >= 0" },
+        { name: "ck_carbon_sequestration_credit_non_negative", kind: "CHECK", definition: "estimated_carbon_credit >= 0" },
+        { name: "ck_carbon_sequestration_net_matches_snapshot", kind: "CHECK", definition: "net_carbon_increase = current_carbon - baseline_carbon" },
         { name: "carbon_sequestration_season_id_key", kind: "UNIQUE", definition: "UNIQUE (season_id)" },
         { name: "carbon_sequestration_farm_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (farm_id) REFERENCES farm (farm_id) ON DELETE CASCADE" },
         { name: "carbon_sequestration_season_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (season_id) REFERENCES season (season_id) ON DELETE CASCADE" }
       ],
       indexes: [
         { name: "idx_carbon_sequestration_farm_id", columns: ["farm_id"], unique: false },
-        { name: "idx_carbon_sequestration_status", columns: ["status"], unique: false }
+        { name: "idx_carbon_sequestration_status", columns: ["status"], unique: false },
+        { name: "idx_carbon_sequestration_status_date", columns: ["status", "calculation_date"], unique: false }
       ],
       preview_rows: [
         { sequestration_id: 9002, farm_id: 101, season_id: 301, estimated_carbon_credit: 1.6, status: "verified", calculation_date: "2026-01-18T09:15:00.000Z" },
@@ -675,17 +716,22 @@ export const demoImplementationSummary: AdminImplementationSummary = {
         { name: "verifier_id", data_type: "INTEGER", nullable: true, is_primary_key: false, foreign_key: "users.user_id", default_value: null },
         { name: "verification_date", data_type: "DATETIME", nullable: false, is_primary_key: false, foreign_key: null, default_value: "CURRENT_TIMESTAMP" },
         { name: "verification_status", data_type: "VARCHAR(20)", nullable: false, is_primary_key: false, foreign_key: null, default_value: null },
-        { name: "verifier_comments", data_type: "TEXT", nullable: true, is_primary_key: false, foreign_key: null, default_value: null },
+        { name: "verifier_comments", data_type: "TEXT", nullable: false, is_primary_key: false, foreign_key: null, default_value: null },
         { name: "approved_carbon_credit", data_type: "NUMERIC(10, 2)", nullable: true, is_primary_key: false, foreign_key: null, default_value: null }
       ],
       constraints: [
         { name: "pk_carbon_verification", kind: "PRIMARY KEY", definition: "PRIMARY KEY (verification_id)" },
         { name: "ck_carbon_verification_status", kind: "CHECK", definition: "verification_status IN ('approved', 'rejected')" },
+        { name: "ck_carbon_verification_comments_non_empty", kind: "CHECK", definition: "verifier_comments IS NOT NULL AND length(trim(verifier_comments)) > 0" },
+        { name: "ck_carbon_verification_credit_matches_status", kind: "CHECK", definition: "approved rows require non-negative approved credit; rejected rows require null approved credit" },
         { name: "carbon_verification_sequestration_id_key", kind: "UNIQUE", definition: "UNIQUE (sequestration_id)" },
         { name: "carbon_verification_sequestration_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (sequestration_id) REFERENCES carbon_sequestration (sequestration_id) ON DELETE CASCADE" },
         { name: "carbon_verification_verifier_id_fkey", kind: "FOREIGN KEY", definition: "FOREIGN KEY (verifier_id) REFERENCES users (user_id) ON DELETE SET NULL" }
       ],
-      indexes: [{ name: "idx_carbon_verification_verifier_id", columns: ["verifier_id"], unique: false }],
+      indexes: [
+        { name: "idx_carbon_verification_verifier_id", columns: ["verifier_id"], unique: false },
+        { name: "idx_carbon_verification_status_date", columns: ["verification_status", "verification_date"], unique: false }
+      ],
       preview_rows: [
         { verification_id: 7001, sequestration_id: 9002, verifier_id: 2, verification_status: "approved", approved_carbon_credit: 1.6, verification_date: "2026-01-19T11:00:00.000Z" }
       ]

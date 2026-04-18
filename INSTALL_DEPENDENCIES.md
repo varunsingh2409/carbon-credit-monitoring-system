@@ -71,6 +71,7 @@ Faculty deliverable files:
 
 - `DBMS_EVALUATION_RUBRIC_README.md`
 - `scripts/bootstrap_db.py`
+- `scripts/formal_schema_constraints.sql`
 - `scripts/seed_demo.sql`
 - `deliverables/CNDC_SECURITY_AND_AUTHENTICITY_NOTE.md`
 - `deliverables/CNDC_OSI_MODEL_MAPPING.md`
@@ -111,6 +112,11 @@ $env:PGPASSWORD='Masterbeast'
   -U carbon_app_user `
   -d carbon_credit_db `
   -f '.\scripts\seed_demo.sql'
+& 'C:\Program Files\PostgreSQL\16\bin\psql.exe' `
+  -h localhost `
+  -U carbon_app_user `
+  -d carbon_credit_db `
+  -f '.\scripts\formal_schema_constraints.sql'
 ```
 
 This resets:
@@ -119,6 +125,7 @@ This resets:
 - farm and season data
 - seeded measurements
 - historical verification state
+- formal DBMS constraints and supporting indexes on existing databases
 
 ## 5. ThingSpeak Demo Sender
 
@@ -202,6 +209,7 @@ Reset terminal:
 cd C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend
 $env:PGPASSWORD='Masterbeast'
 & 'C:\Program Files\PostgreSQL\16\bin\psql.exe' -h localhost -U carbon_app_user -d carbon_credit_db -f '.\scripts\seed_demo.sql'
+& 'C:\Program Files\PostgreSQL\16\bin\psql.exe' -h localhost -U carbon_app_user -d carbon_credit_db -f '.\scripts\formal_schema_constraints.sql'
 ```
 
 ThingSpeak sender terminal:

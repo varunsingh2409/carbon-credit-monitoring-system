@@ -15,6 +15,7 @@ Important precision:
 
 - The schema is created from SQLAlchemy models and the bootstrap path, not from a separate handwritten schema dump.
 - The real seed file used for the local app demo is `scripts/seed_demo.sql`.
+- The formal schema-hardening script is `scripts/formal_schema_constraints.sql`.
 - The database design should be explained as a practical 3NF design, with several BCNF-style determinants and one intentional audit snapshot in `carbon_sequestration`.
 - The public GitHub Pages site is useful for visual walkthroughs, but the local app is the correct proof for live PostgreSQL, API, and ThingSpeak behavior.
 
@@ -68,12 +69,12 @@ sequestration_id -> verification_id, verifier_id, verification_status
 What to show:
 
 - In the app: DBMS Query Lab table selector, selected table schema, constraint list, and index list.
-- In the files: `app/models/`, `scripts/bootstrap_db.py`, and `scripts/seed_demo.sql`.
+- In the files: `app/models/`, `scripts/bootstrap_db.py`, `scripts/formal_schema_constraints.sql`, and `scripts/seed_demo.sql`.
 - In backend docs if asked: `http://127.0.0.1:8000/docs`.
 
 Best explanation:
 
-> The database is not a flat spreadsheet. It uses typed relational tables with primary keys, foreign keys, unique constraints, check constraints, and indexes. These constraints protect the workflow from invalid roles, invalid status values, duplicate measurement imports, invalid depth values, duplicate carbon records for the same season, and duplicate verification decisions for the same carbon record.
+> The database is not a flat spreadsheet. It uses typed relational tables with primary keys, foreign keys, unique constraints, formal check constraints, and indexes. These constraints protect the workflow from invalid roles, invalid identity formats, empty labels, invalid coordinates, invalid numeric ranges, duplicate measurement imports, inconsistent carbon snapshots, duplicate carbon records for the same season, and inconsistent verification decisions.
 
 Main relationship chain:
 
@@ -87,25 +88,39 @@ Important constraints:
 
 - `users.username` and `users.email` are unique.
 - `users.role` is checked against `farmer`, `verifier`, `admin`, and `sensor`.
+- `users.username`, `users.email`, and `users.password_hash` have format or non-empty checks.
 - `farmer.user_id` is unique for one farmer profile per linked user.
+- `farmer.first_name`, `farmer.last_name`, and optional `phone` are checked for valid values.
+- `farm.farm_name`, `farm.location`, `soil_type`, `total_area_hectares`, and `baseline_carbon` have domain checks.
 - `farm.total_area_hectares > 0` prevents invalid land area.
 - `season.end_date > season.start_date` prevents impossible seasons.
 - `season.status` is checked against `active`, `completed`, and `verified`.
+- `season.season_name` and optional `crop_type` cannot be blank.
 - `nutrient.nutrient_name` is unique.
+- `nutrient.unit` cannot be blank, and optimal ranges must be either fully absent or ordered as minimum <= maximum.
 - `soil_measurement.depth_cm > 0` prevents invalid sampling depth.
+- `soil_measurement.latitude` and `soil_measurement.longitude` are checked against valid coordinate ranges.
 - `soil_measurement` has a uniqueness rule on `(farm_id, season_id, measurement_date, depth_cm)` to reduce duplicate imports.
 - `measurement_result` uses `(measurement_id, nutrient_id)` as the composite primary key.
+- `measurement_result.measured_value >= 0` prevents invalid nutrient readings.
 - `carbon_sequestration.season_id` is unique so one season has one current sequestration record.
+- `carbon_sequestration` enforces non-negative baseline/current/credit values and checks that `net_carbon_increase = current_carbon - baseline_carbon`.
 - `carbon_verification.sequestration_id` is unique so one sequestration record has one current verification decision.
 - Carbon and verification status values are protected through check constraints.
+- `carbon_verification` enforces non-empty verifier comments and makes approved/rejected credit values consistent with the decision.
 
 Indexes to mention:
 
 - `idx_users_username` and `idx_users_role` support login and role filtering.
+- `idx_users_role_active` supports active account checks by role.
 - `idx_season_status` supports dashboard filtering.
+- `idx_season_farm_status` supports farm-specific season status lookups.
 - `idx_soil_measurement_farm_season` and `idx_soil_measurement_date` support measurement lookups.
+- `idx_soil_measurement_season_date` supports season timeline and latest-measurement queries.
 - `idx_carbon_sequestration_status` supports pending/verified workflow filtering.
+- `idx_carbon_sequestration_status_date` supports status queues ordered by calculation time.
 - `idx_carbon_verification_verifier_id` supports verifier history lookup.
+- `idx_carbon_verification_status_date` supports approved/rejected history timelines.
 
 ## 3. Data Population - 1 Mark
 
@@ -265,6 +280,7 @@ What to show:
 
 - `app/models/` for schema models.
 - `scripts/bootstrap_db.py` for database bootstrap support.
+- `scripts/formal_schema_constraints.sql` for idempotent formal constraints and indexes on existing databases.
 - `scripts/seed_demo.sql` for the actual demo seed.
 - `app/services/thingspeak_service.py` for external import.
 - `app/services/carbon_calculator.py` for carbon calculation.

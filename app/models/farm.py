@@ -19,8 +19,16 @@ if TYPE_CHECKING:
 class Farm(Base):
     __tablename__ = "farm"
     __table_args__ = (
+        CheckConstraint("length(trim(farm_name)) > 0", name="ck_farm_name_non_empty"),
+        CheckConstraint("length(trim(location)) > 0", name="ck_farm_location_non_empty"),
         CheckConstraint("total_area_hectares > 0", name="ck_farm_total_area_hectares_positive"),
+        CheckConstraint("baseline_carbon >= 0", name="ck_farm_baseline_carbon_non_negative"),
+        CheckConstraint(
+            "soil_type IS NULL OR length(trim(soil_type)) > 0",
+            name="ck_farm_soil_type_non_empty",
+        ),
         Index("idx_farm_farmer_id", "farmer_id"),
+        Index("idx_farm_location", "location"),
     )
 
     farm_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
