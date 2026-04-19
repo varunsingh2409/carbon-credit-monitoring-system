@@ -25,88 +25,141 @@ The public GitHub Pages site is only a limited visual demo and should be treated
 
 ## 2. Local Demo Flow
 
-1. reset the demo database
-2. start the backend
-3. start the frontend
-4. open farmer, verifier, and admin sessions
-5. send the ThingSpeak demo batch
-6. import ThingSpeak data from the admin panel
-7. show the imported measurement evidence
-8. trigger carbon calculation
-9. approve the record as verifier
-10. refresh all roles and show the final verified state
+This is the main presentation flow. The local app is the proof version because it uses the real backend, real PostgreSQL database, and live ThingSpeak import.
+
+| Step | Do this | This means | Say this |
+| --- | --- | --- | --- |
+| 1 | Reset the demo database with `seed_demo.sql` and `formal_schema_constraints.sql`. | The database starts from a clean, known state with formal constraints and indexes applied. | "The demo begins from a controlled PostgreSQL state, so the records shown later are explainable." |
+| 2 | Start FastAPI on `http://127.0.0.1:8000`. | The backend service is live and ready to accept API requests. | "FastAPI is the server layer that validates requests, integrates ThingSpeak, and writes to PostgreSQL." |
+| 3 | Start the frontend on `http://localhost:5173`. | The browser UI is separate from the backend and communicates through APIs. | "The frontend is not static during the local demo; it talks to the backend." |
+| 4 | Open `/health` and `/docs` if a backend proof is needed. | The API surface is visible and testable. | "`/health` proves the backend is running, and `/docs` exposes the available REST endpoints." |
+| 5 | Open the landing page and scroll to implementation evidence. | The app contains its own CNDC and DBMS proof surface. | "The project evidence is inside the website: network trace, tables, constraints, indexes, and artifacts." |
+| 6 | Show farmer dashboard. | Stored farm, season, measurement, and credit data are visible to the field user. | "The farmer view proves that database records become useful user-facing information." |
+| 7 | Show verifier dashboard. | Carbon claims are reviewed before being accepted. | "The verifier is the trust layer that converts a calculated claim into an approved or rejected decision." |
+| 8 | Show admin panel. | Admin controls the live workflow and the implementation proof. | "The admin panel is where ThingSpeak import, database population, calculation, and evidence inspection come together." |
+| 9 | Run `thingspeak_demo_batch.py`. | External sensor-style data is transmitted to ThingSpeak. | "This is the CNDC starting point: data is sent through an external HTTP-based platform." |
+| 10 | Click `Import ThingSpeak Data`. | FastAPI reads the external feed, validates fields, and inserts normalized PostgreSQL rows. | "One ThingSpeak entry becomes one `soil_measurement` row and up to five `measurement_result` rows." |
+| 11 | Show `Last Sync Result`, stored measurement IDs, and DBMS Query Lab. | Database population is proven from the website. | "The app shows imported/skipped counts, stored IDs, and real table rows, so the data path is verifiable." |
+| 12 | Show the Normalization Atlas. | The measurement schema is normalized instead of being one wide repeated table. | "`soil_measurement` stores the event, `measurement_result` stores nutrient values, and `nutrient` stores units and ranges." |
+| 13 | Click `Calculate Credits`. | Stored organic-carbon data becomes a carbon-credit claim. | "The backend calculates `tCO2e` from net carbon increase in `kg/ha`, farm area in `ha`, and the 3.67 conversion factor." |
+| 14 | Approve the claim as verifier. | The decision is stored as workflow history. | "Verifier approval writes into `carbon_verification`, making the final claim auditable." |
+| 15 | Refresh farmer, verifier, and admin views. | Persistence is proven because all roles read the updated state from the same backend and database. | "The final state appears across roles because it is stored in PostgreSQL, not only shown temporarily." |
 
 ## 3. Recommended Presentation Order
 
-### Step 1: Landing page
+### Opening
 
-Show:
+Do:
 
-- hero section
-- implementation evidence explorer
-- CNDC trace
-- DBMS query lab
-- faculty-deliverable evaluation panel
+- open the landing page
+- show the title, role story, and implementation evidence section
 
-Say:
+This means:
 
-- "This platform connects soil-data collection, carbon calculation, and verification into one workflow."
-- "The website presents CNDC and DBMS directly through a visible technical evidence surface."
-
-### Step 2: Farmer dashboard
-
-Show:
-
-- farm and season summary
-- recent measurements
-- carbon results
+- the project is a complete workflow, not only a dashboard
+- the technical proof is visible inside the product
 
 Say:
 
-- "The farmer sees the outcome of the workflow without needing technical backend access."
+> This platform connects soil-data intake, carbon calculation, and verifier approval into one workflow. The same website also exposes CNDC and DBMS evidence, so the implementation can be inspected while the app is running.
 
-### Step 3: Verifier dashboard
+### Role Demonstration
 
-Show:
+Do:
 
-- pending items
-- verification detail screen
+- show farmer dashboard first
+- show verifier dashboard second
+- show admin panel third
 
-Say:
+This means:
 
-- "The verifier is the trust layer. Carbon records are reviewed before they become accepted outcomes."
-
-### Step 4: Admin panel
-
-Show:
-
-- statistics
-- ThingSpeak sync
-- sent-to-ThingSpeak and received-by-backend proof cards
-- database population verification after sync
-- carbon calculation
-- final implementation evidence panel with CNDC trace, DBMS Query Lab, constraints, indexes, and artifact links
+- farmer shows the user-facing result
+- verifier shows governance and trust
+- admin shows control and technical proof
 
 Say:
 
-- "This is the operational control center where both the live workflow and the technical proof are visible."
+> The three roles are intentionally separate. The farmer receives results, the verifier reviews claims, and the admin controls import, calculation, and implementation evidence.
 
-### Step 5: Live workflow
+### CNDC Demonstration
 
-Show:
+Do:
 
-- ThingSpeak sender
-- ThingSpeak import
-- Last Sync Result with imported/skipped counts and stored measurement IDs
-- DBMS Query Lab row counts for `soil_measurement` and `measurement_result`
-- fresh measurement evidence
-- carbon calculation
-- verifier approval
-- final dashboard state
+- show the CNDC trace on the landing page or admin panel
+- run the ThingSpeak sender
+- import ThingSpeak data from admin
+
+This means:
+
+- the system communicates with an external data platform
+- the frontend and backend communicate through REST APIs
+- structured data moves through HTTP and JSON
 
 Say:
 
-- "The system moves from external communication to stored database records and then to verified carbon output."
+> CNDC is demonstrated through ThingSpeak communication, FastAPI REST endpoints, JSON payloads, JWT-protected role routes, and visible request/response evidence inside the app.
+
+### DBMS Demonstration
+
+Do:
+
+- show DBMS Query Lab
+- show the Normalization Atlas
+- show constraints and indexes
+- show row counts after ThingSpeak import
+
+This means:
+
+- PostgreSQL is storing normalized persistent records
+- the schema is protected by primary keys, foreign keys, unique rules, check constraints, and indexes
+- imported data can be verified by actual table rows
+
+Say:
+
+> DBMS is demonstrated through a normalized PostgreSQL schema. A measurement event is stored separately from nutrient values, and nutrient units are stored in the nutrient lookup table. This avoids repeated columns and supports clear functional dependencies.
+
+### Calculation And Verification
+
+Do:
+
+- click `Calculate Credits`
+- open verifier detail
+- show imported measurement evidence
+- approve with comments
+
+This means:
+
+- stored organic-carbon data becomes a `carbon_sequestration` claim
+- the verifier decision becomes a `carbon_verification` record
+
+Say:
+
+> The calculation uses net carbon increase in `kg/ha`, farm area in `ha`, and the 3.67 conversion factor to estimate `tCO2e`. The verifier then approves or rejects that claim, creating a permanent decision history.
+
+### Final Proof
+
+Do:
+
+- refresh farmer dashboard
+- refresh verifier history
+- refresh admin statistics/evidence
+
+This means:
+
+- the final state is persisted and visible across roles
+
+Say:
+
+> The workflow is complete: external ThingSpeak data became database records, the records became a carbon-credit claim, the claim was verified, and all roles now show the updated state.
+
+### Measurement Units To Mention
+
+- Nitrogen, Phosphorus, and Potassium use `ppm`.
+- Moisture uses `%`.
+- Soil depth uses `cm`.
+- Farm area uses `ha`.
+- Organic carbon and carbon snapshots use `kg/ha`.
+- Final carbon credit uses `tCO2e`.
 
 ## 4. CNDC Talking Points
 
@@ -156,7 +209,7 @@ One-line answer:
 
 ## 7. Quick Commands
 
-Faculty deliverable files:
+Evaluation deliverable files:
 
 - `DBMS_EVALUATION_RUBRIC_README.md`
 - `scripts/bootstrap_db.py`
