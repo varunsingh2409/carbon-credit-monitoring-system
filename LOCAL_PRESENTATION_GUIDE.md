@@ -62,7 +62,7 @@ Start frontend:
 
 ```powershell
 cd C:\Users\popul\Downloads\carbon_credit_backend\mnt\data\carbon_credit_backend\frontend
-npm run dev
+npm.cmd run dev
 ```
 
 Open `http://localhost:5173`.

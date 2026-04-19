@@ -1,7 +1,5 @@
 import type { AdminImplementationSummary } from "@/types";
 
-const publishedDemoArtifactBaseUrl = new URL("../implementation-artifacts/", import.meta.url);
-
 const demoArtifactHref = (fileName: string) => {
   if (typeof window === "undefined") {
     return `/implementation-artifacts/${fileName}`;
@@ -11,7 +9,8 @@ const demoArtifactHref = (fileName: string) => {
     return `${window.location.origin}/implementation-artifacts/${fileName}`;
   }
 
-  return new URL(fileName, publishedDemoArtifactBaseUrl).toString();
+  const assetDirectoryUrl = import.meta.url.replace(/[^/]*$/, "");
+  return `${assetDirectoryUrl}../implementation-artifacts/${fileName}`;
 };
 
 export const demoImplementationSummary: AdminImplementationSummary = {
