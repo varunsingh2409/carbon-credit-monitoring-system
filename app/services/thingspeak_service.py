@@ -23,6 +23,9 @@ from app.schemas.measurement import (
 from app.services.measurement_service import MeasurementServiceError, create_measurement
 
 THING_SPEAK_SPECIAL_TARGETS = {"depth_cm", "latitude", "longitude"}
+DUPLICATE_MEASUREMENT_CONFLICT_DETAIL = (
+    "Measurement could not be stored because it conflicts with existing data"
+)
 STANDARD_NUTRIENT_DEFINITIONS: dict[str, dict[str, float | str | None]] = {
     "nitrogen": {"name": "Nitrogen", "unit": "ppm", "min": 20.0, "max": 50.0},
     "phosphorus": {"name": "Phosphorus", "unit": "ppm", "min": 15.0, "max": 30.0},
@@ -190,6 +193,13 @@ def _fetch_thingspeak_feeds(url: str) -> list[dict[str, Any]]:
     return [feed for feed in feeds if isinstance(feed, dict)]
 
 
+def _is_duplicate_measurement_conflict(exc: MeasurementServiceError) -> bool:
+    return (
+        exc.status_code == status.HTTP_409_CONFLICT
+        and exc.detail == DUPLICATE_MEASUREMENT_CONFLICT_DETAIL
+    )
+
+
 def _build_measurement_from_feed(
     request_data: ThingSpeakIngestionRequest,
     feed: dict[str, Any],
@@ -293,11 +303,14 @@ def import_measurements_from_thingspeak(
             result = create_measurement(db, measurement_candidate)
             imported_measurement_ids.append(result["measurement_id"])
         except MeasurementServiceError as exc:
-            if exc.status_code == status.HTTP_409_CONFLICT and request_data.skip_duplicates:
+            if _is_duplicate_measurement_conflict(exc) and request_data.skip_duplicates:
                 skipped_entries.append(
                     ThingSpeakSkippedEntry(
                         entry_id=entry_id,
-                        reason="This ThingSpeak entry was already imported or conflicts with existing measurement data",
+                        reason=(
+                            "This ThingSpeak entry is already stored for the selected "
+                            "farm, season, timestamp, and depth"
+                        ),
                     )
                 )
                 continue
