@@ -70,11 +70,19 @@ function AdminPanel() {
   const [implementationSummary, setImplementationSummary] =
     useState<AdminImplementationSummary | null>(null);
   const [seasonOptions, setSeasonOptions] = useState<SeasonOption[]>([]);
-  const [selectedSeasonId, setSelectedSeasonId] = useState("");
+  const [selectedImportSeasonId, setSelectedImportSeasonId] = useState("");
+  const [selectedCalculationSeasonId, setSelectedCalculationSeasonId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isCalculating, setIsCalculating] = useState(false);
   const [isSyncingThingSpeak, setIsSyncingThingSpeak] = useState(false);
   const [thingSpeakResult, setThingSpeakResult] = useState<ThingSpeakSyncResponse | null>(null);
+
+  const importableSeasons = seasonOptions.filter(
+    (season) => season.status.toLowerCase() === "active"
+  );
+  const calculationSeasons = seasonOptions.filter((season) =>
+    ["active", "completed"].includes(season.status.toLowerCase())
+  );
 
   const loadPanelData = useCallback(async () => {
     const [statisticsResponse, implementationResponse, seasonsResponse] =
@@ -87,12 +95,6 @@ function AdminPanel() {
     setStatistics(statisticsResponse);
     setImplementationSummary(implementationResponse);
     setSeasonOptions(seasonsResponse);
-
-    if (seasonsResponse.length > 0) {
-      setSelectedSeasonId((currentSeasonId) =>
-        currentSeasonId || String(seasonsResponse[0].season_id)
-      );
-    }
   }, []);
 
   useEffect(() => {
@@ -119,8 +121,34 @@ function AdminPanel() {
     };
   }, [loadPanelData]);
 
+  useEffect(() => {
+    setSelectedImportSeasonId((currentSeasonId) => {
+      if (
+        currentSeasonId &&
+        importableSeasons.some((season) => String(season.season_id) === currentSeasonId)
+      ) {
+        return currentSeasonId;
+      }
+
+      return importableSeasons.length > 0 ? String(importableSeasons[0].season_id) : "";
+    });
+  }, [importableSeasons]);
+
+  useEffect(() => {
+    setSelectedCalculationSeasonId((currentSeasonId) => {
+      if (
+        currentSeasonId &&
+        calculationSeasons.some((season) => String(season.season_id) === currentSeasonId)
+      ) {
+        return currentSeasonId;
+      }
+
+      return calculationSeasons.length > 0 ? String(calculationSeasons[0].season_id) : "";
+    });
+  }, [calculationSeasons]);
+
   const handleCalculation = async () => {
-    if (!selectedSeasonId) {
+    if (!selectedCalculationSeasonId) {
       toast.error("Please select a season before calculating");
       return;
     }
@@ -128,7 +156,7 @@ function AdminPanel() {
     try {
       setIsCalculating(true);
       const response = await adminApi.triggerCarbonCalculation({
-        season_id: Number(selectedSeasonId)
+        season_id: Number(selectedCalculationSeasonId)
       });
       toast.success(
         `Carbon calculation completed: ${response.estimated_carbon_credit.toFixed(2)} tCO2e`
@@ -142,17 +170,20 @@ function AdminPanel() {
   };
 
   const handleThingSpeakSync = async () => {
-    if (!selectedSeasonId) {
-      toast.error("Please select a season before importing ThingSpeak data");
+    if (!selectedImportSeasonId) {
+      toast.error(
+        "ThingSpeak import works only for active seasons. Reset the demo or reopen an active season first."
+      );
       return;
     }
 
     try {
       setIsSyncingThingSpeak(true);
       const response = await adminApi.syncThingSpeak({
-        season_id: Number(selectedSeasonId)
+        season_id: Number(selectedImportSeasonId)
       });
       setThingSpeakResult(response);
+      setSelectedCalculationSeasonId(selectedImportSeasonId);
 
       if (response.imported_count > 0) {
         toast.success(
@@ -173,10 +204,6 @@ function AdminPanel() {
   if (isLoading || !statistics) {
     return <LoadingState label="Loading admin panel..." />;
   }
-
-  const selectableSeasons = seasonOptions.filter((season) =>
-    ["active", "completed"].includes(season.status.toLowerCase())
-  );
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -346,9 +373,39 @@ function AdminPanel() {
                 </div>
               </div>
 
+              <div className="mt-5">
+                <label
+                  className="mb-2 block text-sm font-medium text-slate-300"
+                  htmlFor="import_season_id"
+                >
+                  Select Active Season For Import
+                </label>
+                <select
+                  className="w-full rounded-[1.25rem] border border-white/10 bg-white/10 px-4 py-3 text-sm text-white outline-none transition focus:border-white/25 focus:bg-white/10"
+                  id="import_season_id"
+                  onChange={(event) => setSelectedImportSeasonId(event.target.value)}
+                  value={selectedImportSeasonId}
+                >
+                  {importableSeasons.length === 0 ? (
+                    <option value="">No active season available</option>
+                  ) : null}
+                  {importableSeasons.map((season) => (
+                    <option key={season.season_id} value={season.season_id}>
+                      {season.farm_name} | {season.season_name}
+                      {season.crop_type ? ` (${season.crop_type})` : ""}
+                    </option>
+                  ))}
+                </select>
+                <p className="mt-2 text-xs leading-6 text-slate-400">
+                  ThingSpeak import is allowed only for active seasons. After you calculate
+                  credits, this season becomes completed, so rerun the demo seed if you need a
+                  fresh import cycle.
+                </p>
+              </div>
+
               <button
                 className="button-primary mt-5 w-full rounded-[1.25rem] px-5 py-3 disabled:cursor-not-allowed disabled:opacity-60"
-                disabled={isSyncingThingSpeak || selectableSeasons.length === 0}
+                disabled={isSyncingThingSpeak || importableSeasons.length === 0}
                 onClick={() => void handleThingSpeakSync()}
                 type="button"
               >
@@ -437,23 +494,23 @@ function AdminPanel() {
               <div className="mt-5">
                 <label
                   className="mb-2 block text-sm font-medium text-slate-300"
-                  htmlFor="season_id"
+                  htmlFor="calculation_season_id"
                 >
-                  Select Season
+                  Select Season For Calculation
                 </label>
                 <select
                   className="w-full rounded-[1.25rem] border border-white/10 bg-white/10 px-4 py-3 text-sm text-white outline-none transition focus:border-white/25 focus:bg-white/10"
-                  id="season_id"
-                  onChange={(event) => setSelectedSeasonId(event.target.value)}
-                  value={selectedSeasonId}
+                  id="calculation_season_id"
+                  onChange={(event) => setSelectedCalculationSeasonId(event.target.value)}
+                  value={selectedCalculationSeasonId}
                 >
-                  {selectableSeasons.length === 0 ? (
+                  {calculationSeasons.length === 0 ? (
                     <option value="">No seasons available</option>
                   ) : null}
-                  {selectableSeasons.map((season) => (
+                  {calculationSeasons.map((season) => (
                     <option key={season.season_id} value={season.season_id}>
                       {season.farm_name} | {season.season_name}
-                      {season.crop_type ? ` (${season.crop_type})` : ""}
+                      {season.crop_type ? ` (${season.crop_type})` : ""} [{season.status}]
                     </option>
                   ))}
                 </select>
@@ -461,7 +518,7 @@ function AdminPanel() {
 
               <button
                 className="button-primary mt-5 w-full rounded-[1.25rem] px-5 py-3 disabled:cursor-not-allowed disabled:opacity-60"
-                disabled={isCalculating || selectableSeasons.length === 0}
+                disabled={isCalculating || calculationSeasons.length === 0}
                 onClick={() => void handleCalculation()}
                 type="button"
               >
